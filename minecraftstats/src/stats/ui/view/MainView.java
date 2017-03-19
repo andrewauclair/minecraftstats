@@ -40,6 +40,8 @@ public class MainView extends JFrame {
 		Menubar bar = new Menubar();
 		
 		setJMenuBar(bar);
+		
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 //		
 //		File folder = new File("C:\\Users\\might\\AppData\\Roaming\\.minecraft\\saves\\Droidcraft (World 2)-5\\playerdata");
 //		File[] files = folder.listFiles();
@@ -52,6 +54,10 @@ public class MainView extends JFrame {
 //				//m_players.add(file.getName().substring(0, file.getName().indexOf(".") - 1));
 //			}
 //		}
+	}
+	
+	public void exitApplication() {
+		dispose();
 	}
 	
 	public void setLoadedSave(MinecraftSaveData data) {

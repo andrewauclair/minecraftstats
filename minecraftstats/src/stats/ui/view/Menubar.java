@@ -29,6 +29,14 @@ public class Menubar extends JMenuBar {
 		m_fileMenu.add(m_openSave);
 		m_fileMenu.add(m_exit);
 		
+		m_exit.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				MainView.s_mainView.exitApplication();
+			}
+		});
+		
 		add(m_fileMenu);
 		add(m_statsMenu);
 		add(m_helpMenu);
