@@ -17,7 +17,7 @@ public class PlayerDataModel {
 		m_UUID = file.getFile().getName().substring(0, file.getFile().getName().indexOf('.'));
 		
 		try {
-			m_userName = MojangAPI.getUserName(m_UUID);
+			m_userName = MojangAPI.getUserName(m_UUID.replace("-", ""));
 		}
 		catch (Exception e) {
 			System.out.println("Error getting username");

@@ -1,3 +1,4 @@
-/bin/
+minecraftstats/bin/
 /.settings/
 .metadata
+.recommenders

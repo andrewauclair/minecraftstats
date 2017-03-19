@@ -9,15 +9,15 @@ import stats.nbt.model.PlayerDataModel;
 // loads a PlayerDataModel from player.dat file
 public final class PlayerDataLoader {
 
-	public static PlayerDataModel LoadPlayerData(String UUID) {
+	public static PlayerDataModel LoadPlayerData(File file) {
 		
 		PlayerDataModel data = null;
 		
 		try {
-			NBTFile file = NBTFileHelper.readNBTFile(new File(UUID + ".dat"));
+			NBTFile nbtFile = NBTFileHelper.readNBTFile(file);
 			
-			if (file != null) {
-				data = new PlayerDataModel(file);
+			if (nbtFile != null) {
+				data = new PlayerDataModel(nbtFile);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -11,10 +11,17 @@ import javax.swing.JList;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import stats.ui.model.MinecraftSaveData;
 import stats.util.MojangAPI;
 
 public class MainView extends JFrame {
 
+	public static MainView s_mainView = null;
+
+	private static final String s_title = "Minecraft Stats";
+	
+	private MinecraftSaveData m_currentSave = null;
+	
 	//ArrayList<String> m_players = new ArrayList<>();
 	DefaultListModel<String> model = new DefaultListModel<>();
 	
@@ -22,27 +29,34 @@ public class MainView extends JFrame {
 	
 	public MainView() {
 		
-		setTitle("Minecraft Stats");
-		setMinimumSize(new Dimension(200, 200));
+		s_mainView = this;
+		
+		setTitle(s_title);
+		setMinimumSize(new Dimension(500, 500));
 		setPreferredSize(getMinimumSize());
 		
-		add(m_players);
-		
+//		add(m_players);
+//		
 		Menubar bar = new Menubar();
 		
 		setJMenuBar(bar);
+//		
+//		File folder = new File("C:\\Users\\might\\AppData\\Roaming\\.minecraft\\saves\\Droidcraft (World 2)-5\\playerdata");
+//		File[] files = folder.listFiles();
+//		
+//		for (File file : files) {
+//			if (file.isFile()) {
+//				String uuid = file.getName().substring(0, file.getName().indexOf('.'));
+//				uuid = uuid.replace("-", "");
+//				model.addElement(MojangAPI.getUserName(uuid));
+//				//m_players.add(file.getName().substring(0, file.getName().indexOf(".") - 1));
+//			}
+//		}
+	}
+	
+	public void setLoadedSave(MinecraftSaveData data) {
 		
-		File folder = new File("C:\\Users\\might\\AppData\\Roaming\\.minecraft\\saves\\Droidcraft (World 2)-5\\playerdata");
-		File[] files = folder.listFiles();
 		
-		for (File file : files) {
-			if (file.isFile()) {
-				String uuid = file.getName().substring(0, file.getName().indexOf('.'));
-				uuid = uuid.replace("-", "");
-				model.addElement(MojangAPI.getUserName(uuid));
-				//m_players.add(file.getName().substring(0, file.getName().indexOf(".") - 1));
-			}
-		}
 	}
 	
 	public static void main(String[] args) {

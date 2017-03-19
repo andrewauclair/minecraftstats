@@ -24,9 +24,17 @@ public final class MojangAPI {
 			is.read(bytes);
 			String data = new String(bytes, "UTF-8");
 			
-			JsonObject jsonObject = new JsonParser().parse(data).getAsJsonObject();
+			JsonObject jsonObject = null;
 			
-			return jsonObject.get("name").getAsString();
+			try {
+				jsonObject = new JsonParser().parse(data).getAsJsonObject();
+				return jsonObject.get("name").getAsString();
+			}
+			catch (IllegalStateException e) {
+				System.out.println("Error fetching: " + UUID);
+				e.printStackTrace();
+			}
+			
 			
 		}
 		catch (Exception e) {
