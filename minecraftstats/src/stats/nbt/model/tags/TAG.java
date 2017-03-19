@@ -77,6 +77,9 @@ public abstract class TAG {
 			out.writeShort(m_name.length());
 			out.write(m_name.getBytes());
 		}
+		else {
+			out.writeShort(0);
+		}
 	}
 	
 	public void readFromStream(DataInput in, boolean readName) throws IOException {

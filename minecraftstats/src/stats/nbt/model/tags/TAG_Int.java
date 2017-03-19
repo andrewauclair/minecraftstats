@@ -40,6 +40,7 @@ public class TAG_Int extends TAG {
 
 	@Override
 	public void writeToStream(DataOutput out) throws IOException {
+		
 		super.writeToStream(out);
 		
 		out.writeInt(m_value);

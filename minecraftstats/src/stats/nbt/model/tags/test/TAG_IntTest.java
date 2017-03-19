@@ -1,19 +1,117 @@
 package stats.nbt.model.tags.test;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.util.Arrays;
+
 import junit.framework.TestCase;
 import stats.nbt.model.tags.TAG_Int;
+import stats.nbt.model.tags.TAG_List;
 
 public class TAG_IntTest extends TestCase {
 
-	public void testRead() {
-		// create an NBTInputStream that has a TAG_Int in it
-		//TAG_Int nbtInt = new TAG_Int("Test");
+	private static final String s_name = "Test";
+	private static final Integer s_value = 15;
+	
+	public void testTAGIntRead() throws IOException {
+
+		ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
+		DataOutputStream testOut = new DataOutputStream(expectedStream);
 		
-		// read the stream
+		testOut.writeShort(s_name.length());
+		testOut.write(s_name.getBytes());
+		testOut.writeInt(s_value);
+		
+		ByteArrayInputStream byteStream = new ByteArrayInputStream(expectedStream.toByteArray());
+		DataInputStream nbtIn = new DataInputStream(byteStream);
+		
+		TAG_Int nbtInt = new TAG_Int("", null);
+		nbtInt.readFromStream(nbtIn, true);
+		
+		assertEquals(s_name, nbtInt.getName());
+		assertEquals(s_value, nbtInt.getValue());
 	}
 	
-	public void testWrite() {
-		// length, "testWrite", 0x1, 0x2 (value)
+	public void testTAGIntWrite() throws IOException {
 		
+		TAG_Int nbtInt = new TAG_Int(s_name, null);
+		nbtInt.setValue(s_value);
+		
+		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+		DataOutputStream nbtOut = new DataOutputStream(byteStream);
+		nbtInt.writeToStream(nbtOut);
+		
+		ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
+		DataOutputStream testOut = new DataOutputStream(expectedStream);
+		
+		testOut.writeShort(s_name.length());
+		testOut.write(s_name.getBytes());
+		testOut.writeInt(s_value);
+		
+		assertTrue("TAG_Int write is incorrect.", Arrays.equals(expectedStream.toByteArray(), byteStream.toByteArray()));
+	}
+	
+	public void testTAGIntEmptyNameRead() throws IOException {
+		
+		ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
+		DataOutputStream testOut = new DataOutputStream(expectedStream);
+		
+		testOut.writeShort(0);
+		testOut.writeInt(s_value);
+		
+		ByteArrayInputStream byteStream = new ByteArrayInputStream(expectedStream.toByteArray());
+		DataInputStream nbtIn = new DataInputStream(byteStream);
+		
+		TAG_Int nbtInt = new TAG_Int("", null);
+		nbtInt.readFromStream(nbtIn, true);
+		
+		assertEquals("", nbtInt.getName());
+		assertEquals(s_value, nbtInt.getValue());
+	}
+
+	public void testTAGIntEmptyNameWrite() throws IOException {
+		
+		TAG_Int nbtInt = new TAG_Int("", null);
+		nbtInt.setValue(s_value);
+		
+		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+		DataOutputStream nbtOut = new DataOutputStream(byteStream);
+		nbtInt.writeToStream(nbtOut);
+		
+		ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
+		DataOutputStream testOut = new DataOutputStream(expectedStream);
+		
+		testOut.writeShort(0);
+		testOut.writeInt(s_value);
+		
+		assertTrue("TAG_Int write is incorrect.", Arrays.equals(expectedStream.toByteArray(), byteStream.toByteArray()));
+	}
+	
+	public void testTAGIntValue() {
+		
+		TAG_Int nbtInt = new TAG_Int("", null);
+		
+		nbtInt.setValue(s_value);
+		
+		assertEquals(s_value, nbtInt.getValue());
+	}
+	
+	public void testTAGIntConstructor() {
+		
+		TAG_Int nbtInt = new TAG_Int(s_name, null, s_value);
+		
+		assertEquals(s_name, nbtInt.getName());
+		assertEquals(s_value, nbtInt.getValue());
+	}
+	
+	public void testTAGIntParent() {
+		
+		TAG_List nbtList = new TAG_List("", null);
+		TAG_Int nbtInt = new TAG_Int(s_name, nbtList);
+		
+		assertEquals(nbtList, nbtInt.getParent());
 	}
 }
