@@ -55,6 +55,10 @@ public abstract class TAG {
 		return m_parent;
 	}
 	
+	public TAG findTAG(String name) {
+		return null;
+	}
+	
 	public abstract Object getValue();
 	
 	@Override
