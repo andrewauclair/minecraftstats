@@ -8,110 +8,110 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import junit.framework.TestCase;
-import stats.nbt.model.tags.TAG_Int;
+import stats.nbt.model.tags.TAG_Float;
 import stats.nbt.model.tags.TAG_List;
 
-public class TAG_IntTest extends TestCase {
+public class TAG_FloatTest extends TestCase {
 
 	private static final String s_name = "Test";
-	private static final Integer s_value = 15;
+	private static final Float s_value = 15.0f;
 	
-	public void testTAGIntRead() throws IOException {
+	public void testTAGFloatRead() throws IOException {
 
 		ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
 		DataOutputStream testOut = new DataOutputStream(expectedStream);
 		
 		testOut.writeShort(s_name.length());
 		testOut.write(s_name.getBytes());
-		testOut.writeInt(s_value);
+		testOut.writeFloat(s_value);
 		
 		ByteArrayInputStream byteStream = new ByteArrayInputStream(expectedStream.toByteArray());
 		DataInputStream nbtIn = new DataInputStream(byteStream);
 		
-		TAG_Int nbtTAG = new TAG_Int("", null);
-		nbtTAG.readFromStream(nbtIn, true);
+		TAG_Float nbtInt = new TAG_Float("", null);
+		nbtInt.readFromStream(nbtIn, true);
 		
-		assertEquals(s_name, nbtTAG.getName());
-		assertEquals(s_value, nbtTAG.getValue());
+		assertEquals(s_name, nbtInt.getName());
+		assertEquals(s_value, nbtInt.getValue());
 	}
 	
-	public void testTAGIntWrite() throws IOException {
+	public void testTAGFloatWrite() throws IOException {
 		
-		TAG_Int nbtTAG = new TAG_Int(s_name, null);
-		nbtTAG.setValue(s_value);
+		TAG_Float nbtInt = new TAG_Float(s_name, null);
+		nbtInt.setValue(s_value);
 		
 		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
 		DataOutputStream nbtOut = new DataOutputStream(byteStream);
-		nbtTAG.writeToStream(nbtOut);
+		nbtInt.writeToStream(nbtOut);
 		
 		ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
 		DataOutputStream testOut = new DataOutputStream(expectedStream);
 		
 		testOut.writeShort(s_name.length());
 		testOut.write(s_name.getBytes());
-		testOut.writeInt(s_value);
+		testOut.writeFloat(s_value);
 		
-		assertTrue("TAG_Int write is incorrect.", Arrays.equals(expectedStream.toByteArray(), byteStream.toByteArray()));
+		assertTrue("TAG_Float write is incorrect.", Arrays.equals(expectedStream.toByteArray(), byteStream.toByteArray()));
 	}
 	
-	public void testTAGIntEmptyNameRead() throws IOException {
+	public void testTAGFloatEmptyNameRead() throws IOException {
 		
 		ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
 		DataOutputStream testOut = new DataOutputStream(expectedStream);
 		
 		testOut.writeShort(0);
-		testOut.writeInt(s_value);
+		testOut.writeFloat(s_value);
 		
 		ByteArrayInputStream byteStream = new ByteArrayInputStream(expectedStream.toByteArray());
 		DataInputStream nbtIn = new DataInputStream(byteStream);
 		
-		TAG_Int nbtTAG = new TAG_Int("", null);
-		nbtTAG.readFromStream(nbtIn, true);
+		TAG_Float nbtInt = new TAG_Float("", null);
+		nbtInt.readFromStream(nbtIn, true);
 		
-		assertEquals("", nbtTAG.getName());
-		assertEquals(s_value, nbtTAG.getValue());
+		assertEquals("", nbtInt.getName());
+		assertEquals(s_value, nbtInt.getValue());
 	}
 
-	public void testTAGIntEmptyNameWrite() throws IOException {
+	public void testTAGFloatEmptyNameWrite() throws IOException {
 		
-		TAG_Int nbtTAG = new TAG_Int("", null);
-		nbtTAG.setValue(s_value);
+		TAG_Float nbtInt = new TAG_Float("", null);
+		nbtInt.setValue(s_value);
 		
 		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
 		DataOutputStream nbtOut = new DataOutputStream(byteStream);
-		nbtTAG.writeToStream(nbtOut);
+		nbtInt.writeToStream(nbtOut);
 		
 		ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
 		DataOutputStream testOut = new DataOutputStream(expectedStream);
 		
 		testOut.writeShort(0);
-		testOut.writeInt(s_value);
+		testOut.writeFloat(s_value);
 		
-		assertTrue("TAG_Int write is incorrect.", Arrays.equals(expectedStream.toByteArray(), byteStream.toByteArray()));
+		assertTrue("TAG_Float write is incorrect.", Arrays.equals(expectedStream.toByteArray(), byteStream.toByteArray()));
 	}
 	
-	public void testTAGIntValue() {
+	public void testTAGFloatValue() {
 		
-		TAG_Int nbtTAG = new TAG_Int("", null);
+		TAG_Float nbtInt = new TAG_Float("", null);
 		
-		nbtTAG.setValue(s_value);
+		nbtInt.setValue(s_value);
 		
-		assertEquals(s_value, nbtTAG.getValue());
+		assertEquals(s_value, nbtInt.getValue());
 	}
 	
-	public void testTAGIntConstructor() {
+	public void testTAGFloatConstructor() {
 		
-		TAG_Int nbtTAG = new TAG_Int(s_name, null, s_value);
+		TAG_Float nbtInt = new TAG_Float(s_name, null, s_value);
 		
-		assertEquals(s_name, nbtTAG.getName());
-		assertEquals(s_value, nbtTAG.getValue());
+		assertEquals(s_name, nbtInt.getName());
+		assertEquals(s_value, nbtInt.getValue());
 	}
 	
-	public void testTAGIntParent() {
+	public void testTAGFloatParent() {
 		
 		TAG_List nbtList = new TAG_List("", null);
-		TAG_Int nbtTAG = new TAG_Int(s_name, nbtList);
+		TAG_Float nbtInt = new TAG_Float(s_name, nbtList);
 		
-		assertEquals(nbtList, nbtTAG.getParent());
+		assertEquals(nbtList, nbtInt.getParent());
 	}
 }

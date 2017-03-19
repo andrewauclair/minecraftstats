@@ -54,5 +54,8 @@ public class TAG_String extends TAG {
 			in.readFully(bytes);
 			m_value = new String(bytes, "UTF-8");
 		}
+		else {
+			m_value = "";
+		}
 	}
 }

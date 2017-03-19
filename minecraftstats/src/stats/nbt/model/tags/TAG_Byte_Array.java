@@ -6,12 +6,16 @@ import java.io.IOException;
 
 public class TAG_Byte_Array extends TAG {
 
-	private byte[] m_value = null;
+	private Byte[] m_value = null;
 	
 	public TAG_Byte_Array(String name, TAG parent) {
 		super(name, parent);
 	}
 
+	public TAG_Byte_Array(String name, TAG parent, Byte[] value) {
+		super(name, parent);
+		m_value = value;
+	}
 	@Override
 	public Object getValue() {
 		return m_value;
@@ -22,7 +26,7 @@ public class TAG_Byte_Array extends TAG {
 		
 		if (value instanceof Byte[] ||
 			value instanceof byte[]) {
-			m_value = (byte[])value;
+			m_value = (Byte[])value;
 		}
 	}
 	
@@ -45,7 +49,7 @@ public class TAG_Byte_Array extends TAG {
 		
 		int size = in.readInt();
 		
-		m_value = new byte[size];
+		m_value = new Byte[size];
 		
 		for (int i = 0; i < size; i++) {
 			m_value[i] = in.readByte();

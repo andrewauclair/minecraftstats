@@ -8,36 +8,36 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import junit.framework.TestCase;
-import stats.nbt.model.tags.TAG_Int;
+import stats.nbt.model.tags.TAG_Byte;
 import stats.nbt.model.tags.TAG_List;
 
-public class TAG_IntTest extends TestCase {
+public class TAG_ByteTest extends TestCase {
 
 	private static final String s_name = "Test";
-	private static final Integer s_value = 15;
+	private static final Byte s_value = 15;
 	
-	public void testTAGIntRead() throws IOException {
+	public void testTAGByteRead() throws IOException {
 
 		ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
 		DataOutputStream testOut = new DataOutputStream(expectedStream);
 		
 		testOut.writeShort(s_name.length());
 		testOut.write(s_name.getBytes());
-		testOut.writeInt(s_value);
+		testOut.writeByte(s_value);
 		
 		ByteArrayInputStream byteStream = new ByteArrayInputStream(expectedStream.toByteArray());
 		DataInputStream nbtIn = new DataInputStream(byteStream);
 		
-		TAG_Int nbtTAG = new TAG_Int("", null);
+		TAG_Byte nbtTAG = new TAG_Byte("", null);
 		nbtTAG.readFromStream(nbtIn, true);
 		
 		assertEquals(s_name, nbtTAG.getName());
 		assertEquals(s_value, nbtTAG.getValue());
 	}
 	
-	public void testTAGIntWrite() throws IOException {
+	public void testTAGByteWrite() throws IOException {
 		
-		TAG_Int nbtTAG = new TAG_Int(s_name, null);
+		TAG_Byte nbtTAG = new TAG_Byte(s_name, null);
 		nbtTAG.setValue(s_value);
 		
 		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
@@ -49,32 +49,32 @@ public class TAG_IntTest extends TestCase {
 		
 		testOut.writeShort(s_name.length());
 		testOut.write(s_name.getBytes());
-		testOut.writeInt(s_value);
+		testOut.writeByte(s_value);
 		
 		assertTrue("TAG_Int write is incorrect.", Arrays.equals(expectedStream.toByteArray(), byteStream.toByteArray()));
 	}
 	
-	public void testTAGIntEmptyNameRead() throws IOException {
+	public void testTAGByteEmptyNameRead() throws IOException {
 		
 		ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
 		DataOutputStream testOut = new DataOutputStream(expectedStream);
 		
 		testOut.writeShort(0);
-		testOut.writeInt(s_value);
+		testOut.writeByte(s_value);
 		
 		ByteArrayInputStream byteStream = new ByteArrayInputStream(expectedStream.toByteArray());
 		DataInputStream nbtIn = new DataInputStream(byteStream);
 		
-		TAG_Int nbtTAG = new TAG_Int("", null);
+		TAG_Byte nbtTAG = new TAG_Byte("", null);
 		nbtTAG.readFromStream(nbtIn, true);
 		
 		assertEquals("", nbtTAG.getName());
 		assertEquals(s_value, nbtTAG.getValue());
 	}
 
-	public void testTAGIntEmptyNameWrite() throws IOException {
+	public void testTAGByteEmptyNameWrite() throws IOException {
 		
-		TAG_Int nbtTAG = new TAG_Int("", null);
+		TAG_Byte nbtTAG = new TAG_Byte("", null);
 		nbtTAG.setValue(s_value);
 		
 		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
@@ -85,32 +85,32 @@ public class TAG_IntTest extends TestCase {
 		DataOutputStream testOut = new DataOutputStream(expectedStream);
 		
 		testOut.writeShort(0);
-		testOut.writeInt(s_value);
+		testOut.writeByte(s_value);
 		
-		assertTrue("TAG_Int write is incorrect.", Arrays.equals(expectedStream.toByteArray(), byteStream.toByteArray()));
+		assertTrue("TAG_Byte write is incorrect.", Arrays.equals(expectedStream.toByteArray(), byteStream.toByteArray()));
 	}
 	
-	public void testTAGIntValue() {
+	public void testTAGByteValue() {
 		
-		TAG_Int nbtTAG = new TAG_Int("", null);
+		TAG_Byte nbtTAG = new TAG_Byte("", null);
 		
 		nbtTAG.setValue(s_value);
 		
 		assertEquals(s_value, nbtTAG.getValue());
 	}
 	
-	public void testTAGIntConstructor() {
+	public void testTAGByteConstructor() {
 		
-		TAG_Int nbtTAG = new TAG_Int(s_name, null, s_value);
+		TAG_Byte nbtTAG = new TAG_Byte(s_name, null, s_value);
 		
 		assertEquals(s_name, nbtTAG.getName());
 		assertEquals(s_value, nbtTAG.getValue());
 	}
 	
-	public void testTAGIntParent() {
+	public void testTAGByteParent() {
 		
 		TAG_List nbtList = new TAG_List("", null);
-		TAG_Int nbtTAG = new TAG_Int(s_name, nbtList);
+		TAG_Byte nbtTAG = new TAG_Byte(s_name, nbtList);
 		
 		assertEquals(nbtList, nbtTAG.getParent());
 	}
