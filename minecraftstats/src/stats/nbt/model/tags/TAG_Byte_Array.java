@@ -1,18 +1,32 @@
 package stats.nbt.model.tags;
 
 import java.io.DataInput;
+import java.io.DataOutput;
 import java.io.IOException;
 
 public class TAG_Byte_Array extends TAG {
 
+	private byte[] m_value = null;
+	
 	public TAG_Byte_Array(String name, TAG parent) {
 		super(name, parent);
 	}
 
 	@Override
 	public Object getValue() {
-		// TODO Auto-generated method stub
-		return null;
+		return m_value;
+	}
+	
+	@Override
+	public void writeToStream(DataOutput out) throws IOException {
+		
+		super.writeToStream(out);
+		
+		out.writeInt(m_value.length);
+		
+		for (byte val : m_value) {
+			out.writeByte(val);
+		}
 	}
 	
 	@Override
@@ -22,8 +36,10 @@ public class TAG_Byte_Array extends TAG {
 		
 		int size = in.readInt();
 		
+		m_value = new byte[size];
+		
 		for (int i = 0; i < size; i++) {
-			in.readByte();
+			m_value[i] = in.readByte();
 		}
 	}
 }

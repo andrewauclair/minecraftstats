@@ -29,6 +29,10 @@ public abstract class TAG {
 			m_value = value;
 		}
 		
+		public int getValue() {
+			return m_value;
+		}
+		
 		public static TAG_Type valueOf(int value) {
 			for (TAG_Type val : values()) {
 				if (val.m_value == value) {

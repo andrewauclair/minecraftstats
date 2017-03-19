@@ -1,6 +1,8 @@
 package stats.nbt.model.tags;
 
 import java.io.DataInput;
+import java.io.DataOutput;
+import java.io.IOException;
 
 public class TAG_End extends TAG {
 
@@ -11,6 +13,11 @@ public class TAG_End extends TAG {
 	@Override
 	public Object getValue() {
 		return null;
+	}
+	
+	@Override
+	public void writeToStream(DataOutput out) throws IOException {
+		
 	}
 	
 	@Override

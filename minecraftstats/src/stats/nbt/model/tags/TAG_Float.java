@@ -1,6 +1,7 @@
 package stats.nbt.model.tags;
 
 import java.io.DataInput;
+import java.io.DataOutput;
 import java.io.IOException;
 
 public class TAG_Float extends TAG {
@@ -19,6 +20,14 @@ public class TAG_Float extends TAG {
 	@Override
 	public Object getValue() {
 		return m_value;
+	}
+	
+	@Override
+	public void writeToStream(DataOutput out) throws IOException {
+		
+		super.writeToStream(out);
+		
+		out.writeFloat(m_value);
 	}
 	
 	@Override

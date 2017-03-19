@@ -1,6 +1,7 @@
 package stats.nbt.model.tags;
 
 import java.io.DataInput;
+import java.io.DataOutput;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,7 @@ import stats.nbt.utils.NBTFileHelper;
 public class TAG_List extends TAG {
 
 	private ArrayList<TAG> m_value = new ArrayList<>();
+	private TAG_Type m_type = null;
 	
 	public TAG_List(String name, TAG parent) {
 		super(name, parent);
@@ -35,16 +37,28 @@ public class TAG_List extends TAG {
 	}
 	
 	@Override
+	public void writeToStream(DataOutput out) throws IOException {
+		
+		super.writeToStream(out);
+		
+		out.writeByte(m_type.getValue());
+		
+		for (TAG tag : m_value) {
+			tag.writeToStream(out);
+		}
+	}
+	
+	@Override
 	public void readFromStream(DataInput in, boolean readName) throws IOException {
 		
 		super.readFromStream(in, readName);
 		
 		// needs to read the type, size and all the tags
-		TAG_Type type = TAG_Type.valueOf(in.readByte());
+		m_type = TAG_Type.valueOf(in.readByte());
 		int size = in.readInt();
 		
 		for (int i = 0; i < size; i++) {
-			m_value.add(NBTFileHelper.readTagPayload(in, this, type, false));
+			m_value.add(NBTFileHelper.readTagPayload(in, this, m_type, false));
 		}
 	}
 }

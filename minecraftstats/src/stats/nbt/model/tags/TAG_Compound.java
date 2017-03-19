@@ -42,8 +42,14 @@ public class TAG_Compound extends TAG {
 		return buf.toString();
 	}
 	
-	public void writeToStream(DataOutput out) {
+	@Override
+	public void writeToStream(DataOutput out) throws IOException {
 		
+		super.writeToStream(out);
+		
+		for (String val : m_value.keySet()) {
+			m_value.get(val).writeToStream(out);
+		}
 	}
 	
 	@Override
