@@ -21,6 +21,14 @@ public class TAG_Byte extends TAG {
 	public Object getValue() {
 		return m_value;
 	}
+
+	@Override
+	public void setValue(Object value) {
+		
+		if (value instanceof Byte) {
+			m_value = (Byte)value;
+		}
+	}
 	
 	@Override
 	public void writeToStream(DataOutput out) throws IOException {

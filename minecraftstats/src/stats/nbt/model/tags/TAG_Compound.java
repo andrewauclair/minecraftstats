@@ -30,6 +30,14 @@ public class TAG_Compound extends TAG {
 	public Object getValue() {
 		return m_value;
 	}
+
+	@Override
+	public void setValue(Object value) {
+		
+		if (value instanceof Map<?, ?>) {
+			m_value = (Map<String, TAG>)value;
+		}
+	}
 	
 	@Override
 	public String toString() {

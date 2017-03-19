@@ -21,6 +21,14 @@ public class TAG_Long extends TAG {
 	public Object getValue() {
 		return m_value;
 	}
+
+	@Override
+	public void setValue(Object value) {
+		
+		if (value instanceof Long) {
+			m_value = (Long)value;
+		}
+	}
 	
 	@Override
 	public void writeToStream(DataOutput out) throws IOException {

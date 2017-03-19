@@ -14,6 +14,11 @@ public class TAG_End extends TAG {
 	public Object getValue() {
 		return null;
 	}
+
+	@Override
+	public void setValue(Object value) {
+		
+	}
 	
 	@Override
 	public void writeToStream(DataOutput out) throws IOException {

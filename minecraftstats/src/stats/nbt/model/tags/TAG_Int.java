@@ -24,9 +24,13 @@ public class TAG_Int extends TAG {
 	public Object getValue() {
 		return m_value;
 	}
-	
-	public void setValue(Integer value) {
-		m_value = value;
+
+	@Override
+	public void setValue(Object value) {
+		
+		if (value instanceof Integer) {
+			m_value = (Integer)value;
+		}
 	}
 	
 	@Override

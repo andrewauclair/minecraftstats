@@ -64,6 +64,7 @@ public abstract class TAG {
 	}
 	
 	public abstract Object getValue();
+	public abstract void setValue(Object value);
 	
 	@Override
 	public String toString() {

@@ -35,6 +35,14 @@ public class TAG_List extends TAG {
 	public Object getValue() {
 		return m_value;
 	}
+
+	@Override
+	public void setValue(Object value) {
+		
+		if (value instanceof ArrayList<?>) {
+			m_value = (ArrayList<TAG>)value;
+		}
+	}
 	
 	@Override
 	public void writeToStream(DataOutput out) throws IOException {

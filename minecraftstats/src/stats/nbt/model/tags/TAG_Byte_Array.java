@@ -18,6 +18,15 @@ public class TAG_Byte_Array extends TAG {
 	}
 	
 	@Override
+	public void setValue(Object value) {
+		
+		if (value instanceof Byte[] ||
+			value instanceof byte[]) {
+			m_value = (byte[])value;
+		}
+	}
+	
+	@Override
 	public void writeToStream(DataOutput out) throws IOException {
 		
 		super.writeToStream(out);

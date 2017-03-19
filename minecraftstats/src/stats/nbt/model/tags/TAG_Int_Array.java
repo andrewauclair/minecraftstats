@@ -19,6 +19,15 @@ public class TAG_Int_Array extends TAG {
 	public Object getValue() {
 		return m_value;
 	}
+
+	@Override
+	public void setValue(Object value) {
+		
+		if (value instanceof Integer[] ||
+			value instanceof int[]) {
+			m_value = (int[])value;
+		}
+	}
 	
 	@Override
 	public void writeToStream(DataOutput out) throws IOException {
