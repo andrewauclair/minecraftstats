@@ -19,6 +19,11 @@ public class TAG_List extends TAG {
 	
 	public TAG_List(String name, TAG parent, List<TAG> value) {
 		super(name, parent);
+		
+		// TODO only accept tags that match the first in the list
+		if (value.size() > 0) {
+			m_type = TAG_Type.fromTAG(value.get(0));
+		}
 	}
 
 	@Override
@@ -36,23 +41,30 @@ public class TAG_List extends TAG {
 		return m_value;
 	}
 
-	@Override
-	public void setValue(Object value) {
+	public void setValue(ArrayList<TAG> value) {
+		m_value = value;
 		
-		if (value instanceof ArrayList<?>) {
-			m_value = (ArrayList<TAG>)value;
+		if (m_value.size() > 0) {
+			m_type = TAG_Type.fromTAG(m_value.get(0));
 		}
 	}
 	
 	@Override
-	public void writeToStream(DataOutput out) throws IOException {
+	public void writeToStream(DataOutput out, boolean writeName) throws IOException {
 		
-		super.writeToStream(out);
+		super.writeToStream(out, writeName);
 		
-		out.writeByte(m_type.getValue());
+		if (m_type != null) {
+			out.writeByte(m_type.getValue());
+		}
+		else {
+			out.writeByte(0);
+		}
+		
+		out.writeInt(m_value.size());
 		
 		for (TAG tag : m_value) {
-			tag.writeToStream(out);
+			tag.writeToStream(out, false);
 		}
 	}
 	

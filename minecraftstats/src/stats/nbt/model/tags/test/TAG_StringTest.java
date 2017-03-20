@@ -43,7 +43,7 @@ public class TAG_StringTest extends TestCase {
 		
 		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
 		DataOutputStream nbtOut = new DataOutputStream(byteStream);
-		nbtInt.writeToStream(nbtOut);
+		nbtInt.writeToStream(nbtOut, true);
 		
 		ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
 		DataOutputStream testOut = new DataOutputStream(expectedStream);
@@ -82,7 +82,7 @@ public class TAG_StringTest extends TestCase {
 		
 		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
 		DataOutputStream nbtOut = new DataOutputStream(byteStream);
-		nbtInt.writeToStream(nbtOut);
+		nbtInt.writeToStream(nbtOut, true);
 		
 		ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
 		DataOutputStream testOut = new DataOutputStream(expectedStream);
@@ -120,7 +120,7 @@ public class TAG_StringTest extends TestCase {
 		
 		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
 		DataOutputStream nbtOut = new DataOutputStream(byteStream);
-		nbtInt.writeToStream(nbtOut);
+		nbtInt.writeToStream(nbtOut, true);
 		
 		ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
 		DataOutputStream testOut = new DataOutputStream(expectedStream);

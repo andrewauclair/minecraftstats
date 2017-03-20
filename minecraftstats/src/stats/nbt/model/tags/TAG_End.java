@@ -16,12 +16,7 @@ public class TAG_End extends TAG {
 	}
 
 	@Override
-	public void setValue(Object value) {
-		
-	}
-	
-	@Override
-	public void writeToStream(DataOutput out) throws IOException {
+	public void writeToStream(DataOutput out, boolean writeName) throws IOException {
 		
 	}
 	

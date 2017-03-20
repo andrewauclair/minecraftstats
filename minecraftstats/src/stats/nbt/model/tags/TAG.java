@@ -41,6 +41,49 @@ public abstract class TAG {
 			}
 			return null;
 		}
+		
+		public static TAG_Type fromTAG(TAG tag) {
+			if (tag instanceof TAG_End) {
+				return TAG_End;
+			}
+			else if (tag instanceof TAG_Byte) {
+				return TAG_Byte;
+			}
+			else if (tag instanceof TAG_Short) {
+				return TAG_Short;
+			}
+			else if (tag instanceof TAG_Int) {
+				return TAG_Int;
+			}
+			else if (tag instanceof TAG_Long) {
+				return TAG_Long;
+			}
+			else if (tag instanceof TAG_Float) {
+				return TAG_Float;
+			}
+			else if (tag instanceof TAG_Double) {
+				return TAG_Double;
+			}
+			else if (tag instanceof TAG_Byte_Array) {
+				return TAG_Byte_Array;
+			}
+			else if (tag instanceof TAG_Byte_Array) {
+				return TAG_Byte_Array;
+			}
+			else if (tag instanceof TAG_String) {
+				return TAG_String;
+			}
+			else if (tag instanceof TAG_List) {
+				return TAG_List;
+			}
+			else if (tag instanceof TAG_Compound) {
+				return TAG_Compound;
+			}
+			else if (tag instanceof TAG_Int_Array) {
+				return TAG_Int_Array;
+			}
+			return null;
+		}
 	}
 	
 	protected String m_name = "";
@@ -59,26 +102,31 @@ public abstract class TAG {
 		return m_parent;
 	}
 	
+	public void setParent(TAG parent) {
+		m_parent = parent;
+	}
+	
 	public TAG findTAG(String name) {
 		return null;
 	}
 	
 	public abstract Object getValue();
-	public abstract void setValue(Object value);
 	
 	@Override
 	public String toString() {
 		return getName() + " : " + getValue();
 	}
 	
-	public void writeToStream(DataOutput out) throws IOException {
+	public void writeToStream(DataOutput out, boolean writeName) throws IOException {
 		
-		if (m_name != null && !m_name.isEmpty()) {
-			out.writeShort(m_name.length());
-			out.write(m_name.getBytes());
-		}
-		else {
-			out.writeShort(0);
+		if (writeName) {
+			if (m_name != null && !m_name.isEmpty()) {
+				out.writeShort(m_name.length());
+				out.write(m_name.getBytes());
+			}
+			else {
+				out.writeShort(0);
+			}
 		}
 	}
 	

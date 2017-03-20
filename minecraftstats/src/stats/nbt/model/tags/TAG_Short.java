@@ -22,18 +22,14 @@ public class TAG_Short extends TAG {
 		return m_value;
 	}
 
-	@Override
-	public void setValue(Object value) {
-		
-		if (value instanceof Short) {
-			m_value = (Short)value;
-		}
+	public void setValue(Short value) {
+		m_value = value;
 	}
 	
 	@Override
-	public void writeToStream(DataOutput out) throws IOException {
+	public void writeToStream(DataOutput out, boolean writeName) throws IOException {
 		
-		super.writeToStream(out);
+		super.writeToStream(out, writeName);
 		
 		out.writeShort(m_value);
 	}

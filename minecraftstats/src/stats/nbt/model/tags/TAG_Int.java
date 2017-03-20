@@ -25,12 +25,8 @@ public class TAG_Int extends TAG {
 		return m_value;
 	}
 
-	@Override
-	public void setValue(Object value) {
-		
-		if (value instanceof Integer) {
-			m_value = (Integer)value;
-		}
+	public void setValue(Integer value) {
+		m_value = value;
 	}
 	
 	@Override
@@ -39,9 +35,9 @@ public class TAG_Int extends TAG {
 	}
 
 	@Override
-	public void writeToStream(DataOutput out) throws IOException {
+	public void writeToStream(DataOutput out, boolean writeName) throws IOException {
 		
-		super.writeToStream(out);
+		super.writeToStream(out, writeName);
 		
 		out.writeInt(m_value);
 	}

@@ -22,18 +22,14 @@ public class TAG_Float extends TAG {
 		return m_value;
 	}
 
-	@Override
-	public void setValue(Object value) {
-		
-		if (value instanceof Float) {
-			m_value = (Float)value;
-		}
+	public void setValue(Float value) {
+		m_value = value;
 	}
 	
 	@Override
-	public void writeToStream(DataOutput out) throws IOException {
+	public void writeToStream(DataOutput out, boolean writeName) throws IOException {
 		
-		super.writeToStream(out);
+		super.writeToStream(out, writeName);
 		
 		out.writeFloat(m_value);
 	}

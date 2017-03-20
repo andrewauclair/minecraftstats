@@ -45,7 +45,7 @@ public class TAG_Byte_ArrayTest extends TestCase {
 		
 		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
 		DataOutputStream nbtOut = new DataOutputStream(byteStream);
-		nbtTAG.writeToStream(nbtOut);
+		nbtTAG.writeToStream(nbtOut, true);
 		
 		ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
 		DataOutputStream testOut = new DataOutputStream(expectedStream);
@@ -88,7 +88,7 @@ public class TAG_Byte_ArrayTest extends TestCase {
 		
 		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
 		DataOutputStream nbtOut = new DataOutputStream(byteStream);
-		nbtTAG.writeToStream(nbtOut);
+		nbtTAG.writeToStream(nbtOut, true);
 		
 		ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
 		DataOutputStream testOut = new DataOutputStream(expectedStream);

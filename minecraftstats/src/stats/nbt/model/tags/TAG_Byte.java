@@ -22,18 +22,14 @@ public class TAG_Byte extends TAG {
 		return m_value;
 	}
 
-	@Override
-	public void setValue(Object value) {
-		
-		if (value instanceof Byte) {
-			m_value = (Byte)value;
-		}
+	public void setValue(Byte value) {
+		m_value = value;
 	}
 	
 	@Override
-	public void writeToStream(DataOutput out) throws IOException {
+	public void writeToStream(DataOutput out, boolean writeName) throws IOException {
 		
-		super.writeToStream(out);
+		super.writeToStream(out, writeName);
 		
 		out.writeByte(m_value);
 	}

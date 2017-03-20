@@ -22,18 +22,14 @@ public class TAG_Long extends TAG {
 		return m_value;
 	}
 
-	@Override
-	public void setValue(Object value) {
-		
-		if (value instanceof Long) {
-			m_value = (Long)value;
-		}
+	public void setValue(Long value) {
+		m_value = value;
 	}
 	
 	@Override
-	public void writeToStream(DataOutput out) throws IOException {
+	public void writeToStream(DataOutput out, boolean writeName) throws IOException {
 		
-		super.writeToStream(out);
+		super.writeToStream(out, writeName);
 		
 		out.writeLong(m_value);
 	}

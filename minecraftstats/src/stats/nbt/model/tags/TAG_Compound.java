@@ -19,6 +19,10 @@ public class TAG_Compound extends TAG {
 	public TAG_Compound(String name, TAG parent, Map<String, TAG> value) {
 		super(name, parent);
 		m_value = value;
+		
+		for (TAG tag : m_value.values()) {
+			tag.setParent(this);
+		}
 	}
 	
 	@Override
@@ -31,11 +35,11 @@ public class TAG_Compound extends TAG {
 		return m_value;
 	}
 
-	@Override
-	public void setValue(Object value) {
+	public void setValue(Map<String, TAG> value) {
+		m_value = value;
 		
-		if (value instanceof Map<?, ?>) {
-			m_value = (Map<String, TAG>)value;
+		for (TAG tag : m_value.values()) {
+			tag.setParent(this);
 		}
 	}
 	
@@ -51,13 +55,16 @@ public class TAG_Compound extends TAG {
 	}
 	
 	@Override
-	public void writeToStream(DataOutput out) throws IOException {
+	public void writeToStream(DataOutput out, boolean writeName) throws IOException {
 		
-		super.writeToStream(out);
+		super.writeToStream(out, writeName);
 		
 		for (String val : m_value.keySet()) {
-			m_value.get(val).writeToStream(out);
+			out.writeByte(TAG_Type.fromTAG(m_value.get(val)).getValue());
+			m_value.get(val).writeToStream(out, true);
 		}
+		
+		out.writeByte(TAG_Type.TAG_End.getValue());
 	}
 	
 	@Override

@@ -25,19 +25,14 @@ public class TAG_Int_Array extends TAG {
 		return m_value;
 	}
 
-	@Override
-	public void setValue(Object value) {
-		
-		if (value instanceof Integer[] ||
-			value instanceof int[]) {
-			m_value = (Integer[])value;
-		}
+	public void setValue(Integer[] value) {
+		m_value = value;
 	}
 	
 	@Override
-	public void writeToStream(DataOutput out) throws IOException {
+	public void writeToStream(DataOutput out, boolean writeName) throws IOException {
 		
-		super.writeToStream(out);
+		super.writeToStream(out, writeName);
 		
 		out.writeInt(m_value.length);
 		
