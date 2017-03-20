@@ -24,4 +24,12 @@ public class PlayerDataModel {
 			e.printStackTrace();
 		}
 	}
+	
+	public String getUUID() {
+		return m_UUID;
+	}
+	
+	public String getUserName() {
+		return m_userName;
+	}
 }

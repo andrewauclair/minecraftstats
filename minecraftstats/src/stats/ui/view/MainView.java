@@ -11,6 +11,8 @@ import javax.swing.JList;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import stats.nbt.model.PlayerDataModel;
+import stats.nbt.model.tags.TAG;
 import stats.ui.model.MinecraftSaveData;
 import stats.util.MojangAPI;
 
@@ -35,7 +37,7 @@ public class MainView extends JFrame {
 		setMinimumSize(new Dimension(500, 500));
 		setPreferredSize(getMinimumSize());
 		
-//		add(m_players);
+		add(m_players);
 //		
 		Menubar bar = new Menubar();
 		
@@ -60,9 +62,23 @@ public class MainView extends JFrame {
 		dispose();
 	}
 	
-	public void setLoadedSave(MinecraftSaveData data) {
+	public void setLoadedSave(MinecraftSaveData saveData) {
 		
+		for (PlayerDataModel player : saveData.getPlayers()) {
+			model.addElement(player.getUserName());
+		}
 		
+		TAG root = saveData.getLevelDatNBT().getRoot();
+		
+		TAG data = root.findTAG("Data");
+		
+		TAG version = data.findTAG("Version");
+		
+		TAG levelName = data.findTAG("LevelName");
+		
+		TAG versionName = version.findTAG("Name");
+		
+		setTitle(s_title + " - " + levelName.getValue() + " - " + versionName.getValue());
 	}
 	
 	public static void main(String[] args) {

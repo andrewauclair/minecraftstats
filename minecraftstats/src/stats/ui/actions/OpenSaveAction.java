@@ -1,6 +1,7 @@
 package stats.ui.actions;
 
 import java.awt.event.ActionEvent;
+import java.io.File;
 import java.io.IOException;
 
 import javax.swing.AbstractAction;
@@ -19,10 +20,13 @@ public class OpenSaveAction extends AbstractAction {
 	public void actionPerformed(ActionEvent arg0) {
 
 		JFileChooser chooser = new JFileChooser();
+		String appdata = System.getenv("APPDATA");
+		
+		chooser.setCurrentDirectory(new File(System.getenv("APPDATA") + "/.minecraft/saves"));
 		
 		chooser.showOpenDialog(MainView.s_mainView);
 		try {
-			MinecraftSaveLoader.loadSave(chooser.getSelectedFile());
+			MainView.s_mainView.setLoadedSave(MinecraftSaveLoader.loadSave(chooser.getSelectedFile()));
 		} catch (IOException e) {
 			System.out.println("Error loading save.");
 			e.printStackTrace();

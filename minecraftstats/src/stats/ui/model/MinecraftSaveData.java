@@ -30,6 +30,10 @@ public class MinecraftSaveData {
 		return m_levelDatNBT;
 	}
 	
+	public ArrayList<PlayerDataModel> getPlayers() {
+		return m_players;
+	}
+	
 	public void setLevelDat(File levelDatfile) throws IOException {
 		m_levelDat = levelDatfile;
 		m_levelDatNBT = NBTFileHelper.readNBTFile(levelDatfile);

@@ -31,7 +31,7 @@ public final class NBTFileHelper {
 		type = TAG_Type.valueOf(in.readByte() & 0xFF);
 		TAG newTag = null;
 		
-		System.out.println("Found tag: " + type);
+		//System.out.println("Found tag: " + type);
 		
 		return readTagPayload(in, parent, type, true);
 	}
@@ -110,10 +110,6 @@ public final class NBTFileHelper {
 		TAG root = readNextTag(input, null);
 		
 		System.out.println("Finished reading file.");
-		
-		System.out.println();
-		
-		System.out.println(root.toString());
 		
 		return new NBTFile(file, root, gzipped);
 		
