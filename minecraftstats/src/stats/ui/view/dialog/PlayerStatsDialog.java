@@ -4,23 +4,32 @@ import java.awt.Dimension;
 import java.io.File;
 
 import javax.swing.JDialog;
+import javax.swing.JTabbedPane;
 
+import stats.nbt.model.PlayerDataModel;
 import stats.nbt.utils.PlayerDataLoader;
+import stats.ui.view.panel.player.PlayerGeneralStats;
 import stats.util.MojangAPI;
 
 public class PlayerStatsDialog extends JDialog {
 
-	public PlayerStatsDialog(String player, boolean isUUID) {
+	private PlayerDataModel m_playerData = null;
+	
+	private JTabbedPane m_tabbedPane = new JTabbedPane();
+	
+	private PlayerGeneralStats m_generalStats = new PlayerGeneralStats();
+	
+	public PlayerStatsDialog(PlayerDataModel playerData) {
+	
+		m_playerData = playerData;
 		
-		PlayerDataLoader.LoadPlayerData(new File("1a0857f7-b10c-457b-b136-9643b4f26ab4.dat"));
-		
-		String username = MojangAPI.getUserName("1a0857f7b10c457bb1369643b4f26ab4");
-		
-		System.out.println("username: " + username);
-		
-		setTitle(username);
+		setTitle(playerData.getUserName());
 		
 		setMinimumSize(new Dimension(200, 200));
 		setPreferredSize(getMinimumSize());
+		
+		add(m_tabbedPane);
+		
+		m_tabbedPane.add("General", m_generalStats);
 	}
 }
