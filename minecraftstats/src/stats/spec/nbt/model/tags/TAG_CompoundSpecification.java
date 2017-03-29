@@ -1,4 +1,4 @@
-package stats.nbt.model.tags.test;
+package stats.spec.nbt.model.tags;
 
 // test nested compounds
 // test nested lists
@@ -28,7 +28,7 @@ import stats.nbt.model.tags.TAG_Short;
 import stats.nbt.model.tags.TAG_String;
 import stats.nbt.model.tags.TAG.TAG_Type;
 
-public class TAG_CompoundTest extends TestCase {
+public class TAG_CompoundSpecification extends TestCase {
 
 	private static final String s_name = "Test";
 	

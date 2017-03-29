@@ -1,4 +1,4 @@
-package stats.nbt.model.tags.test;
+package stats.spec.nbt.model.tags;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -18,7 +18,7 @@ import stats.nbt.model.tags.TAG_List;
 
 // need to do some form of full structure test with all of the tags
 
-public class TAG_ListTest extends TestCase {
+public class TAG_ListSpecification extends TestCase {
 
 	private static final String s_name = "Test";
 	

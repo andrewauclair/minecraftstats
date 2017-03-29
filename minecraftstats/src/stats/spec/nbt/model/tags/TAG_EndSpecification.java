@@ -1,4 +1,4 @@
-package stats.nbt.model.tags.test;
+package stats.spec.nbt.model.tags;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -11,7 +11,7 @@ import junit.framework.TestCase;
 import stats.nbt.model.tags.TAG_End;
 import stats.nbt.model.tags.TAG_List;
 
-public class TAG_EndTest extends TestCase {
+public class TAG_EndSpecification extends TestCase {
 
 	public void testTAGEndRead() throws IOException {
 

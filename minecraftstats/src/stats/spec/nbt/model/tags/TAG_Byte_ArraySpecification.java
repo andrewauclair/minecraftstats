@@ -1,4 +1,4 @@
-package stats.nbt.model.tags.test;
+package stats.spec.nbt.model.tags;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -11,7 +11,7 @@ import junit.framework.TestCase;
 import stats.nbt.model.tags.TAG_Byte_Array;
 import stats.nbt.model.tags.TAG_List;
 
-public class TAG_Byte_ArrayTest extends TestCase {
+public class TAG_Byte_ArraySpecification extends TestCase {
 
 	private static final String s_name = "Test";
 	private static final Byte[] s_value = { 1, 2, 3, 4, 5 };

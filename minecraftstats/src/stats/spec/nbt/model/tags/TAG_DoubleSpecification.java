@@ -1,4 +1,4 @@
-package stats.nbt.model.tags.test;
+package stats.spec.nbt.model.tags;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -11,7 +11,7 @@ import junit.framework.TestCase;
 import stats.nbt.model.tags.TAG_Double;
 import stats.nbt.model.tags.TAG_List;
 
-public class TAG_DoubleTest extends TestCase {
+public class TAG_DoubleSpecification extends TestCase {
 
 	private static final String s_name = "Test";
 	private static final Double s_value = 15.0;

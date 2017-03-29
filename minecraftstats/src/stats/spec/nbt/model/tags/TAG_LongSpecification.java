@@ -1,4 +1,4 @@
-package stats.nbt.model.tags.test;
+package stats.spec.nbt.model.tags;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -11,7 +11,7 @@ import junit.framework.TestCase;
 import stats.nbt.model.tags.TAG_List;
 import stats.nbt.model.tags.TAG_Long;
 
-public class TAG_LongTest extends TestCase {
+public class TAG_LongSpecification extends TestCase {
 
 	private static final String s_name = "Test";
 	private static final Long s_value = 15L;
