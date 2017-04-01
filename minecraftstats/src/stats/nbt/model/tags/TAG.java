@@ -67,9 +67,6 @@ public abstract class TAG {
 			else if (tag instanceof TAG_Byte_Array) {
 				return TAG_Byte_Array;
 			}
-			else if (tag instanceof TAG_Byte_Array) {
-				return TAG_Byte_Array;
-			}
 			else if (tag instanceof TAG_String) {
 				return TAG_String;
 			}

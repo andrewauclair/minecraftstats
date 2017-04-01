@@ -7,16 +7,20 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 import junit.framework.TestCase;
 import stats.nbt.model.tags.TAG_List;
 import stats.nbt.model.tags.TAG_String;
 
-public class TAG_StringSpecification extends TestCase {
+public class TAG_StringSpecification {
 
 	private static final String s_name = "Test";
 	private static final String s_value = "String";
 	
-	public void testTAGStringRead() throws IOException {
+	@Test
+	public void ShouldReadAllValuesFromInputStream() throws IOException {
 
 		ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
 		DataOutputStream testOut = new DataOutputStream(expectedStream);
@@ -32,31 +36,41 @@ public class TAG_StringSpecification extends TestCase {
 		TAG_String nbtInt = new TAG_String("", null);
 		nbtInt.readFromStream(nbtIn, true);
 		
-		assertEquals(s_name, nbtInt.getName());
-		assertEquals(s_value, nbtInt.getValue());
+		Assert.assertEquals(s_name, nbtInt.getName());
+		Assert.assertEquals(s_value, nbtInt.getValue());
 	}
 	
-	public void testTAGStringWrite() throws IOException {
+	@Test
+	public void ShouldWriteAllValuesToOutputStream() throws IOException {
+		
+		// Given
+		ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
+		DataOutputStream testOut = new DataOutputStream(expectedStream);
+		
+		testOut.writeShort(s_name.length());
+		testOut.write(s_name.getBytes());
+		testOut.writeShort(s_value.length());
+		testOut.write(s_value.getBytes());
 		
 		TAG_String nbtInt = new TAG_String(s_name, null);
 		nbtInt.setValue(s_value);
 		
+		// When
 		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
 		DataOutputStream nbtOut = new DataOutputStream(byteStream);
 		nbtInt.writeToStream(nbtOut, true);
 		
-		ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
-		DataOutputStream testOut = new DataOutputStream(expectedStream);
+		// Then
+		ByteArrayInputStream inputStream = new ByteArrayInputStream(byteStream.toByteArray());
+		DataInputStream in = new DataInputStream(inputStream);
 		
-		testOut.writeShort(s_name.length());
-		testOut.write(s_name.getBytes());
-		testOut.writeShort(s_value.length());
-		testOut.write(s_value.getBytes());
+		Assert.assertEquals(s_name.length(), in.readShort());
+		//Assert.assertEquals(s_name.getBytes(), in.read());
 		
-		assertTrue("TAG_Int write is incorrect.", Arrays.equals(expectedStream.toByteArray(), byteStream.toByteArray()));
+		Assert.assertTrue("TAG_Int write is incorrect.", Arrays.equals(expectedStream.toByteArray(), byteStream.toByteArray()));
 	}
 	
-	public void testTAGStringEmptyNameRead() throws IOException {
+	public void ShouldReadValuesWithEmptyName() throws IOException {
 		
 		ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
 		DataOutputStream testOut = new DataOutputStream(expectedStream);
@@ -71,11 +85,12 @@ public class TAG_StringSpecification extends TestCase {
 		TAG_String nbtInt = new TAG_String("", null);
 		nbtInt.readFromStream(nbtIn, true);
 		
-		assertEquals("", nbtInt.getName());
-		assertEquals(s_value, nbtInt.getValue());
+		Assert.assertEquals("", nbtInt.getName());
+		Assert.assertEquals(s_value, nbtInt.getValue());
 	}
 
-	public void testTAGStringEmptyNameWrite() throws IOException {
+	@Test
+	public void ShouldWriteValuesWithEmptyName() throws IOException {
 		
 		TAG_String nbtInt = new TAG_String("", null);
 		nbtInt.setValue(s_value);
@@ -91,10 +106,11 @@ public class TAG_StringSpecification extends TestCase {
 		testOut.writeShort(s_value.length());
 		testOut.write(s_value.getBytes());
 		
-		assertTrue("TAG_Int write is incorrect.", Arrays.equals(expectedStream.toByteArray(), byteStream.toByteArray()));
+		Assert.assertTrue("TAG_Int write is incorrect.", Arrays.equals(expectedStream.toByteArray(), byteStream.toByteArray()));
 	}
 	
-	public void testTAGStringEmptyValueRead() throws IOException {
+	@Test
+	public void ShouldReadValueWithEmptyString() throws IOException {
 
 		ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
 		DataOutputStream testOut = new DataOutputStream(expectedStream);
@@ -109,11 +125,12 @@ public class TAG_StringSpecification extends TestCase {
 		TAG_String nbtInt = new TAG_String("", null);
 		nbtInt.readFromStream(nbtIn, true);
 		
-		assertEquals(s_name, nbtInt.getName());
-		assertEquals("", nbtInt.getValue());
+		Assert.assertEquals(s_name, nbtInt.getName());
+		Assert.assertEquals("", nbtInt.getValue());
 	}
 	
-	public void testTAGStringEmptyValueWrite() throws IOException {
+	@Test
+	public void ShouldWriteValueWithEmptyString() throws IOException {
 		
 		TAG_String nbtInt = new TAG_String(s_name, null);
 		nbtInt.setValue("");
@@ -129,31 +146,32 @@ public class TAG_StringSpecification extends TestCase {
 		testOut.write(s_name.getBytes());
 		testOut.writeShort(0);
 		
-		assertTrue("TAG_Int write is incorrect.", Arrays.equals(expectedStream.toByteArray(), byteStream.toByteArray()));
+		Assert.assertTrue("TAG_Int write is incorrect.", Arrays.equals(expectedStream.toByteArray(), byteStream.toByteArray()));
 	}
 	
-	public void testTAGStringValue() {
+	@Test
+	public void ShouldAllowSetAndGetOfStringValue() {
 		
+		// Given
 		TAG_String nbtInt = new TAG_String("", null);
 		
+		// When
 		nbtInt.setValue(s_value);
 		
-		assertEquals(s_value, nbtInt.getValue());
+		// Then
+		Assert.assertEquals(s_value, nbtInt.getValue());
 	}
 	
-	public void testTAGStringConstructor() {
+	@Test
+	public void ShouldConstructObjectWithNameParentAndValue() {
 		
-		TAG_String nbtInt = new TAG_String(s_name, null, s_value);
-		
-		assertEquals(s_name, nbtInt.getName());
-		assertEquals(s_value, nbtInt.getValue());
-	}
-	
-	public void testTAGStringParent() {
-		
+		// Given
 		TAG_List nbtList = new TAG_List("", null);
-		TAG_String nbtInt = new TAG_String(s_name, nbtList);
+		TAG_String nbtInt = new TAG_String(s_name, nbtList, s_value);
 		
-		assertEquals(nbtList, nbtInt.getParent());
+		// Then
+		Assert.assertEquals(s_name, nbtInt.getName());
+		Assert.assertEquals(nbtList, nbtInt.getParent());
+		Assert.assertEquals(s_value, nbtInt.getValue());
 	}
 }
