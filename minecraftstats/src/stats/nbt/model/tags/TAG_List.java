@@ -13,12 +13,12 @@ public class TAG_List extends TAG {
 	private ArrayList<TAG> m_value = new ArrayList<>();
 	private TAG_Type m_type = null;
 	
-	public TAG_List(String name, TAG parent) {
-		super(name, parent);
+	public TAG_List(String name) {
+		super(name);
 	}
 	
-	public TAG_List(String name, TAG parent, List<TAG> value) {
-		super(name, parent);
+	public TAG_List(String name, List<TAG> value) {
+		super(name);
 		
 		// TODO only accept tags that match the first in the list
 		if (value.size() > 0) {

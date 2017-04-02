@@ -36,7 +36,7 @@ public class TAG_ListSpecification extends TestCase {
 		ByteArrayInputStream byteStream = new ByteArrayInputStream(expectedStream.toByteArray());
 		DataInputStream nbtIn = new DataInputStream(byteStream);
 		
-		TAG_List nbtTAG = new TAG_List("", null);
+		TAG_List nbtTAG = new TAG_List("");
 		nbtTAG.readFromStream(nbtIn, true);
 		
 		assertEquals(s_name, nbtTAG.getName());
@@ -45,9 +45,9 @@ public class TAG_ListSpecification extends TestCase {
 	
 	public void testTAGListWrite() throws IOException {
 		
-		TAG_List nbtTAG = new TAG_List(s_name, null);
+		TAG_List nbtTAG = new TAG_List(s_name);
 		ArrayList<TAG> value = new ArrayList<>();
-		value.add(new TAG_Byte("", null, (byte) 0));
+		value.add(new TAG_Byte("", (byte) 0));
 	
 		nbtTAG.setValue(value);
 		

@@ -8,12 +8,12 @@ public class TAG_Double extends TAG {
 
 	private Double m_value = null;
 	
-	public TAG_Double(String name, TAG parent) {
-		super(name, parent);
+	public TAG_Double(String name) {
+		super(name);
 	}
 	
-	public TAG_Double(String name, TAG parent, Double value) {
-		super(name, parent);
+	public TAG_Double(String name, Double value) {
+		super(name);
 		m_value = value;
 	}
 

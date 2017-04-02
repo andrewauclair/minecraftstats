@@ -8,12 +8,12 @@ public class TAG_Float extends TAG {
 
 	private Float m_value = null;
 	
-	public TAG_Float(String name, TAG parent) {
-		super(name, parent);
+	public TAG_Float(String name) {
+		super(name);
 	}
 	
-	public TAG_Float(String name, TAG parent, Float value) {
-		super(name, parent);
+	public TAG_Float(String name, Float value) {
+		super(name);
 		m_value = value;
 	}
 

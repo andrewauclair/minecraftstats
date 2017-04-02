@@ -44,7 +44,7 @@ public class TAG_CompoundSpecification extends TestCase {
 		ByteArrayInputStream byteStream = new ByteArrayInputStream(expectedStream.toByteArray());
 		DataInputStream nbtIn = new DataInputStream(byteStream);
 		
-		TAG_Compound nbtTAG = new TAG_Compound("", null);
+		TAG_Compound nbtTAG = new TAG_Compound("");
 		nbtTAG.readFromStream(nbtIn, true);
 		
 		assertEquals(s_name, nbtTAG.getName());
@@ -52,9 +52,9 @@ public class TAG_CompoundSpecification extends TestCase {
 
 	public void testTAGCompoundWrite_TAGByte() throws IOException {
 		
-		TAG_Compound nbtTAG = new TAG_Compound(s_name, null);
+		TAG_Compound nbtTAG = new TAG_Compound(s_name);
 		Map<String, TAG> value = new HashMap<String, TAG>();
-		value.put("TAG_Byte", new TAG_Byte("TAG_Byte", nbtTAG, (byte) 0));
+		value.put("TAG_Byte", new TAG_Byte("TAG_Byte", (byte) 0));
 		
 		nbtTAG.setValue(value);
 		
@@ -83,9 +83,9 @@ public class TAG_CompoundSpecification extends TestCase {
 	
 	public void testTAGCompoundWrite_TAGShort() throws IOException {
 		
-		TAG_Compound nbtTAG = new TAG_Compound(s_name, null);
+		TAG_Compound nbtTAG = new TAG_Compound(s_name);
 		Map<String, TAG> value = new HashMap<String, TAG>();
-		value.put("TAG_Short", new TAG_Short("TAG_Short", nbtTAG, (short) 0));
+		value.put("TAG_Short", new TAG_Short("TAG_Short", (short) 0));
 		
 		nbtTAG.setValue(value);
 		
@@ -114,9 +114,9 @@ public class TAG_CompoundSpecification extends TestCase {
 	
 	public void testTAGCompoundWrite_TAGInt() throws IOException {
 		
-		TAG_Compound nbtTAG = new TAG_Compound(s_name, null);
+		TAG_Compound nbtTAG = new TAG_Compound(s_name);
 		Map<String, TAG> value = new HashMap<String, TAG>();
-		value.put("TAG_Int", new TAG_Int("TAG_Int", nbtTAG, 0));
+		value.put("TAG_Int", new TAG_Int("TAG_Int", 0));
 		
 		nbtTAG.setValue(value);
 		
@@ -145,9 +145,9 @@ public class TAG_CompoundSpecification extends TestCase {
 
 	public void testTAGCompoundWrite_TAGLong() throws IOException {
 	
-		TAG_Compound nbtTAG = new TAG_Compound(s_name, null);
+		TAG_Compound nbtTAG = new TAG_Compound(s_name);
 		Map<String, TAG> value = new HashMap<String, TAG>();
-		value.put("TAG_Long", new TAG_Long("TAG_Long", nbtTAG, (long) 0));
+		value.put("TAG_Long", new TAG_Long("TAG_Long", (long) 0));
 		
 		nbtTAG.setValue(value);
 		
@@ -176,9 +176,9 @@ public class TAG_CompoundSpecification extends TestCase {
 	
 	public void testTAGCompoundWrite_TAGFloat() throws IOException {
 		
-		TAG_Compound nbtTAG = new TAG_Compound(s_name, null);
+		TAG_Compound nbtTAG = new TAG_Compound(s_name);
 		Map<String, TAG> value = new HashMap<String, TAG>();
-		value.put("TAG_Float", new TAG_Float("TAG_Float", nbtTAG, 0f));
+		value.put("TAG_Float", new TAG_Float("TAG_Float", 0f));
 		
 		nbtTAG.setValue(value);
 		
@@ -207,9 +207,9 @@ public class TAG_CompoundSpecification extends TestCase {
 	
 	public void testTAGCompoundWrite_TAGDouble() throws IOException {
 		
-		TAG_Compound nbtTAG = new TAG_Compound(s_name, null);
+		TAG_Compound nbtTAG = new TAG_Compound(s_name);
 		Map<String, TAG> value = new HashMap<String, TAG>();
-		value.put("TAG_Double", new TAG_Double("TAG_Double", nbtTAG, 0.0));
+		value.put("TAG_Double", new TAG_Double("TAG_Double", 0.0));
 		
 		nbtTAG.setValue(value);
 		
@@ -238,9 +238,9 @@ public class TAG_CompoundSpecification extends TestCase {
 	
 	public void testTAGCompoundWrite_TAGByteArray() throws IOException {
 		
-		TAG_Compound nbtTAG = new TAG_Compound(s_name, null);
+		TAG_Compound nbtTAG = new TAG_Compound(s_name);
 		Map<String, TAG> value = new HashMap<String, TAG>();
-		value.put("TAG_Byte_Array", new TAG_Byte_Array("TAG_Byte_Array", nbtTAG, new Byte[] {}));
+		value.put("TAG_Byte_Array", new TAG_Byte_Array("TAG_Byte_Array", new Byte[] {}));
 		
 		nbtTAG.setValue(value);
 		
@@ -269,9 +269,9 @@ public class TAG_CompoundSpecification extends TestCase {
 	
 	public void testTAGCompoundWrite_TAGString() throws IOException {
 		
-		TAG_Compound nbtTAG = new TAG_Compound(s_name, null);
+		TAG_Compound nbtTAG = new TAG_Compound(s_name);
 		Map<String, TAG> value = new HashMap<String, TAG>();
-		value.put("TAG_String", new TAG_String("TAG_String", nbtTAG, s_name));
+		value.put("TAG_String", new TAG_String("TAG_String", s_name));
 		
 		nbtTAG.setValue(value);
 		
@@ -301,9 +301,9 @@ public class TAG_CompoundSpecification extends TestCase {
 	
 	public void testTAGCompoundWrite_TAGList() throws IOException {
 		
-		TAG_Compound nbtTAG = new TAG_Compound(s_name, null);
+		TAG_Compound nbtTAG = new TAG_Compound(s_name);
 		Map<String, TAG> value = new HashMap<String, TAG>();
-		value.put("TAG_List", new TAG_List("TAG_List", nbtTAG));
+		value.put("TAG_List", new TAG_List("TAG_List"));
 		
 		nbtTAG.setValue(value);
 		
@@ -333,9 +333,9 @@ public class TAG_CompoundSpecification extends TestCase {
 	
 	public void testTAGCompoundWrite_TAGCompound() throws IOException {
 		
-		TAG_Compound nbtTAG = new TAG_Compound(s_name, null);
+		TAG_Compound nbtTAG = new TAG_Compound(s_name);
 		Map<String, TAG> value = new HashMap<String, TAG>();
-		value.put("TAG_Compound", new TAG_Compound("TAG_Compound", nbtTAG));
+		value.put("TAG_Compound", new TAG_Compound("TAG_Compound"));
 		
 		nbtTAG.setValue(value);
 		
@@ -364,9 +364,9 @@ public class TAG_CompoundSpecification extends TestCase {
 	
 	public void testTAGCompoundWrite_TAGIntArray() throws IOException {
 		
-		TAG_Compound nbtTAG = new TAG_Compound(s_name, null);
+		TAG_Compound nbtTAG = new TAG_Compound(s_name);
 		Map<String, TAG> value = new HashMap<String, TAG>();
-		value.put("TAG_Int_Array", new TAG_Int_Array("TAG_Int_Array", nbtTAG, new Integer[] {}));
+		value.put("TAG_Int_Array", new TAG_Int_Array("TAG_Int_Array", new Integer[] {}));
 		
 		nbtTAG.setValue(value);
 		
@@ -431,19 +431,19 @@ public class TAG_CompoundSpecification extends TestCase {
 	
 	public void testTAGCompoundValue() {
 		
-		TAG_Compound nbtTAG = new TAG_Compound(s_name, null);
+		TAG_Compound nbtTAG = new TAG_Compound(s_name);
 		Map<String, TAG> value = new HashMap<String, TAG>();
-		value.put("TAG_Byte", new TAG_Byte("TAG_Byte", null));
-		value.put("TAG_Short", new TAG_Short("TAG_Short", null));
-		value.put("TAG_Int", new TAG_Int("TAG_Int", null));
-		value.put("TAG_Long", new TAG_Long("TAG_Long", null));
-		value.put("TAG_Float", new TAG_Float("TAG_Float", null));
+		value.put("TAG_Byte", new TAG_Byte("TAG_Byte", (byte)0));
+		value.put("TAG_Short", new TAG_Short("TAG_Short"));
+		value.put("TAG_Int", new TAG_Int("TAG_Int"));
+		value.put("TAG_Long", new TAG_Long("TAG_Long"));
+		value.put("TAG_Float", new TAG_Float("TAG_Float"));
 		value.put("TAG_Double", new TAG_Double("TAG_Double", null));
-		value.put("TAG_Byte_Array", new TAG_Byte_Array("TAG_Byte_Array", null));
-		value.put("TAG_String", new TAG_String("TAG_String", null));
-		value.put("TAG_List", new TAG_List("TAG_List", null));
-		value.put("TAG_Compound", new TAG_Compound("TAG_Compound", null));
-		value.put("TAG_Int_Array", new TAG_Int_Array("TAG_Int_Array", null));
+		value.put("TAG_Byte_Array", new TAG_Byte_Array("TAG_Byte_Array"));
+		value.put("TAG_String", new TAG_String("TAG_String"));
+		value.put("TAG_List", new TAG_List("TAG_List"));
+		value.put("TAG_Compound", new TAG_Compound("TAG_Compound"));
+		value.put("TAG_Int_Array", new TAG_Int_Array("TAG_Int_Array"));
 		
 		nbtTAG.setValue(value);
 		
@@ -461,35 +461,35 @@ public class TAG_CompoundSpecification extends TestCase {
 		assertEquals("TAG_Compound", nbtTAG.findTAG("TAG_Compound").getName());
 		assertEquals("TAG_Int_Array", nbtTAG.findTAG("TAG_Int_Array").getName());
 		
-		assertTrue(nbtTAG.findTAG("TAG_Byte").getParent() == nbtTAG);
-		assertTrue(nbtTAG.findTAG("TAG_Short").getParent() == nbtTAG);
-		assertTrue(nbtTAG.findTAG("TAG_Int").getParent() == nbtTAG);
-		assertTrue(nbtTAG.findTAG("TAG_Long").getParent() == nbtTAG);
-		assertTrue(nbtTAG.findTAG("TAG_Float").getParent() == nbtTAG);
-		assertTrue(nbtTAG.findTAG("TAG_Double").getParent() == nbtTAG);
-		assertTrue(nbtTAG.findTAG("TAG_Byte_Array").getParent() == nbtTAG);
-		assertTrue(nbtTAG.findTAG("TAG_String").getParent() == nbtTAG);
-		assertTrue(nbtTAG.findTAG("TAG_List").getParent() == nbtTAG);
-		assertTrue(nbtTAG.findTAG("TAG_Compound").getParent() == nbtTAG);
-		assertTrue(nbtTAG.findTAG("TAG_Int_Array").getParent() == nbtTAG);
+//		assertTrue(nbtTAG.findTAG("TAG_Byte").getParent() == nbtTAG);
+//		assertTrue(nbtTAG.findTAG("TAG_Short").getParent() == nbtTAG);
+//		assertTrue(nbtTAG.findTAG("TAG_Int").getParent() == nbtTAG);
+//		assertTrue(nbtTAG.findTAG("TAG_Long").getParent() == nbtTAG);
+//		assertTrue(nbtTAG.findTAG("TAG_Float").getParent() == nbtTAG);
+//		assertTrue(nbtTAG.findTAG("TAG_Double").getParent() == nbtTAG);
+//		assertTrue(nbtTAG.findTAG("TAG_Byte_Array").getParent() == nbtTAG);
+//		assertTrue(nbtTAG.findTAG("TAG_String").getParent() == nbtTAG);
+//		assertTrue(nbtTAG.findTAG("TAG_List").getParent() == nbtTAG);
+//		assertTrue(nbtTAG.findTAG("TAG_Compound").getParent() == nbtTAG);
+//		assertTrue(nbtTAG.findTAG("TAG_Int_Array").getParent() == nbtTAG);
 	}
 	
 	public void testTAGCompoundConstructor() {
 		
 		Map<String, TAG> value = new HashMap<String, TAG>();
-		value.put("TAG_Byte", new TAG_Byte("TAG_Byte", null));
-		value.put("TAG_Short", new TAG_Short("TAG_Short", null));
-		value.put("TAG_Int", new TAG_Int("TAG_Int", null));
-		value.put("TAG_Long", new TAG_Long("TAG_Long", null));
-		value.put("TAG_Float", new TAG_Float("TAG_Float", null));
+		value.put("TAG_Byte", new TAG_Byte("TAG_Byte", (byte)0));
+		value.put("TAG_Short", new TAG_Short("TAG_Short"));
+		value.put("TAG_Int", new TAG_Int("TAG_Int"));
+		value.put("TAG_Long", new TAG_Long("TAG_Long"));
+		value.put("TAG_Float", new TAG_Float("TAG_Float"));
 		value.put("TAG_Double", new TAG_Double("TAG_Double", null));
-		value.put("TAG_Byte_Array", new TAG_Byte_Array("TAG_Byte_Array", null));
-		value.put("TAG_String", new TAG_String("TAG_String", null));
-		value.put("TAG_List", new TAG_List("TAG_List", null));
-		value.put("TAG_Compound", new TAG_Compound("TAG_Compound", null));
-		value.put("TAG_Int_Array", new TAG_Int_Array("TAG_Int_Array", null));
+		value.put("TAG_Byte_Array", new TAG_Byte_Array("TAG_Byte_Array"));
+		value.put("TAG_String", new TAG_String("TAG_String"));
+		value.put("TAG_List", new TAG_List("TAG_List"));
+		value.put("TAG_Compound", new TAG_Compound("TAG_Compound"));
+		value.put("TAG_Int_Array", new TAG_Int_Array("TAG_Int_Array"));
 		
-		TAG_Compound nbtTAG = new TAG_Compound(s_name, null, value);
+		TAG_Compound nbtTAG = new TAG_Compound(s_name, value);
 		
 		assertEquals(s_name, nbtTAG.getName());
 		
@@ -505,31 +505,23 @@ public class TAG_CompoundSpecification extends TestCase {
 		assertEquals("TAG_Compound", nbtTAG.findTAG("TAG_Compound").getName());
 		assertEquals("TAG_Int_Array", nbtTAG.findTAG("TAG_Int_Array").getName());
 		
-		assertTrue(nbtTAG.findTAG("TAG_Byte").getParent() == nbtTAG);
-		assertTrue(nbtTAG.findTAG("TAG_Short").getParent() == nbtTAG);
-		assertTrue(nbtTAG.findTAG("TAG_Int").getParent() == nbtTAG);
-		assertTrue(nbtTAG.findTAG("TAG_Long").getParent() == nbtTAG);
-		assertTrue(nbtTAG.findTAG("TAG_Float").getParent() == nbtTAG);
-		assertTrue(nbtTAG.findTAG("TAG_Double").getParent() == nbtTAG);
-		assertTrue(nbtTAG.findTAG("TAG_Byte_Array").getParent() == nbtTAG);
-		assertTrue(nbtTAG.findTAG("TAG_String").getParent() == nbtTAG);
-		assertTrue(nbtTAG.findTAG("TAG_List").getParent() == nbtTAG);
-		assertTrue(nbtTAG.findTAG("TAG_Compound").getParent() == nbtTAG);
-		assertTrue(nbtTAG.findTAG("TAG_Int_Array").getParent() == nbtTAG);
+//		assertTrue(nbtTAG.findTAG("TAG_Byte").getParent() == nbtTAG);
+//		assertTrue(nbtTAG.findTAG("TAG_Short").getParent() == nbtTAG);
+//		assertTrue(nbtTAG.findTAG("TAG_Int").getParent() == nbtTAG);
+//		assertTrue(nbtTAG.findTAG("TAG_Long").getParent() == nbtTAG);
+//		assertTrue(nbtTAG.findTAG("TAG_Float").getParent() == nbtTAG);
+//		assertTrue(nbtTAG.findTAG("TAG_Double").getParent() == nbtTAG);
+//		assertTrue(nbtTAG.findTAG("TAG_Byte_Array").getParent() == nbtTAG);
+//		assertTrue(nbtTAG.findTAG("TAG_String").getParent() == nbtTAG);
+//		assertTrue(nbtTAG.findTAG("TAG_List").getParent() == nbtTAG);
+//		assertTrue(nbtTAG.findTAG("TAG_Compound").getParent() == nbtTAG);
+//		assertTrue(nbtTAG.findTAG("TAG_Int_Array").getParent() == nbtTAG);
 	}
 	
 	public void testTAGCompoundTAGNotFound() {
 		
-		TAG_Compound nbtTAG = new TAG_Compound("", null);
+		TAG_Compound nbtTAG = new TAG_Compound("");
 		
 		assertNull(nbtTAG.findTAG("TAG"));
-	}
-	
-	public void testTAGCompoundParent() {
-		
-		TAG_List nbtList = new TAG_List("", null);
-		TAG_Compound nbtTAG = new TAG_Compound(s_name, nbtList);
-		
-		assertEquals(nbtList, nbtTAG.getParent());
 	}
 }

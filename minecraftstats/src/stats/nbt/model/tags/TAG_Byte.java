@@ -8,12 +8,12 @@ public class TAG_Byte extends TAG {
 
 	private Byte m_value = null;
 	
-	public TAG_Byte(String name, TAG parent) {
-		super(name, parent);
+	public TAG_Byte(String name) {
+		super(name);
 	}
 	
-	public TAG_Byte(String name, TAG parent, Byte value) {
-		super(name, parent);
+	public TAG_Byte(String name, Byte value) {
+		super(name);
 		m_value = value;
 	}
 

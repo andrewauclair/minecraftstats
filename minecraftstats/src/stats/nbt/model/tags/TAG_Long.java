@@ -8,12 +8,12 @@ public class TAG_Long extends TAG {
 
 	private Long m_value = null;
 	
-	public TAG_Long(String name, TAG parent) {
-		super(name, parent);
+	public TAG_Long(String name) {
+		super(name);
 	}
 
-	public TAG_Long(String name, TAG parent, Long value) {
-		super(name, parent);
+	public TAG_Long(String name, Long value) {
+		super(name);
 		m_value = value;
 	}
 

@@ -8,12 +8,12 @@ public class TAG_Short extends TAG {
 
 	private Short m_value = null;
 	
-	public TAG_Short(String name, TAG parent) {
-		super(name, parent);
+	public TAG_Short(String name) {
+		super(name);
 	}
 
-	public TAG_Short(String name, TAG parent, Short value) {
-		super(name, parent);
+	public TAG_Short(String name, Short value) {
+		super(name);
 		m_value = value;
 	}
 

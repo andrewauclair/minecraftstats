@@ -67,9 +67,6 @@ public abstract class TAG {
 			else if (tag instanceof TAG_Byte_Array) {
 				return TAG_Byte_Array;
 			}
-			else if (tag instanceof TAG_Byte_Array) {
-				return TAG_Byte_Array;
-			}
 			else if (tag instanceof TAG_String) {
 				return TAG_String;
 			}
@@ -87,23 +84,13 @@ public abstract class TAG {
 	}
 	
 	protected String m_name = "";
-	protected TAG m_parent = null;
 	
-	public TAG(String name, TAG parent) {
+	public TAG(String name) {
 		m_name = name;
-		m_parent = parent;
 	}
 	
 	public String getName() {
 		return m_name;
-	}
-	
-	public TAG getParent() {
-		return m_parent;
-	}
-	
-	public void setParent(TAG parent) {
-		m_parent = parent;
 	}
 	
 	public TAG findTAG(String name) {
@@ -120,25 +107,26 @@ public abstract class TAG {
 	public void writeToStream(DataOutput out, boolean writeName) throws IOException {
 		
 		if (writeName) {
-			if (m_name != null && !m_name.isEmpty()) {
-				out.writeShort(m_name.length());
-				out.write(m_name.getBytes());
-			}
-			else {
-				out.writeShort(0);
-			}
+			writeNameToStream(out);
 		}
 	}
 	
 	public void readFromStream(DataInput in, boolean readName) throws IOException {
 		
 		if (readName) {
-			int nameLength = in.readShort() & 0xFFFF;
-			if (nameLength > 0) {
-				byte[] nameBytes = new byte[nameLength];
-				in.readFully(nameBytes);
-				m_name = new String(nameBytes, "UTF-8");
-			}
+			readNameFromStream(in);
 		}
+	}
+	
+	protected void writeNameToStream(DataOutput out) throws IOException {
+		out.writeShort(m_name.length());
+		out.write(m_name.getBytes());
+	}
+	
+	protected void readNameFromStream(DataInput in) throws IOException {
+		int nameLength = in.readShort() & 0xFFFF;
+		byte[] nameBytes = new byte[nameLength];
+		in.readFully(nameBytes);
+		m_name = new String(nameBytes, "UTF-8");
 	}
 }

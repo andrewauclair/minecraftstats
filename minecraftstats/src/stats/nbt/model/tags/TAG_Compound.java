@@ -12,17 +12,13 @@ public class TAG_Compound extends TAG {
 
 	private Map<String, TAG> m_value = new HashMap<String, TAG>();
 	
-	public TAG_Compound(String name, TAG parent) {
-		super(name, parent);
+	public TAG_Compound(String name) {
+		super(name);
 	}
 
-	public TAG_Compound(String name, TAG parent, Map<String, TAG> value) {
-		super(name, parent);
+	public TAG_Compound(String name, Map<String, TAG> value) {
+		super(name);
 		m_value = value;
-		
-		for (TAG tag : m_value.values()) {
-			tag.setParent(this);
-		}
 	}
 	
 	@Override
@@ -37,10 +33,6 @@ public class TAG_Compound extends TAG {
 
 	public void setValue(Map<String, TAG> value) {
 		m_value = value;
-		
-		for (TAG tag : m_value.values()) {
-			tag.setParent(this);
-		}
 	}
 	
 	@Override

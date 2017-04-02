@@ -11,12 +11,12 @@ public class TAG_Int_Array extends TAG {
 
 	private Integer[] m_value = null;
 	
-	public TAG_Int_Array(String name, TAG parent) {
-		super(name, parent);
+	public TAG_Int_Array(String name) {
+		super(name);
 	}
 
-	public TAG_Int_Array(String name, TAG parent, Integer[] value) {
-		super(name, parent);
+	public TAG_Int_Array(String name, Integer[] value) {
+		super(name);
 		m_value = value;
 	}
 	

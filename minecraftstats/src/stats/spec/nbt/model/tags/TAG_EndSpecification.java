@@ -1,49 +1,32 @@
 package stats.spec.nbt.model.tags;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
+import org.junit.Assert;
+import org.junit.Test;
 
-import junit.framework.TestCase;
 import stats.nbt.model.tags.TAG_End;
-import stats.nbt.model.tags.TAG_List;
 
-public class TAG_EndSpecification extends TestCase {
+public class TAG_EndSpecification extends TAGCommonSpecification {
 
-	public void testTAGEndRead() throws IOException {
-
-		ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
-		DataOutputStream testOut = new DataOutputStream(expectedStream);
-		
-		ByteArrayInputStream byteStream = new ByteArrayInputStream(expectedStream.toByteArray());
-		DataInputStream nbtIn = new DataInputStream(byteStream);
-		
-		TAG_End nbtTAG = new TAG_End(null);
-		nbtTAG.readFromStream(nbtIn, true);
-	}
+	private TAG_End tagEnd = new TAG_End();
 	
-	public void testTAGEndWrite() throws IOException {
+	@Test
+	public void ShouldReadNothingFromStream() throws IOException {
+		int size = inStream.available();
+		tagEnd.readFromStream(inStream, true);
 		
-		TAG_End nbtTAG = new TAG_End(null);
-		
-		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-		DataOutputStream nbtOut = new DataOutputStream(byteStream);
-		nbtTAG.writeToStream(nbtOut, true);
-		
-		ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
-		DataOutputStream testOut = new DataOutputStream(expectedStream);
-		
-		assertTrue("TAG_End write is incorrect.", Arrays.equals(expectedStream.toByteArray(), byteStream.toByteArray()));
+		Assert.assertEquals(size, inStream.available());
 	}
-	
-	public void testTAGEndParent() {
+
+	@Test
+	public void ShouldWriteNothingToStream() throws IOException {
+		int size = outStream.size();
+		tagEnd.writeToStream(outStream, true);
 		
-		TAG_List nbtList = new TAG_List("", null);
-		TAG_End nbtTAG = new TAG_End(nbtList);
-		
-		assertEquals(nbtList, nbtTAG.getParent());
+		Assert.assertEquals(size, outStream.size());
+	}
+
+	@Override
+	public void writeValue() throws IOException {
 	}
 }

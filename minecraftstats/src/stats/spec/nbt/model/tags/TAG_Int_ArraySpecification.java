@@ -31,7 +31,7 @@ public class TAG_Int_ArraySpecification extends TestCase {
 		ByteArrayInputStream byteStream = new ByteArrayInputStream(expectedStream.toByteArray());
 		DataInputStream nbtIn = new DataInputStream(byteStream);
 		
-		TAG_Int_Array nbtTAG = new TAG_Int_Array("", null);
+		TAG_Int_Array nbtTAG = new TAG_Int_Array("");
 		nbtTAG.readFromStream(nbtIn, true);
 		
 		assertEquals(s_name, nbtTAG.getName());
@@ -40,7 +40,7 @@ public class TAG_Int_ArraySpecification extends TestCase {
 	
 	public void testTAGIntArrayWrite() throws IOException {
 		
-		TAG_Int_Array nbtTAG = new TAG_Int_Array(s_name, null);
+		TAG_Int_Array nbtTAG = new TAG_Int_Array(s_name);
 		nbtTAG.setValue(s_value);
 		
 		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
@@ -74,7 +74,7 @@ public class TAG_Int_ArraySpecification extends TestCase {
 		ByteArrayInputStream byteStream = new ByteArrayInputStream(expectedStream.toByteArray());
 		DataInputStream nbtIn = new DataInputStream(byteStream);
 		
-		TAG_Int_Array nbtTAG = new TAG_Int_Array("", null);
+		TAG_Int_Array nbtTAG = new TAG_Int_Array("");
 		nbtTAG.readFromStream(nbtIn, true);
 		
 		assertEquals("", nbtTAG.getName());
@@ -83,7 +83,7 @@ public class TAG_Int_ArraySpecification extends TestCase {
 
 	public void testTAGIntArrayEmptyNameWrite() throws IOException {
 		
-		TAG_Int_Array nbtTAG = new TAG_Int_Array("", null);
+		TAG_Int_Array nbtTAG = new TAG_Int_Array("");
 		nbtTAG.setValue(s_value);
 		
 		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
@@ -104,7 +104,7 @@ public class TAG_Int_ArraySpecification extends TestCase {
 	
 	public void testTAGIntArrayValue() {
 		
-		TAG_Int_Array nbtTAG = new TAG_Int_Array("", null);
+		TAG_Int_Array nbtTAG = new TAG_Int_Array("");
 		
 		nbtTAG.setValue(s_value);
 		
@@ -113,17 +113,9 @@ public class TAG_Int_ArraySpecification extends TestCase {
 	
 	public void testTAGIntArrayConstructor() {
 		
-		TAG_Int_Array nbtTAG = new TAG_Int_Array(s_name, null, s_value);
+		TAG_Int_Array nbtTAG = new TAG_Int_Array(s_name, s_value);
 		
 		assertEquals(s_name, nbtTAG.getName());
 		assertEquals(s_value, nbtTAG.getValue());
-	}
-	
-	public void testTAGIntArrayParent() {
-		
-		TAG_List nbtList = new TAG_List("", null);
-		TAG_Int_Array nbtTAG = new TAG_Int_Array(s_name, nbtList);
-		
-		assertEquals(nbtList, nbtTAG.getParent());
 	}
 }

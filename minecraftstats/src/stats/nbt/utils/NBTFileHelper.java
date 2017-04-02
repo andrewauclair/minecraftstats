@@ -42,40 +42,40 @@ public final class NBTFileHelper {
 		
 		switch (type) {
 		case TAG_End:
-			newTag = new TAG_End(parent);
+			newTag = new TAG_End();
 			break;
 		case TAG_Byte:
-			newTag = new TAG_Byte("", parent);
+			newTag = new TAG_Byte("");
 			break;
 		case TAG_Short:
-			newTag = new TAG_Short("", parent);
+			newTag = new TAG_Short("");
 			break;
 		case TAG_Int:
-			newTag = new TAG_Int("", parent);
+			newTag = new TAG_Int("");
 			break;
 		case TAG_Long:
-			newTag = new TAG_Long("", parent);
+			newTag = new TAG_Long("");
 			break;
 		case TAG_Float:
-			newTag = new TAG_Float("", parent);
+			newTag = new TAG_Float("");
 			break;
 		case TAG_Double:
-			newTag = new TAG_Double("", parent);
+			newTag = new TAG_Double("");
 			break;
 		case TAG_Byte_Array:
-			newTag = new TAG_Byte_Array("", parent);
+			newTag = new TAG_Byte_Array("");
 			break;
 		case TAG_String:
-			newTag = new TAG_String("", parent);
+			newTag = new TAG_String("");
 			break;
 		case TAG_List:
-			newTag = new TAG_List("", parent);
+			newTag = new TAG_List("");
 			break;
 		case TAG_Compound:
-			newTag = new TAG_Compound("", parent);
+			newTag = new TAG_Compound("");
 			break;
 		case TAG_Int_Array:
-			newTag = new TAG_Int_Array("", parent);
+			newTag = new TAG_Int_Array("");
 			break;
 		}
 

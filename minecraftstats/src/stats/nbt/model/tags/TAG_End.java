@@ -6,8 +6,8 @@ import java.io.IOException;
 
 public class TAG_End extends TAG {
 
-	public TAG_End(TAG parent) {
-		super("", parent);
+	public TAG_End() {
+		super("");
 	}
 
 	@Override
