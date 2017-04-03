@@ -13,6 +13,13 @@ public class TAG_ByteSpecification extends TAGCommonSpecification {
 	private TAG_Byte tagByte = new TAG_Byte("", (byte)0);
 	
 	@Test
+	public void ShouldCreateObjectWithName() {
+		tagByte = new TAG_Byte(name);
+		
+		Assert.assertEquals(name, tagByte.getName());
+	}
+	
+	@Test
 	public void ShouldCreateObjectWithNameAndValue() {
 		tagByte = new TAG_Byte(name, s_value);
 		

@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class TAG_Byte_Array extends TAG {
 
-	private Byte[] m_value = null;
+	private Byte[] m_value = new Byte[0];
 	
 	public TAG_Byte_Array(String name) {
 		super(name);

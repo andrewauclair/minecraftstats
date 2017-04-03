@@ -13,6 +13,13 @@ public class TAG_DoubleSpecification extends TAGCommonSpecification {
 	private TAG_Double tagDouble = new TAG_Double("", 0.0);
 	
 	@Test
+	public void ShouldCreateObjectWithName() {
+		tagDouble = new TAG_Double(name);
+		
+		Assert.assertEquals(name, tagDouble.getName());
+	}
+	
+	@Test
 	public void ShouldCreateObjectWithNameAndValue() {
 		tagDouble = new TAG_Double(name, s_value);
 		

@@ -13,6 +13,13 @@ public class TAG_FloatSpecification extends TAGCommonSpecification {
 	private TAG_Float tagFloat = new TAG_Float("", 0.0f);
 	
 	@Test
+	public void ShouldCreateObjectWithName() {
+		tagFloat = new TAG_Float(name);
+		
+		Assert.assertEquals(name, tagFloat.getName());
+	}
+	
+	@Test
 	public void ShouldCreateObjectWithNameAndValue() {
 		tagFloat = new TAG_Float(name, s_value);
 		

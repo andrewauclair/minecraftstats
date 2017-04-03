@@ -1,5 +1,7 @@
 package stats.spec.nbt.model.tags;
 
+import static org.junit.Assert.*;
+
 // test nested compounds
 // test nested lists
 // test with each type of tag
@@ -13,7 +15,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import junit.framework.TestCase;
+import org.junit.Test;
+
 import stats.nbt.model.tags.TAG;
 import stats.nbt.model.tags.TAG_Byte;
 import stats.nbt.model.tags.TAG_Byte_Array;
@@ -26,12 +29,21 @@ import stats.nbt.model.tags.TAG_List;
 import stats.nbt.model.tags.TAG_Long;
 import stats.nbt.model.tags.TAG_Short;
 import stats.nbt.model.tags.TAG_String;
-import stats.nbt.model.tags.TAG.TAG_Type;
 
-public class TAG_CompoundSpecification extends TestCase {
+public class TAG_CompoundSpecification extends TAGCommonSpecification {
 
 	private static final String s_name = "Test";
 	
+	private TAG_Compound tagCompound = new TAG_Compound("");
+	
+	@Test
+	public void ShouldCreateObjectWithName() {
+		tagCompound = new TAG_Compound(name);
+		
+		assertEquals(name, tagCompound.getName());
+	}
+	
+	@Test
 	public void testTAGCompoundRead() throws IOException {
 
 		ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
@@ -50,6 +62,7 @@ public class TAG_CompoundSpecification extends TestCase {
 		assertEquals(s_name, nbtTAG.getName());
 	}
 
+	@Test
 	public void testTAGCompoundWrite_TAGByte() throws IOException {
 		
 		TAG_Compound nbtTAG = new TAG_Compound(s_name);
@@ -81,6 +94,7 @@ public class TAG_CompoundSpecification extends TestCase {
 		assertTrue("TAG_Compound write is incorrect.", Arrays.equals(expectedStream.toByteArray(), byteStream.toByteArray()));
 	}
 	
+	@Test
 	public void testTAGCompoundWrite_TAGShort() throws IOException {
 		
 		TAG_Compound nbtTAG = new TAG_Compound(s_name);
@@ -112,6 +126,7 @@ public class TAG_CompoundSpecification extends TestCase {
 		assertTrue("TAG_Compound write is incorrect.", Arrays.equals(expectedStream.toByteArray(), byteStream.toByteArray()));
 	}
 	
+	@Test
 	public void testTAGCompoundWrite_TAGInt() throws IOException {
 		
 		TAG_Compound nbtTAG = new TAG_Compound(s_name);
@@ -143,6 +158,7 @@ public class TAG_CompoundSpecification extends TestCase {
 		assertTrue("TAG_Compound write is incorrect.", Arrays.equals(expectedStream.toByteArray(), byteStream.toByteArray()));
 	}
 
+	@Test
 	public void testTAGCompoundWrite_TAGLong() throws IOException {
 	
 		TAG_Compound nbtTAG = new TAG_Compound(s_name);
@@ -174,6 +190,7 @@ public class TAG_CompoundSpecification extends TestCase {
 		assertTrue("TAG_Compound write is incorrect.", Arrays.equals(expectedStream.toByteArray(), byteStream.toByteArray()));
 	}
 	
+	@Test
 	public void testTAGCompoundWrite_TAGFloat() throws IOException {
 		
 		TAG_Compound nbtTAG = new TAG_Compound(s_name);
@@ -523,5 +540,11 @@ public class TAG_CompoundSpecification extends TestCase {
 		TAG_Compound nbtTAG = new TAG_Compound("");
 		
 		assertNull(nbtTAG.findTAG("TAG"));
+	}
+
+	@Override
+	public void writeValue() throws IOException {
+		// TODO Auto-generated method stub
+		
 	}
 }

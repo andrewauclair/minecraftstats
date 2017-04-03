@@ -9,7 +9,7 @@ import stats.nbt.utils.NBTOutputStream;
 
 public class TAG_Int_Array extends TAG {
 
-	private Integer[] m_value = null;
+	private Integer[] m_value = new Integer[0];
 	
 	public TAG_Int_Array(String name) {
 		super(name);

@@ -87,56 +87,56 @@ public class TAGSpecification {
 	
 	@Test
 	public void ShouldReturnTAGByteWhenCallingFromTAGWithTAGByte() {
-		Assert.assertEquals(TAG_Type.TAG_Byte, TAG_Type.fromTAG(new TAG_Byte("", null)));
+		Assert.assertEquals(TAG_Type.TAG_Byte, TAG_Type.fromTAG(new TAG_Byte("")));
 	}
 	
 	@Test
 	public void ShouldReturnTAGShortWhenCallingFromTAGWithTAGShort() {
-		Assert.assertEquals(TAG_Type.TAG_Short, TAG_Type.fromTAG(new TAG_Short("", null)));
+		Assert.assertEquals(TAG_Type.TAG_Short, TAG_Type.fromTAG(new TAG_Short("")));
 	}
 	
 	@Test
 	public void ShouldReturnTAGIntWhenCallingFromTAGWithTAGInt() {
-		Assert.assertEquals(TAG_Type.TAG_Int, TAG_Type.fromTAG(new TAG_Int("", null)));
+		Assert.assertEquals(TAG_Type.TAG_Int, TAG_Type.fromTAG(new TAG_Int("")));
 	}
 	
 	@Test
 	public void ShouldReturnTAGLongWhenCallingFromTAGWithTAGLong() {
-		Assert.assertEquals(TAG_Type.TAG_Long, TAG_Type.fromTAG(new TAG_Long("", null)));
+		Assert.assertEquals(TAG_Type.TAG_Long, TAG_Type.fromTAG(new TAG_Long("")));
 	}
 	
 	@Test
 	public void ShouldReturnTAGFloatWhenCallingFromTAGWithTAGFloat() {
-		Assert.assertEquals(TAG_Type.TAG_Float, TAG_Type.fromTAG(new TAG_Float("", null)));
+		Assert.assertEquals(TAG_Type.TAG_Float, TAG_Type.fromTAG(new TAG_Float("")));
 	}
 	
 	@Test
 	public void ShouldReturnTAGDoubleWhenCallingFromTAGWithTAGDouble() {
-		Assert.assertEquals(TAG_Type.TAG_Double, TAG_Type.fromTAG(new TAG_Double("", null)));
+		Assert.assertEquals(TAG_Type.TAG_Double, TAG_Type.fromTAG(new TAG_Double("")));
 	}
 	
 	@Test
 	public void ShouldReturnTAGByteArrayWhenCallingFromTAGWithTAGByteArray() {
-		Assert.assertEquals(TAG_Type.TAG_Byte_Array, TAG_Type.fromTAG(new TAG_Byte_Array("", null)));
+		Assert.assertEquals(TAG_Type.TAG_Byte_Array, TAG_Type.fromTAG(new TAG_Byte_Array("")));
 	}
 	
 	@Test
 	public void ShouldReturnTAGStringWhenCallingFromTAGWithTAGString() {
-		Assert.assertEquals(TAG_Type.TAG_String, TAG_Type.fromTAG(new TAG_String("", null)));
+		Assert.assertEquals(TAG_Type.TAG_String, TAG_Type.fromTAG(new TAG_String("")));
 	}
 	
 	@Test
 	public void ShouldReturnTAGListWhenCallingFromTAGWithTAGList() {
-		Assert.assertEquals(TAG_Type.TAG_List, TAG_Type.fromTAG(new TAG_List("", null)));
+		Assert.assertEquals(TAG_Type.TAG_List, TAG_Type.fromTAG(new TAG_List("")));
 	}
 	
 	@Test
 	public void ShouldReturnTAGCompoundWhenCallingFromTAGWithTAGCompound() {
-		Assert.assertEquals(TAG_Type.TAG_Compound, TAG_Type.fromTAG(new TAG_Compound("", null)));
+		Assert.assertEquals(TAG_Type.TAG_Compound, TAG_Type.fromTAG(new TAG_Compound("")));
 	}
 	
 	@Test
 	public void ShouldReturnTAGIntArrayWhenCallingFromTAGWithTAGIntArray() {
-		Assert.assertEquals(TAG_Type.TAG_Int_Array, TAG_Type.fromTAG(new TAG_Int_Array("", null)));
+		Assert.assertEquals(TAG_Type.TAG_Int_Array, TAG_Type.fromTAG(new TAG_Int_Array("")));
 	}
 }

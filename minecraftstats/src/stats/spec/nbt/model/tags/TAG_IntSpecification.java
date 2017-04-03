@@ -13,6 +13,13 @@ public class TAG_IntSpecification extends TAGCommonSpecification {
 	private TAG_Int tagInt = new TAG_Int("", 0);
 	
 	@Test
+	public void ShouldCreateObjectWithName() {
+		tagInt = new TAG_Int(name);
+		
+		Assert.assertEquals(name, tagInt.getName());
+	}
+	
+	@Test
 	public void ShouldCreateObjectWithNameAndValue() {
 		tagInt = new TAG_Int(name, s_value);
 		

@@ -21,6 +21,13 @@ public class TAG_StringSpecification extends TAGCommonSpecification {
 	private TAG_String tagString = new TAG_String("", "");
 	
 	@Test
+	public void ShouldCreateObjectWithName() {
+		tagString = new TAG_String(name);
+		
+		Assert.assertEquals(name, tagString.getName());
+	}
+	
+	@Test
 	public void ShouldCreateObjectWithNameAndValue() {
 		tagString = new TAG_String(name, value);
 		

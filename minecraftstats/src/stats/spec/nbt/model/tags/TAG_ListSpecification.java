@@ -8,6 +8,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 import junit.framework.TestCase;
 import stats.nbt.model.tags.TAG;
 import stats.nbt.model.tags.TAG_Byte;
@@ -21,6 +24,12 @@ import stats.nbt.model.tags.TAG_List;
 public class TAG_ListSpecification extends TestCase {
 
 	private static final String s_name = "Test";
+	
+	@Test
+	public void ShouldCreateObjectWithName() {
+		
+		//Assert.assertEquals(name, .getName());
+	}
 	
 	public void testTAGListRead() throws IOException {
 

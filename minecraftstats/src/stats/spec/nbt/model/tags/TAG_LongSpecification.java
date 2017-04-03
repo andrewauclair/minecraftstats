@@ -21,6 +21,13 @@ public class TAG_LongSpecification extends TAGCommonSpecification {
 	private TAG_Long tagLong = new TAG_Long("", 0L);
 	
 	@Test
+	public void ShouldCreateObjectWithName() {
+		tagLong = new TAG_Long(name);
+		
+		Assert.assertEquals(name, tagLong.getName());
+	}
+	
+	@Test
 	public void ShouldCreateObjectWithNameAndValue() {
 		tagLong = new TAG_Long(name, s_value);
 		
