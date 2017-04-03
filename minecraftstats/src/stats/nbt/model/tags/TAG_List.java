@@ -36,8 +36,7 @@ public class TAG_List extends TAG {
 		return null;
 	}
 	
-	@Override
-	public Object getValue() {
+	public ArrayList<TAG> getValue() {
 		return m_value;
 	}
 
@@ -50,10 +49,7 @@ public class TAG_List extends TAG {
 	}
 	
 	@Override
-	public void writeToStream(DataOutput out, boolean writeName) throws IOException {
-		
-		super.writeToStream(out, writeName);
-		
+	public void writePayloadToStream(DataOutput out) throws IOException {
 		if (m_type != null) {
 			out.writeByte(m_type.getValue());
 		}
@@ -69,10 +65,7 @@ public class TAG_List extends TAG {
 	}
 	
 	@Override
-	public void readFromStream(DataInput in, boolean readName) throws IOException {
-		
-		super.readFromStream(in, readName);
-		
+	public void readPayloadFromStream(DataInput in) throws IOException {
 		// needs to read the type, size and all the tags
 		m_type = TAG_Type.valueOf(in.readByte());
 		int size = in.readInt();

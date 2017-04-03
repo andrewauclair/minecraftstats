@@ -20,8 +20,7 @@ public class TAG_Int_Array extends TAG {
 		m_value = value;
 	}
 	
-	@Override
-	public Object getValue() {
+	public Integer[] getValue() {
 		return m_value;
 	}
 
@@ -30,10 +29,7 @@ public class TAG_Int_Array extends TAG {
 	}
 	
 	@Override
-	public void writeToStream(DataOutput out, boolean writeName) throws IOException {
-		
-		super.writeToStream(out, writeName);
-		
+	public void writePayloadToStream(DataOutput out) throws IOException {
 		out.writeInt(m_value.length);
 		
 		for (int val : m_value) {
@@ -42,10 +38,7 @@ public class TAG_Int_Array extends TAG {
 	}
 	
 	@Override
-	public void readFromStream(DataInput in, boolean readName) throws IOException {
-		
-		super.readFromStream(in, readName);
-		
+	public void readPayloadFromStream(DataInput in) throws IOException {
 		int size = in.readInt();
 		
 		m_value = new Integer[size];

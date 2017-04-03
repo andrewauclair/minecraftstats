@@ -109,12 +109,12 @@ public class MainView extends JFrame {
 		
 		TAG versionName = version.findTAG("Name");
 		
-		m_seed.setText(data.findTAG("RandomSeed").getValue().toString());
-		m_spawnX.setText(data.findTAG("SpawnX").getValue().toString());
-		m_spawnY.setText(data.findTAG("SpawnY").getValue().toString());
-		m_spawnZ.setText(data.findTAG("SpawnZ").getValue().toString());
-		
-		setTitle(s_title + " - " + levelName.getValue() + " - " + versionName.getValue());
+//		m_seed.setText(data.findTAG("RandomSeed").getValue().toString());
+//		m_spawnX.setText(data.findTAG("SpawnX").getValue().toString());
+//		m_spawnY.setText(data.findTAG("SpawnY").getValue().toString());
+//		m_spawnZ.setText(data.findTAG("SpawnZ").getValue().toString());
+//		
+//		setTitle(s_title + " - " + levelName.getValue() + " - " + versionName.getValue());
 	}
 	
 	public static void main(String[] args) {

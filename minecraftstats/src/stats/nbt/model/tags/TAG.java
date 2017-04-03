@@ -97,36 +97,36 @@ public abstract class TAG {
 		return null;
 	}
 	
-	public abstract Object getValue();
-	
-	@Override
-	public String toString() {
-		return getName() + " : " + getValue();
-	}
-	
 	public void writeToStream(DataOutput out, boolean writeName) throws IOException {
 		
 		if (writeName) {
 			writeNameToStream(out);
 		}
-	}
-	
-	public void readFromStream(DataInput in, boolean readName) throws IOException {
 		
-		if (readName) {
-			readNameFromStream(in);
-		}
+		writePayloadToStream(out);
 	}
 	
-	protected void writeNameToStream(DataOutput out) throws IOException {
+	private void writeNameToStream(DataOutput out) throws IOException {
 		out.writeShort(m_name.length());
 		out.write(m_name.getBytes());
 	}
 	
-	protected void readNameFromStream(DataInput in) throws IOException {
+	protected abstract void writePayloadToStream(DataOutput out) throws IOException;
+	
+	public void readFromStream(DataInput in, boolean readName) throws IOException {
+		if (readName) {
+			readNameFromStream(in);
+		}
+		
+		readPayloadFromStream(in);
+	}
+	
+	private void readNameFromStream(DataInput in) throws IOException {
 		int nameLength = in.readShort() & 0xFFFF;
 		byte[] nameBytes = new byte[nameLength];
 		in.readFully(nameBytes);
 		m_name = new String(nameBytes, "UTF-8");
 	}
+	
+	protected abstract void readPayloadFromStream(DataInput in) throws IOException;
 }

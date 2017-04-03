@@ -11,17 +11,17 @@ public class TAG_End extends TAG {
 	}
 
 	@Override
-	public Object getValue() {
-		return null;
-	}
-
-	@Override
 	public void writeToStream(DataOutput out, boolean writeName) throws IOException {
-		
 	}
 	
 	@Override
-	public void readFromStream(DataInput in, boolean readName) {
-		
+	public void writePayloadToStream(DataOutput out) throws IOException {	
+	}
+	
+	public void readFromStream(DataInput in, boolean readName) throws IOException {
+	}
+	
+	@Override
+	public void readPayloadFromStream(DataInput in) {
 	}
 }

@@ -17,8 +17,7 @@ public class TAG_Byte extends TAG {
 		m_value = value;
 	}
 
-	@Override
-	public Object getValue() {
+	public Byte getValue() {
 		return m_value;
 	}
 
@@ -27,18 +26,12 @@ public class TAG_Byte extends TAG {
 	}
 	
 	@Override
-	public void writeToStream(DataOutput out, boolean writeName) throws IOException {
-		
-		super.writeToStream(out, writeName);
-		
+	public void writePayloadToStream(DataOutput out) throws IOException {
 		out.writeByte(m_value);
 	}
 	
 	@Override
-	public void readFromStream(DataInput in, boolean readName) throws IOException {
-		
-		super.readFromStream(in, readName);
-		
+	public void readPayloadFromStream(DataInput in) throws IOException {
 		m_value = in.readByte();
 	}
 }

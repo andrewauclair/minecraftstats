@@ -26,8 +26,12 @@ public class TAG_Compound extends TAG {
 		return m_value.get(name);
 	}
 	
-	@Override
-	public Object getValue() {
+	// TODO Break down the getValue and setValue into better access functions such as:
+	// hasX
+	// removeX
+	// addX
+	
+	public Map<String, TAG> getValue() {
 		return m_value;
 	}
 
@@ -47,10 +51,7 @@ public class TAG_Compound extends TAG {
 	}
 	
 	@Override
-	public void writeToStream(DataOutput out, boolean writeName) throws IOException {
-		
-		super.writeToStream(out, writeName);
-		
+	public void writePayloadToStream(DataOutput out) throws IOException {
 		for (String val : m_value.keySet()) {
 			out.writeByte(TAG_Type.fromTAG(m_value.get(val)).getValue());
 			m_value.get(val).writeToStream(out, true);
@@ -60,10 +61,7 @@ public class TAG_Compound extends TAG {
 	}
 	
 	@Override
-	public void readFromStream(DataInput in, boolean readName) throws IOException {
-		
-		super.readFromStream(in, readName);
-		
+	public void readPayloadFromStream(DataInput in) throws IOException {
 		TAG tag = null;
 		
 		do {
