@@ -28,7 +28,7 @@ public final class NBTFileHelper {
 
 	public static TAG readNextTag(DataInput in, TAG parent) throws IOException {
 		TAG_Type type = null;
-		type = TAG_Type.valueOf(in.readByte() & 0xFF);
+		type = TAG_Type.fromInt(in.readByte() & 0xFF);
 		TAG newTag = null;
 		
 		//System.out.println("Found tag: " + type);

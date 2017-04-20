@@ -101,13 +101,13 @@ public class MainView extends JFrame {
 		
 		TAG root = saveData.getLevelDatNBT().getRoot();
 		
-		TAG data = root.findTAG("Data");
+		//TAG data = root.findTAG("Data");
 		
-		TAG version = data.findTAG("Version");
+		//TAG version = data.findTAG("Version");
 		
-		TAG levelName = data.findTAG("LevelName");
+		//TAG levelName = data.findTAG("LevelName");
 		
-		TAG versionName = version.findTAG("Name");
+		//TAG versionName = version.findTAG("Name");
 		
 //		m_seed.setText(data.findTAG("RandomSeed").getValue().toString());
 //		m_spawnX.setText(data.findTAG("SpawnX").getValue().toString());

@@ -1,5 +1,7 @@
 package stats.spec.nbt.model.tags;
 
+import static org.junit.Assert.*;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -21,122 +23,132 @@ import stats.nbt.model.tags.TAG_String;
 public class TAGSpecification {
 
 	@Test
+	public void ShouldReturnNullForInvalidEnumValue() {
+		assertEquals(null, TAG_Type.fromInt(-1));
+	}
+	
+	@Test
 	public void ShouldReturn0ForEndEnumValue() {
-		Assert.assertEquals(0, TAG_Type.TAG_End.getValue());
+		assertEquals(0, TAG_Type.TAG_End.getValue());
 	}
 	
 	@Test
 	public void ShouldReturn1ForByteEnumValue() {
-		Assert.assertEquals(1, TAG_Type.TAG_Byte.getValue());
+		assertEquals(1, TAG_Type.TAG_Byte.getValue());
 	}
 	
 	@Test
 	public void ShouldReturn2ForShortEnumValue() {
-		Assert.assertEquals(2, TAG_Type.TAG_Short.getValue());
+		assertEquals(2, TAG_Type.TAG_Short.getValue());
 	}
 	
 	@Test
 	public void ShouldReturn3ForIntEnumValue() {
-		Assert.assertEquals(3, TAG_Type.TAG_Int.getValue());
+		assertEquals(3, TAG_Type.TAG_Int.getValue());
 	}
 	
 	@Test
 	public void ShouldReturn4ForLongEnumValue() {
-		Assert.assertEquals(4, TAG_Type.TAG_Long.getValue());
+		assertEquals(4, TAG_Type.TAG_Long.getValue());
 	}
 	
 	@Test
 	public void ShouldReturn5ForFloatEnumValue() {
-		Assert.assertEquals(5, TAG_Type.TAG_Float.getValue());
+		assertEquals(5, TAG_Type.TAG_Float.getValue());
 	}
 	
 	@Test
 	public void ShouldReturn6ForDoubleEnumValue() {
-		Assert.assertEquals(6, TAG_Type.TAG_Double.getValue());
+		assertEquals(6, TAG_Type.TAG_Double.getValue());
 	}
 	
 	@Test
 	public void ShouldReturn7ForByteArrayEnumValue() {
-		Assert.assertEquals(7, TAG_Type.TAG_Byte_Array.getValue());
+		assertEquals(7, TAG_Type.TAG_Byte_Array.getValue());
 	}
 	
 	@Test
 	public void ShouldReturn8ForStringEnumValue() {
-		Assert.assertEquals(8, TAG_Type.TAG_String.getValue());
+		assertEquals(8, TAG_Type.TAG_String.getValue());
 	}
 	
 	@Test
 	public void ShouldReturn9ForListEnumValue() {
-		Assert.assertEquals(9, TAG_Type.TAG_List.getValue());
+		assertEquals(9, TAG_Type.TAG_List.getValue());
 	}
 	
 	@Test
 	public void ShouldReturn10ForCompoundEnumValue() {
-		Assert.assertEquals(10, TAG_Type.TAG_Compound.getValue());
+		assertEquals(10, TAG_Type.TAG_Compound.getValue());
 	}
 	
 	@Test
 	public void ShouldReturn11ForIntArrayEnumValue() {
-		Assert.assertEquals(11, TAG_Type.TAG_Int_Array.getValue());
+		assertEquals(11, TAG_Type.TAG_Int_Array.getValue());
 	}
 	
 	@Test
 	public void ShouldReturnTAGEndWhenCallingFromTAGWithTAGEnd() {
-		Assert.assertEquals(TAG_Type.TAG_End, TAG_Type.fromTAG(new TAG_End()));
+		assertEquals(TAG_Type.TAG_End, TAG_Type.fromTAG(new TAG_End()));
 	}
 	
 	@Test
 	public void ShouldReturnTAGByteWhenCallingFromTAGWithTAGByte() {
-		Assert.assertEquals(TAG_Type.TAG_Byte, TAG_Type.fromTAG(new TAG_Byte("")));
+		assertEquals(TAG_Type.TAG_Byte, TAG_Type.fromTAG(new TAG_Byte("")));
 	}
 	
 	@Test
 	public void ShouldReturnTAGShortWhenCallingFromTAGWithTAGShort() {
-		Assert.assertEquals(TAG_Type.TAG_Short, TAG_Type.fromTAG(new TAG_Short("")));
+		assertEquals(TAG_Type.TAG_Short, TAG_Type.fromTAG(new TAG_Short("")));
 	}
 	
 	@Test
 	public void ShouldReturnTAGIntWhenCallingFromTAGWithTAGInt() {
-		Assert.assertEquals(TAG_Type.TAG_Int, TAG_Type.fromTAG(new TAG_Int("")));
+		assertEquals(TAG_Type.TAG_Int, TAG_Type.fromTAG(new TAG_Int("")));
 	}
 	
 	@Test
 	public void ShouldReturnTAGLongWhenCallingFromTAGWithTAGLong() {
-		Assert.assertEquals(TAG_Type.TAG_Long, TAG_Type.fromTAG(new TAG_Long("")));
+		assertEquals(TAG_Type.TAG_Long, TAG_Type.fromTAG(new TAG_Long("")));
 	}
 	
 	@Test
 	public void ShouldReturnTAGFloatWhenCallingFromTAGWithTAGFloat() {
-		Assert.assertEquals(TAG_Type.TAG_Float, TAG_Type.fromTAG(new TAG_Float("")));
+		assertEquals(TAG_Type.TAG_Float, TAG_Type.fromTAG(new TAG_Float("")));
 	}
 	
 	@Test
 	public void ShouldReturnTAGDoubleWhenCallingFromTAGWithTAGDouble() {
-		Assert.assertEquals(TAG_Type.TAG_Double, TAG_Type.fromTAG(new TAG_Double("")));
+		assertEquals(TAG_Type.TAG_Double, TAG_Type.fromTAG(new TAG_Double("")));
 	}
 	
 	@Test
 	public void ShouldReturnTAGByteArrayWhenCallingFromTAGWithTAGByteArray() {
-		Assert.assertEquals(TAG_Type.TAG_Byte_Array, TAG_Type.fromTAG(new TAG_Byte_Array("")));
+		assertEquals(TAG_Type.TAG_Byte_Array, TAG_Type.fromTAG(new TAG_Byte_Array("")));
 	}
 	
 	@Test
 	public void ShouldReturnTAGStringWhenCallingFromTAGWithTAGString() {
-		Assert.assertEquals(TAG_Type.TAG_String, TAG_Type.fromTAG(new TAG_String("")));
+		assertEquals(TAG_Type.TAG_String, TAG_Type.fromTAG(new TAG_String("")));
 	}
 	
 	@Test
 	public void ShouldReturnTAGListWhenCallingFromTAGWithTAGList() {
-		Assert.assertEquals(TAG_Type.TAG_List, TAG_Type.fromTAG(new TAG_List("")));
+		assertEquals(TAG_Type.TAG_List, TAG_Type.fromTAG(new TAG_List("")));
 	}
 	
 	@Test
 	public void ShouldReturnTAGCompoundWhenCallingFromTAGWithTAGCompound() {
-		Assert.assertEquals(TAG_Type.TAG_Compound, TAG_Type.fromTAG(new TAG_Compound("")));
+		assertEquals(TAG_Type.TAG_Compound, TAG_Type.fromTAG(new TAG_Compound("")));
 	}
 	
 	@Test
 	public void ShouldReturnTAGIntArrayWhenCallingFromTAGWithTAGIntArray() {
-		Assert.assertEquals(TAG_Type.TAG_Int_Array, TAG_Type.fromTAG(new TAG_Int_Array("")));
+		assertEquals(TAG_Type.TAG_Int_Array, TAG_Type.fromTAG(new TAG_Int_Array("")));
+	}
+	
+	@Test
+	public void ShouldReturnNullWhenCallingFromTAGWithNull() {
+		assertEquals(null, TAG_Type.fromTAG(null));
 	}
 }

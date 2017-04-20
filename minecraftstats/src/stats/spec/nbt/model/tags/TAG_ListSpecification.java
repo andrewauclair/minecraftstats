@@ -1,5 +1,7 @@
 package stats.spec.nbt.model.tags;
 
+import static org.junit.Assert.*;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
@@ -9,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import junit.framework.TestCase;
@@ -21,23 +24,46 @@ import stats.nbt.model.tags.TAG_List;
 
 // need to do some form of full structure test with all of the tags
 
-public class TAG_ListSpecification extends TestCase {
+public class TAG_ListSpecification extends TAGCommonSpecification {
 
-	private static final String s_name = "Test";
+	private TAG_List tagList = new TAG_List("");
+	private ArrayList<TAG> values = new ArrayList<>();
+	
+	private byte byteValue1 = 15;
+	private byte byteValue2 = 20;
+	
+	@Before
+	public void setUp() throws IOException {
+		super.setUp();
+		
+		values = new ArrayList<>();
+		values.add(new TAG_Byte("byte_1", byteValue1));
+		values.add(new TAG_Byte("byte_2", byteValue2));
+	}
 	
 	@Test
 	public void ShouldCreateObjectWithName() {
+		tagList = new TAG_List(name);
 		
-		//Assert.assertEquals(name, .getName());
+		assertEquals(name, tagList.getName());
 	}
 	
+	@Test
+	public void ShouldCreateObjectWithNameAndValues() {
+		tagList = new TAG_List(name, values);
+		
+		assertEquals(name, tagList.getName());
+		assertEquals(values, tagList.getValue());
+	}
+	
+	@Test
 	public void testTAGListRead() throws IOException {
 
 		ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
 		DataOutputStream testOut = new DataOutputStream(expectedStream);
 		
-		testOut.writeShort(s_name.length());
-		testOut.write(s_name.getBytes());
+		testOut.writeShort(name.length());
+		testOut.write(name.getBytes());
 		testOut.writeByte(1);
 		testOut.writeInt(1);
 		testOut.writeByte(0);
@@ -48,13 +74,14 @@ public class TAG_ListSpecification extends TestCase {
 		TAG_List nbtTAG = new TAG_List("");
 		nbtTAG.readFromStream(nbtIn, true);
 		
-		assertEquals(s_name, nbtTAG.getName());
+		assertEquals(name, nbtTAG.getName());
 		assertEquals(1, ((ArrayList<TAG>)nbtTAG.getValue()).size());
 	}
 	
+	@Test
 	public void testTAGListWrite() throws IOException {
 		
-		TAG_List nbtTAG = new TAG_List(s_name);
+		TAG_List nbtTAG = new TAG_List(name);
 		ArrayList<TAG> value = new ArrayList<>();
 		value.add(new TAG_Byte("", (byte) 0));
 	
@@ -67,12 +94,18 @@ public class TAG_ListSpecification extends TestCase {
 		ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
 		DataOutputStream testOut = new DataOutputStream(expectedStream);
 		
-		testOut.writeShort(s_name.length());
-		testOut.write(s_name.getBytes());
+		testOut.writeShort(name.length());
+		testOut.write(name.getBytes());
 		testOut.writeByte(1);
 		testOut.writeInt(1);
 		testOut.writeByte(0);
 		
 		assertTrue("TAG_List write is incorrect.", Arrays.equals(expectedStream.toByteArray(), byteStream.toByteArray()));
+	}
+
+	@Override
+	public void writeValue() throws IOException {
+		// TODO Auto-generated method stub
+		
 	}
 }

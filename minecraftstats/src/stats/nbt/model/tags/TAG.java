@@ -4,9 +4,6 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 
-import stats.nbt.utils.NBTInputStream;
-import stats.nbt.utils.NBTOutputStream;
-
 // base class for all tags
 public abstract class TAG {
 
@@ -33,7 +30,7 @@ public abstract class TAG {
 			return m_value;
 		}
 		
-		public static TAG_Type valueOf(int value) {
+		public static TAG_Type fromInt(int value) {
 			for (TAG_Type val : values()) {
 				if (val.m_value == value) {
 					return val;
@@ -91,10 +88,6 @@ public abstract class TAG {
 	
 	public String getName() {
 		return m_name;
-	}
-	
-	public TAG findTAG(String name) {
-		return null;
 	}
 	
 	public void writeToStream(DataOutput out, boolean writeName) throws IOException {

@@ -15,6 +15,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import stats.nbt.model.tags.TAG;
@@ -29,6 +31,7 @@ import stats.nbt.model.tags.TAG_List;
 import stats.nbt.model.tags.TAG_Long;
 import stats.nbt.model.tags.TAG_Short;
 import stats.nbt.model.tags.TAG_String;
+import stats.nbt.model.tags.TAG.TAG_Type;
 
 public class TAG_CompoundSpecification extends TAGCommonSpecification {
 
@@ -44,54 +47,40 @@ public class TAG_CompoundSpecification extends TAGCommonSpecification {
 	}
 	
 	@Test
-	public void testTAGCompoundRead() throws IOException {
-
-		ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
-		DataOutputStream testOut = new DataOutputStream(expectedStream);
+	public void ShouldReadDataFromInputStream() throws IOException {
 		
-		testOut.writeShort(s_name.length());
-		testOut.write(s_name.getBytes());
-		testOut.writeByte(0);
 		
-		ByteArrayInputStream byteStream = new ByteArrayInputStream(expectedStream.toByteArray());
-		DataInputStream nbtIn = new DataInputStream(byteStream);
+		createInputStreamFromOutputStream();
 		
-		TAG_Compound nbtTAG = new TAG_Compound("");
-		nbtTAG.readFromStream(nbtIn, true);
+		//tagCompound.readFromStream(inStream, true);
 		
-		assertEquals(s_name, nbtTAG.getName());
+		assertEquals(s_name, tagCompound.getName());
 	}
-
+	
 	@Test
-	public void testTAGCompoundWrite_TAGByte() throws IOException {
+	public void ShouldWriteDataToOutputStream() throws IOException {
+		tagCompound = new TAG_Compound(s_name);
 		
-		TAG_Compound nbtTAG = new TAG_Compound(s_name);
 		Map<String, TAG> value = new HashMap<String, TAG>();
-		value.put("TAG_Byte", new TAG_Byte("TAG_Byte", (byte) 0));
+		value.put("TAG_Byte", new TAG_Byte("TAG_Byte", (byte)0));
+		value.put("TAG_Short", new TAG_Short("TAG_Short", (short) 0));
+		value.put("TAG_Int", new TAG_Int("TAG_Int", 0));
+		value.put("TAG_Long", new TAG_Long("TAG_Long", (long) 0));
+		value.put("TAG_Float", new TAG_Float("TAG_Float", 0f));
+		value.put("TAG_Double", new TAG_Double("TAG_Double", 0.0));
+		value.put("TAG_Byte_Array", new TAG_Byte_Array("TAG_Byte_Array", new Byte[] {}));
+		value.put("TAG_String", new TAG_String("TAG_String", s_name));
+		value.put("TAG_List", new TAG_List("TAG_List"));
+		value.put("TAG_Compound", new TAG_Compound("TAG_Compound"));
+		value.put("TAG_Int_Array", new TAG_Int_Array("TAG_Int_Array", new Integer[] {}));
 		
-		nbtTAG.setValue(value);
+		tagCompound.setValue(value);
 		
-		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-		DataOutputStream nbtOut = new DataOutputStream(byteStream);
-		nbtTAG.writeToStream(nbtOut, true);
+		tagCompound.writeToStream(outStream, true);
 		
-		ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
-		DataOutputStream testOut = new DataOutputStream(expectedStream);
+		createInputStreamFromOutputStream();
 		
-		testOut.writeShort(s_name.length());
-		testOut.write(s_name.getBytes());
-		
-		testOut.writeByte(1);
-		testOut.writeShort("TAG_Byte".length());
-		testOut.write("TAG_Byte".getBytes());
-		testOut.writeByte(0);
-		
-		testOut.writeByte(0);
-		
-		byte[] a = expectedStream.toByteArray();
-		byte[] b = byteStream.toByteArray();
-		
-		assertTrue("TAG_Compound write is incorrect.", Arrays.equals(expectedStream.toByteArray(), byteStream.toByteArray()));
+		assertNameRead();
 	}
 	
 	@Test

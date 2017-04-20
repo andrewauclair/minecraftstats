@@ -17,16 +17,12 @@ public class TAG_List extends TAG {
 		super(name);
 	}
 	
-	public TAG_List(String name, List<TAG> value) {
+	public TAG_List(String name, ArrayList<TAG> value) {
 		super(name);
 		
-		// TODO only accept tags that match the first in the list
-		if (value.size() > 0) {
-			m_type = TAG_Type.fromTAG(value.get(0));
-		}
+		setValue(value);
 	}
 
-	@Override
 	public TAG findTAG(String name) {
 		for (TAG tag : m_value) {
 			if (tag.getName().equals(name)) {
@@ -67,7 +63,7 @@ public class TAG_List extends TAG {
 	@Override
 	public void readPayloadFromStream(DataInput in) throws IOException {
 		// needs to read the type, size and all the tags
-		m_type = TAG_Type.valueOf(in.readByte());
+		m_type = TAG_Type.fromInt(in.readByte());
 		int size = in.readInt();
 		
 		for (int i = 0; i < size; i++) {

@@ -4,6 +4,7 @@ import java.io.IOException;
 import org.junit.Assert;
 import org.junit.Test;
 
+import stats.nbt.model.tags.TAG.TAG_Type;
 import stats.nbt.model.tags.TAG_Byte;
 
 public class TAG_ByteSpecification extends TAGCommonSpecification {

@@ -21,7 +21,6 @@ public class TAG_Compound extends TAG {
 		m_value = value;
 	}
 	
-	@Override
 	public TAG findTAG(String name) {
 		return m_value.get(name);
 	}

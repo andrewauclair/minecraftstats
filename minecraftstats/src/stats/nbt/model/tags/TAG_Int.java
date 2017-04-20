@@ -29,11 +29,6 @@ public class TAG_Int extends TAG {
 	}
 	
 	@Override
-	public String toString() {
-		return m_name + " : " + m_value;
-	}
-	
-	@Override
 	public void writePayloadToStream(DataOutput out) throws IOException {
 		out.writeInt(m_value);
 	}

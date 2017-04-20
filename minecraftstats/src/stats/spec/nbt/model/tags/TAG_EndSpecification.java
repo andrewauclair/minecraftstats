@@ -14,6 +14,7 @@ public class TAG_EndSpecification extends TAGCommonSpecification {
 	public void ShouldReadNothingFromStream() throws IOException {
 		int size = inStream.available();
 		tagEnd.readFromStream(inStream, true);
+		tagEnd.readPayloadFromStream(inStream);
 		
 		Assert.assertEquals(size, inStream.available());
 	}
@@ -22,6 +23,7 @@ public class TAG_EndSpecification extends TAGCommonSpecification {
 	public void ShouldWriteNothingToStream() throws IOException {
 		int size = outStream.size();
 		tagEnd.writeToStream(outStream, true);
+		tagEnd.writePayloadToStream(outStream);
 		
 		Assert.assertEquals(size, outStream.size());
 	}
