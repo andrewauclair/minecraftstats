@@ -22,25 +22,23 @@ public class TAG_List extends TAG {
 		
 		setValue(value);
 	}
-
-	public TAG findTAG(String name) {
-		for (TAG tag : m_value) {
-			if (tag.getName().equals(name)) {
-				return tag;
-			}
-		}
-		return null;
-	}
 	
 	public ArrayList<TAG> getValue() {
 		return m_value;
 	}
 
+	public TAG_Type getType() {
+		return m_type;
+	}
+	
 	public void setValue(ArrayList<TAG> value) {
 		m_value = value;
 		
 		if (m_value.size() > 0) {
 			m_type = TAG_Type.fromTAG(m_value.get(0));
+		}
+		else {
+			m_type = null;
 		}
 	}
 	

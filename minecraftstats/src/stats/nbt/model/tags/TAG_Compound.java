@@ -39,17 +39,6 @@ public class TAG_Compound extends TAG {
 	}
 	
 	@Override
-	public String toString() {
-		StringBuffer buf = new StringBuffer();
-		
-		for (TAG tag : m_value.values()) {
-			buf.append(tag.toString()).append("\n");
-		}
-		
-		return buf.toString();
-	}
-	
-	@Override
 	public void writePayloadToStream(DataOutput out) throws IOException {
 		for (String val : m_value.keySet()) {
 			out.writeByte(TAG_Type.fromTAG(m_value.get(val)).getValue());

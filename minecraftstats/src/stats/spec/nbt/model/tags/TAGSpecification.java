@@ -24,6 +24,7 @@ public class TAGSpecification {
 
 	@Test
 	public void ShouldReturnNullForInvalidEnumValue() {
+		TAG_Type.valueOf("TAG_End");
 		assertEquals(null, TAG_Type.fromInt(-1));
 	}
 	

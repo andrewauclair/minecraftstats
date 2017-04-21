@@ -16,6 +16,7 @@ import org.junit.Test;
 
 import junit.framework.TestCase;
 import stats.nbt.model.tags.TAG;
+import stats.nbt.model.tags.TAG.TAG_Type;
 import stats.nbt.model.tags.TAG_Byte;
 import stats.nbt.model.tags.TAG_List;
 
@@ -57,7 +58,7 @@ public class TAG_ListSpecification extends TAGCommonSpecification {
 	}
 	
 	@Test
-	public void testTAGListRead() throws IOException {
+	public void ShouldReadValuesFromStream() throws IOException {
 
 		ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
 		DataOutputStream testOut = new DataOutputStream(expectedStream);
@@ -79,7 +80,7 @@ public class TAG_ListSpecification extends TAGCommonSpecification {
 	}
 	
 	@Test
-	public void testTAGListWrite() throws IOException {
+	public void ShouldWriteValuesToStream() throws IOException {
 		
 		TAG_List nbtTAG = new TAG_List(name);
 		ArrayList<TAG> value = new ArrayList<>();
@@ -103,9 +104,36 @@ public class TAG_ListSpecification extends TAGCommonSpecification {
 		assertTrue("TAG_List write is incorrect.", Arrays.equals(expectedStream.toByteArray(), byteStream.toByteArray()));
 	}
 
+	@Test
+	public void ShouldWriteType0WhenEmpty() throws IOException {
+		
+		TAG_List nbtTAG = new TAG_List(name);
+		
+		nbtTAG.writeToStream(outStream, true);
+		
+		createInputStreamFromOutputStream();
+		
+		assertNameRead();
+		assertEquals(0, inStream.readByte());
+		assertEquals(0, inStream.readInt());
+		assertEquals(0, inStream.available());
+	}
+	
+	@Test
+	public void ShouldSetTypeToNullWithEmptyValue() {
+		ArrayList<TAG> value = new ArrayList<>();
+		value.add(new TAG_Byte("", (byte) 0));
+		
+		tagList.setValue(value);
+		
+		assertEquals(TAG_Type.TAG_Byte, tagList.getType());
+		
+		tagList.setValue(new ArrayList<>());
+		
+		assertEquals(null, tagList.getType());
+	}
+	
 	@Override
 	public void writeValue() throws IOException {
-		// TODO Auto-generated method stub
-		
 	}
 }

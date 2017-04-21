@@ -35,9 +35,17 @@ import stats.nbt.model.tags.TAG.TAG_Type;
 
 public class TAG_CompoundSpecification extends TAGCommonSpecification {
 
-	private static final String s_name = "Test";
-	
 	private TAG_Compound tagCompound = new TAG_Compound("");
+	Map<String, TAG> values = new HashMap<String, TAG>();
+	
+	@Before
+	public void setUp() throws IOException {
+		super.setUp();
+		
+		values = new HashMap<String, TAG>();
+		values.put("value1", new TAG_Byte("value1", (byte)0));
+		values.put("value2", new TAG_Byte("value2", (byte)0));
+	}
 	
 	@Test
 	public void ShouldCreateObjectWithName() {
@@ -47,493 +55,68 @@ public class TAG_CompoundSpecification extends TAGCommonSpecification {
 	}
 	
 	@Test
-	public void ShouldReadDataFromInputStream() throws IOException {
+	public void ShouldCreateObjectWithNameAndValues() {
+		tagCompound = new TAG_Compound(name, values);
 		
-		
-		createInputStreamFromOutputStream();
-		
-		//tagCompound.readFromStream(inStream, true);
-		
-		assertEquals(s_name, tagCompound.getName());
+		assertEquals(name, tagCompound.getName());
+		assertEquals(values, tagCompound.getValue());
 	}
 	
 	@Test
-	public void ShouldWriteDataToOutputStream() throws IOException {
-		tagCompound = new TAG_Compound(s_name);
+	public void ShouldReadValuesFromStream() throws IOException {
 		
-		Map<String, TAG> value = new HashMap<String, TAG>();
-		value.put("TAG_Byte", new TAG_Byte("TAG_Byte", (byte)0));
-		value.put("TAG_Short", new TAG_Short("TAG_Short", (short) 0));
-		value.put("TAG_Int", new TAG_Int("TAG_Int", 0));
-		value.put("TAG_Long", new TAG_Long("TAG_Long", (long) 0));
-		value.put("TAG_Float", new TAG_Float("TAG_Float", 0f));
-		value.put("TAG_Double", new TAG_Double("TAG_Double", 0.0));
-		value.put("TAG_Byte_Array", new TAG_Byte_Array("TAG_Byte_Array", new Byte[] {}));
-		value.put("TAG_String", new TAG_String("TAG_String", s_name));
-		value.put("TAG_List", new TAG_List("TAG_List"));
-		value.put("TAG_Compound", new TAG_Compound("TAG_Compound"));
-		value.put("TAG_Int_Array", new TAG_Int_Array("TAG_Int_Array", new Integer[] {}));
+		outStream.writeShort(name.length());
+		outStream.write(name.getBytes());
+		outStream.writeByte(1);
+		outStream.writeShort("value1".length());
+		outStream.write("value1".getBytes());
+		outStream.writeByte(0);
+		outStream.writeByte(1);
+		outStream.writeShort("value2".length());
+		outStream.write("value2".getBytes());
+		outStream.writeByte(0);
+		outStream.writeByte(0);
 		
-		tagCompound.setValue(value);
+		createInputStreamFromOutputStream();
+		
+		tagCompound.readFromStream(inStream, true);
+		
+		assertEquals(name, tagCompound.getName());
+		assertEquals(3, tagCompound.getValue().size());
+	}
+	
+	@Test
+	public void ShouldWriteValuesToStream() throws IOException {
+		tagCompound = new TAG_Compound(name);
+		tagCompound.setValue(values);
 		
 		tagCompound.writeToStream(outStream, true);
 		
 		createInputStreamFromOutputStream();
 		
 		assertNameRead();
+		assertEquals(1, inStream.readByte());
+		assertReadString("value2");
+		assertEquals(0, inStream.readByte());
+		assertEquals(1, inStream.readByte());
+		assertReadString("value1");
+		assertEquals(0, inStream.readByte());
+		assertEquals(0, inStream.readByte());
+	}
+	
+	private void assertReadString(String expected) throws IOException {
+		assertEquals(expected.length(), inStream.readShort());
+		assertTrue(Arrays.equals(expected.getBytes(), readBytesFromStream(expected.length())));
 	}
 	
 	@Test
-	public void testTAGCompoundWrite_TAGShort() throws IOException {
+	public void ShouldReturnValuesForFindTag() {
+		tagCompound = new TAG_Compound(name, values);
 		
-		TAG_Compound nbtTAG = new TAG_Compound(s_name);
-		Map<String, TAG> value = new HashMap<String, TAG>();
-		value.put("TAG_Short", new TAG_Short("TAG_Short", (short) 0));
-		
-		nbtTAG.setValue(value);
-		
-		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-		DataOutputStream nbtOut = new DataOutputStream(byteStream);
-		nbtTAG.writeToStream(nbtOut, true);
-		
-		ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
-		DataOutputStream testOut = new DataOutputStream(expectedStream);
-		
-		testOut.writeShort(s_name.length());
-		testOut.write(s_name.getBytes());
-		
-		testOut.writeByte(2);
-		testOut.writeShort("TAG_Short".length());
-		testOut.write("TAG_Short".getBytes());
-		testOut.writeShort(0);
-		
-		testOut.writeByte(0);
-		
-		byte[] a = expectedStream.toByteArray();
-		byte[] b = byteStream.toByteArray();
-		
-		assertTrue("TAG_Compound write is incorrect.", Arrays.equals(expectedStream.toByteArray(), byteStream.toByteArray()));
+		assertEquals(null, tagCompound.findTAG("nothing"));
+		assertEquals(values.get("value1"), tagCompound.findTAG("value1"));
 	}
-	
-	@Test
-	public void testTAGCompoundWrite_TAGInt() throws IOException {
-		
-		TAG_Compound nbtTAG = new TAG_Compound(s_name);
-		Map<String, TAG> value = new HashMap<String, TAG>();
-		value.put("TAG_Int", new TAG_Int("TAG_Int", 0));
-		
-		nbtTAG.setValue(value);
-		
-		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-		DataOutputStream nbtOut = new DataOutputStream(byteStream);
-		nbtTAG.writeToStream(nbtOut, true);
-		
-		ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
-		DataOutputStream testOut = new DataOutputStream(expectedStream);
-		
-		testOut.writeShort(s_name.length());
-		testOut.write(s_name.getBytes());
-		
-		testOut.writeByte(3);
-		testOut.writeShort("TAG_Int".length());
-		testOut.write("TAG_Int".getBytes());
-		testOut.writeInt(0);
-		
-		testOut.writeByte(0);
-		
-		byte[] a = expectedStream.toByteArray();
-		byte[] b = byteStream.toByteArray();
-		
-		assertTrue("TAG_Compound write is incorrect.", Arrays.equals(expectedStream.toByteArray(), byteStream.toByteArray()));
-	}
-
-	@Test
-	public void testTAGCompoundWrite_TAGLong() throws IOException {
-	
-		TAG_Compound nbtTAG = new TAG_Compound(s_name);
-		Map<String, TAG> value = new HashMap<String, TAG>();
-		value.put("TAG_Long", new TAG_Long("TAG_Long", (long) 0));
-		
-		nbtTAG.setValue(value);
-		
-		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-		DataOutputStream nbtOut = new DataOutputStream(byteStream);
-		nbtTAG.writeToStream(nbtOut, true);
-		
-		ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
-		DataOutputStream testOut = new DataOutputStream(expectedStream);
-		
-		testOut.writeShort(s_name.length());
-		testOut.write(s_name.getBytes());
-		
-		testOut.writeByte(4);
-		testOut.writeShort("TAG_Long".length());
-		testOut.write("TAG_Long".getBytes());
-		testOut.writeLong(0);
-		
-		testOut.writeByte(0);
-		
-		byte[] a = expectedStream.toByteArray();
-		byte[] b = byteStream.toByteArray();
-		
-		assertTrue("TAG_Compound write is incorrect.", Arrays.equals(expectedStream.toByteArray(), byteStream.toByteArray()));
-	}
-	
-	@Test
-	public void testTAGCompoundWrite_TAGFloat() throws IOException {
-		
-		TAG_Compound nbtTAG = new TAG_Compound(s_name);
-		Map<String, TAG> value = new HashMap<String, TAG>();
-		value.put("TAG_Float", new TAG_Float("TAG_Float", 0f));
-		
-		nbtTAG.setValue(value);
-		
-		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-		DataOutputStream nbtOut = new DataOutputStream(byteStream);
-		nbtTAG.writeToStream(nbtOut, true);
-		
-		ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
-		DataOutputStream testOut = new DataOutputStream(expectedStream);
-		
-		testOut.writeShort(s_name.length());
-		testOut.write(s_name.getBytes());
-		
-		testOut.writeByte(5);
-		testOut.writeShort("TAG_Float".length());
-		testOut.write("TAG_Float".getBytes());
-		testOut.writeFloat(0.0f);
-		
-		testOut.writeByte(0);
-		
-		byte[] a = expectedStream.toByteArray();
-		byte[] b = byteStream.toByteArray();
-		
-		assertTrue("TAG_Compound write is incorrect.", Arrays.equals(expectedStream.toByteArray(), byteStream.toByteArray()));
-	}
-	
-	public void testTAGCompoundWrite_TAGDouble() throws IOException {
-		
-		TAG_Compound nbtTAG = new TAG_Compound(s_name);
-		Map<String, TAG> value = new HashMap<String, TAG>();
-		value.put("TAG_Double", new TAG_Double("TAG_Double", 0.0));
-		
-		nbtTAG.setValue(value);
-		
-		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-		DataOutputStream nbtOut = new DataOutputStream(byteStream);
-		nbtTAG.writeToStream(nbtOut, true);
-		
-		ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
-		DataOutputStream testOut = new DataOutputStream(expectedStream);
-		
-		testOut.writeShort(s_name.length());
-		testOut.write(s_name.getBytes());
-		
-		testOut.writeByte(6);
-		testOut.writeShort("TAG_Double".length());
-		testOut.write("TAG_Double".getBytes());
-		testOut.writeDouble(0.0);
-		
-		testOut.writeByte(0);
-		
-		byte[] a = expectedStream.toByteArray();
-		byte[] b = byteStream.toByteArray();
-		
-		assertTrue("TAG_Compound write is incorrect.", Arrays.equals(expectedStream.toByteArray(), byteStream.toByteArray()));
-	}
-	
-	public void testTAGCompoundWrite_TAGByteArray() throws IOException {
-		
-		TAG_Compound nbtTAG = new TAG_Compound(s_name);
-		Map<String, TAG> value = new HashMap<String, TAG>();
-		value.put("TAG_Byte_Array", new TAG_Byte_Array("TAG_Byte_Array", new Byte[] {}));
-		
-		nbtTAG.setValue(value);
-		
-		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-		DataOutputStream nbtOut = new DataOutputStream(byteStream);
-		nbtTAG.writeToStream(nbtOut, true);
-		
-		ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
-		DataOutputStream testOut = new DataOutputStream(expectedStream);
-		
-		testOut.writeShort(s_name.length());
-		testOut.write(s_name.getBytes());
-		
-		testOut.writeByte(7);
-		testOut.writeShort("TAG_Byte_Array".length());
-		testOut.write("TAG_Byte_Array".getBytes());
-		testOut.writeInt(0);
-		
-		testOut.writeByte(0);
-		
-		byte[] a = expectedStream.toByteArray();
-		byte[] b = byteStream.toByteArray();
-		
-		assertTrue("TAG_Compound write is incorrect.", Arrays.equals(expectedStream.toByteArray(), byteStream.toByteArray()));
-	}
-	
-	public void testTAGCompoundWrite_TAGString() throws IOException {
-		
-		TAG_Compound nbtTAG = new TAG_Compound(s_name);
-		Map<String, TAG> value = new HashMap<String, TAG>();
-		value.put("TAG_String", new TAG_String("TAG_String", s_name));
-		
-		nbtTAG.setValue(value);
-		
-		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-		DataOutputStream nbtOut = new DataOutputStream(byteStream);
-		nbtTAG.writeToStream(nbtOut, true);
-		
-		ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
-		DataOutputStream testOut = new DataOutputStream(expectedStream);
-		
-		testOut.writeShort(s_name.length());
-		testOut.write(s_name.getBytes());
-		
-		testOut.writeByte(8);
-		testOut.writeShort("TAG_String".length());
-		testOut.write("TAG_String".getBytes());
-		testOut.writeShort(s_name.length());
-		testOut.write(s_name.getBytes());
-		
-		testOut.writeByte(0);
-		
-		byte[] a = expectedStream.toByteArray();
-		byte[] b = byteStream.toByteArray();
-		
-		assertTrue("TAG_Compound write is incorrect.", Arrays.equals(expectedStream.toByteArray(), byteStream.toByteArray()));
-	}
-	
-	public void testTAGCompoundWrite_TAGList() throws IOException {
-		
-		TAG_Compound nbtTAG = new TAG_Compound(s_name);
-		Map<String, TAG> value = new HashMap<String, TAG>();
-		value.put("TAG_List", new TAG_List("TAG_List"));
-		
-		nbtTAG.setValue(value);
-		
-		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-		DataOutputStream nbtOut = new DataOutputStream(byteStream);
-		nbtTAG.writeToStream(nbtOut, true);
-		
-		ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
-		DataOutputStream testOut = new DataOutputStream(expectedStream);
-		
-		testOut.writeShort(s_name.length());
-		testOut.write(s_name.getBytes());
-		
-		testOut.writeByte(9);
-		testOut.writeShort("TAG_List".length());
-		testOut.write("TAG_List".getBytes());
-		testOut.writeByte(0);
-		testOut.writeInt(0);
-		
-		testOut.writeByte(0);
-		
-		byte[] a = expectedStream.toByteArray();
-		byte[] b = byteStream.toByteArray();
-		
-		assertTrue("TAG_Compound write is incorrect.", Arrays.equals(expectedStream.toByteArray(), byteStream.toByteArray()));
-	}
-	
-	public void testTAGCompoundWrite_TAGCompound() throws IOException {
-		
-		TAG_Compound nbtTAG = new TAG_Compound(s_name);
-		Map<String, TAG> value = new HashMap<String, TAG>();
-		value.put("TAG_Compound", new TAG_Compound("TAG_Compound"));
-		
-		nbtTAG.setValue(value);
-		
-		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-		DataOutputStream nbtOut = new DataOutputStream(byteStream);
-		nbtTAG.writeToStream(nbtOut, true);
-		
-		ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
-		DataOutputStream testOut = new DataOutputStream(expectedStream);
-		
-		testOut.writeShort(s_name.length());
-		testOut.write(s_name.getBytes());
-		
-		testOut.writeByte(10);
-		testOut.writeShort("TAG_Compound".length());
-		testOut.write("TAG_Compound".getBytes());
-		testOut.writeByte(0);
-		
-		testOut.writeByte(0);
-		
-		byte[] a = expectedStream.toByteArray();
-		byte[] b = byteStream.toByteArray();
-		
-		assertTrue("TAG_Compound write is incorrect.", Arrays.equals(expectedStream.toByteArray(), byteStream.toByteArray()));
-	}
-	
-	public void testTAGCompoundWrite_TAGIntArray() throws IOException {
-		
-		TAG_Compound nbtTAG = new TAG_Compound(s_name);
-		Map<String, TAG> value = new HashMap<String, TAG>();
-		value.put("TAG_Int_Array", new TAG_Int_Array("TAG_Int_Array", new Integer[] {}));
-		
-		nbtTAG.setValue(value);
-		
-		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-		DataOutputStream nbtOut = new DataOutputStream(byteStream);
-		nbtTAG.writeToStream(nbtOut, true);
-		
-		ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
-		DataOutputStream testOut = new DataOutputStream(expectedStream);
-		
-		testOut.writeShort(s_name.length());
-		testOut.write(s_name.getBytes());
-		
-		testOut.writeByte(11);
-		testOut.writeShort("TAG_Int_Array".length());
-		testOut.write("TAG_Int_Array".getBytes());
-		testOut.writeInt(0);
-		
-		testOut.writeByte(0);
-		
-		byte[] a = expectedStream.toByteArray();
-		byte[] b = byteStream.toByteArray();
-		
-		assertTrue("TAG_Compound write is incorrect.", Arrays.equals(expectedStream.toByteArray(), byteStream.toByteArray()));
-	}
-//	
-//	public void testTAGCompoundEmptyNameRead() throws IOException {
-//		
-//		ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
-//		DataOutputStream testOut = new DataOutputStream(expectedStream);
-//		
-//		testOut.writeShort(0);
-//		testOut.writeInt(s_value);
-//		
-//		ByteArrayInputStream byteStream = new ByteArrayInputStream(expectedStream.toByteArray());
-//		DataInputStream nbtIn = new DataInputStream(byteStream);
-//		
-//		TAG_Compound nbtTAG = new TAG_Compound("", null);
-//		nbtTAG.readFromStream(nbtIn, true);
-//		
-//		assertEquals("", nbtTAG.getName());
-//		assertEquals(s_value, nbtTAG.getValue());
-//	}
-//
-//	public void testTAGCompoundEmptyNameWrite() throws IOException {
-//		
-//		TAG_Compound nbtTAG = new TAG_Compound("", null);
-//		nbtTAG.setValue(s_value);
-//		
-//		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-//		DataOutputStream nbtOut = new DataOutputStream(byteStream);
-//		nbtTAG.writeToStream(nbtOut);
-//		
-//		ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
-//		DataOutputStream testOut = new DataOutputStream(expectedStream);
-//		
-//		testOut.writeShort(0);
-//		testOut.writeInt(s_value);
-//		
-//		assertTrue("TAG_Int write is incorrect.", Arrays.equals(expectedStream.toByteArray(), byteStream.toByteArray()));
-//	}
-	
-	public void testTAGCompoundValue() {
-		
-		TAG_Compound nbtTAG = new TAG_Compound(s_name);
-		Map<String, TAG> value = new HashMap<String, TAG>();
-		value.put("TAG_Byte", new TAG_Byte("TAG_Byte", (byte)0));
-		value.put("TAG_Short", new TAG_Short("TAG_Short"));
-		value.put("TAG_Int", new TAG_Int("TAG_Int"));
-		value.put("TAG_Long", new TAG_Long("TAG_Long"));
-		value.put("TAG_Float", new TAG_Float("TAG_Float"));
-		value.put("TAG_Double", new TAG_Double("TAG_Double", null));
-		value.put("TAG_Byte_Array", new TAG_Byte_Array("TAG_Byte_Array"));
-		value.put("TAG_String", new TAG_String("TAG_String"));
-		value.put("TAG_List", new TAG_List("TAG_List"));
-		value.put("TAG_Compound", new TAG_Compound("TAG_Compound"));
-		value.put("TAG_Int_Array", new TAG_Int_Array("TAG_Int_Array"));
-		
-		nbtTAG.setValue(value);
-		
-		assertEquals(s_name, nbtTAG.getName());
-		
-		assertEquals("TAG_Byte", nbtTAG.findTAG("TAG_Byte").getName());
-		assertEquals("TAG_Short", nbtTAG.findTAG("TAG_Short").getName());
-		assertEquals("TAG_Int", nbtTAG.findTAG("TAG_Int").getName());
-		assertEquals("TAG_Long", nbtTAG.findTAG("TAG_Long").getName());
-		assertEquals("TAG_Float", nbtTAG.findTAG("TAG_Float").getName());
-		assertEquals("TAG_Double", nbtTAG.findTAG("TAG_Double").getName());
-		assertEquals("TAG_Byte_Array", nbtTAG.findTAG("TAG_Byte_Array").getName());
-		assertEquals("TAG_String", nbtTAG.findTAG("TAG_String").getName());
-		assertEquals("TAG_List", nbtTAG.findTAG("TAG_List").getName());
-		assertEquals("TAG_Compound", nbtTAG.findTAG("TAG_Compound").getName());
-		assertEquals("TAG_Int_Array", nbtTAG.findTAG("TAG_Int_Array").getName());
-		
-//		assertTrue(nbtTAG.findTAG("TAG_Byte").getParent() == nbtTAG);
-//		assertTrue(nbtTAG.findTAG("TAG_Short").getParent() == nbtTAG);
-//		assertTrue(nbtTAG.findTAG("TAG_Int").getParent() == nbtTAG);
-//		assertTrue(nbtTAG.findTAG("TAG_Long").getParent() == nbtTAG);
-//		assertTrue(nbtTAG.findTAG("TAG_Float").getParent() == nbtTAG);
-//		assertTrue(nbtTAG.findTAG("TAG_Double").getParent() == nbtTAG);
-//		assertTrue(nbtTAG.findTAG("TAG_Byte_Array").getParent() == nbtTAG);
-//		assertTrue(nbtTAG.findTAG("TAG_String").getParent() == nbtTAG);
-//		assertTrue(nbtTAG.findTAG("TAG_List").getParent() == nbtTAG);
-//		assertTrue(nbtTAG.findTAG("TAG_Compound").getParent() == nbtTAG);
-//		assertTrue(nbtTAG.findTAG("TAG_Int_Array").getParent() == nbtTAG);
-	}
-	
-	public void testTAGCompoundConstructor() {
-		
-		Map<String, TAG> value = new HashMap<String, TAG>();
-		value.put("TAG_Byte", new TAG_Byte("TAG_Byte", (byte)0));
-		value.put("TAG_Short", new TAG_Short("TAG_Short"));
-		value.put("TAG_Int", new TAG_Int("TAG_Int"));
-		value.put("TAG_Long", new TAG_Long("TAG_Long"));
-		value.put("TAG_Float", new TAG_Float("TAG_Float"));
-		value.put("TAG_Double", new TAG_Double("TAG_Double", null));
-		value.put("TAG_Byte_Array", new TAG_Byte_Array("TAG_Byte_Array"));
-		value.put("TAG_String", new TAG_String("TAG_String"));
-		value.put("TAG_List", new TAG_List("TAG_List"));
-		value.put("TAG_Compound", new TAG_Compound("TAG_Compound"));
-		value.put("TAG_Int_Array", new TAG_Int_Array("TAG_Int_Array"));
-		
-		TAG_Compound nbtTAG = new TAG_Compound(s_name, value);
-		
-		assertEquals(s_name, nbtTAG.getName());
-		
-		assertEquals("TAG_Byte", nbtTAG.findTAG("TAG_Byte").getName());
-		assertEquals("TAG_Short", nbtTAG.findTAG("TAG_Short").getName());
-		assertEquals("TAG_Int", nbtTAG.findTAG("TAG_Int").getName());
-		assertEquals("TAG_Long", nbtTAG.findTAG("TAG_Long").getName());
-		assertEquals("TAG_Float", nbtTAG.findTAG("TAG_Float").getName());
-		assertEquals("TAG_Double", nbtTAG.findTAG("TAG_Double").getName());
-		assertEquals("TAG_Byte_Array", nbtTAG.findTAG("TAG_Byte_Array").getName());
-		assertEquals("TAG_String", nbtTAG.findTAG("TAG_String").getName());
-		assertEquals("TAG_List", nbtTAG.findTAG("TAG_List").getName());
-		assertEquals("TAG_Compound", nbtTAG.findTAG("TAG_Compound").getName());
-		assertEquals("TAG_Int_Array", nbtTAG.findTAG("TAG_Int_Array").getName());
-		
-//		assertTrue(nbtTAG.findTAG("TAG_Byte").getParent() == nbtTAG);
-//		assertTrue(nbtTAG.findTAG("TAG_Short").getParent() == nbtTAG);
-//		assertTrue(nbtTAG.findTAG("TAG_Int").getParent() == nbtTAG);
-//		assertTrue(nbtTAG.findTAG("TAG_Long").getParent() == nbtTAG);
-//		assertTrue(nbtTAG.findTAG("TAG_Float").getParent() == nbtTAG);
-//		assertTrue(nbtTAG.findTAG("TAG_Double").getParent() == nbtTAG);
-//		assertTrue(nbtTAG.findTAG("TAG_Byte_Array").getParent() == nbtTAG);
-//		assertTrue(nbtTAG.findTAG("TAG_String").getParent() == nbtTAG);
-//		assertTrue(nbtTAG.findTAG("TAG_List").getParent() == nbtTAG);
-//		assertTrue(nbtTAG.findTAG("TAG_Compound").getParent() == nbtTAG);
-//		assertTrue(nbtTAG.findTAG("TAG_Int_Array").getParent() == nbtTAG);
-	}
-	
-	public void testTAGCompoundTAGNotFound() {
-		
-		TAG_Compound nbtTAG = new TAG_Compound("");
-		
-		assertNull(nbtTAG.findTAG("TAG"));
-	}
-
 	@Override
 	public void writeValue() throws IOException {
-		// TODO Auto-generated method stub
-		
 	}
 }
