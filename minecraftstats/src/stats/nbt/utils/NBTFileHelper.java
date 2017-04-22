@@ -5,7 +5,6 @@ import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.zip.GZIPInputStream;
 
 import stats.nbt.model.NBTFile;
@@ -29,9 +28,8 @@ public final class NBTFileHelper {
 	public static TAG readNextTag(DataInput in, TAG parent) throws IOException {
 		TAG_Type type = null;
 		type = TAG_Type.fromInt(in.readByte() & 0xFF);
-		TAG newTag = null;
 		
-		//System.out.println("Found tag: " + type);
+		System.out.println("Found tag: " + type);
 		
 		return readTagPayload(in, parent, type, true);
 	}

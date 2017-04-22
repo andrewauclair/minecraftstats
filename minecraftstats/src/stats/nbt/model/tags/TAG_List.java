@@ -4,8 +4,6 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-
 import stats.nbt.utils.NBTFileHelper;
 
 public class TAG_List extends TAG {
