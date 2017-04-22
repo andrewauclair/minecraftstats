@@ -16,4 +16,7 @@
 			</manifest>
 		</jar>
 	</target>
+	
+	<target name="test" depends="jar">
+	</target>
 </project>
