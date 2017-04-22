@@ -6,22 +6,22 @@ import java.io.IOException;
 
 public class TAG_Short extends TAG {
 
-	private Short m_value = null;
+	private short m_value = 0;
 	
 	public TAG_Short(String name) {
 		super(name);
 	}
 
-	public TAG_Short(String name, Short value) {
+	public TAG_Short(String name, short value) {
 		super(name);
 		m_value = value;
 	}
 
-	public Short getValue() {
+	public short getValue() {
 		return m_value;
 	}
 
-	public void setValue(Short value) {
+	public void setValue(short value) {
 		m_value = value;
 	}
 

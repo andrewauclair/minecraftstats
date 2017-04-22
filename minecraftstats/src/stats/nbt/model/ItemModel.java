@@ -1,8 +1,9 @@
 package stats.nbt.model;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import stats.nbt.model.tags.TAG_Byte;
+import stats.nbt.model.tags.TAG_Compound;
+import stats.nbt.model.tags.TAG_Short;
+import stats.nbt.model.tags.TAG_String;
 
 public class ItemModel {
 
@@ -10,34 +11,28 @@ public class ItemModel {
 	private short damage;
 	private String itemID;
 	
-	public void readFromStream(DataInputStream input) throws IOException {
-		readString(input);
-		count = input.readByte();
-		readString(input);
-		damage = input.readShort();
-		readString(input);
-		itemID = readString(input);
+	public void readFromCompound(TAG_Compound compound) {
+		TAG_Byte tagCount = (TAG_Byte) compound.getTAG("Count");
+		TAG_Short tagDamage = (TAG_Short) compound.getTAG("Damage");
+		TAG_String tagID = (TAG_String) compound.getTAG("id");
+		
+		if (tagCount != null) {
+			count = tagCount.getValue();
+		}
+		
+		if (tagDamage != null) {
+			damage = tagDamage.getValue();
+		}
+		
+		if (tagID != null) {
+			itemID = tagID.getValue();
+		}
 	}
 	
-	public void writeToStream(DataOutputStream output) throws IOException {
-		writeString(output, "Count");
-		output.writeByte(count);
-		writeString(output, "Damage");
-		output.writeShort(damage);
-		writeString(output, "id");
-		writeString(output, itemID);
-	}
-	
-	private String readString(DataInputStream input) throws IOException {
-		short len = input.readShort();
-		byte[] bytes = new byte[len];
-		input.read(bytes);
-		return new String(bytes, "UTF-8");
-	}
-	
-	private void writeString(DataOutputStream output, String value) throws IOException {
-		output.writeShort(value.length());
-		output.write(value.getBytes());
+	public void writeToCompound(TAG_Compound compound) {
+		compound.addTAG(new TAG_Byte("Count", count));
+		compound.addTAG(new TAG_Short("Damage", damage));
+		compound.addTAG(new TAG_String("id", itemID));
 	}
 	
 	public byte getCount() {

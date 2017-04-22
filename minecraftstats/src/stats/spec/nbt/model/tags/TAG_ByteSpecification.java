@@ -8,7 +8,7 @@ import stats.nbt.model.tags.TAG_Byte;
 
 public class TAG_ByteSpecification extends TAGCommonSpecification {
 
-	private static final Byte s_value = 15;
+	private static final byte s_value = 15;
 	
 	private TAG_Byte tagByte = new TAG_Byte("", (byte)0);
 	
@@ -49,7 +49,7 @@ public class TAG_ByteSpecification extends TAGCommonSpecification {
 		createInputStreamFromOutputStream();
 		
 		assertNameRead();
-		Assert.assertEquals(s_value.byteValue(), inStream.readByte());
+		Assert.assertEquals(s_value, inStream.readByte());
 	}
 	
 	@Test
@@ -76,7 +76,7 @@ public class TAG_ByteSpecification extends TAGCommonSpecification {
 		createInputStreamFromOutputStream();
 		
 		Assert.assertEquals(0, inStream.readShort());
-		Assert.assertEquals(s_value.byteValue(), inStream.readByte());
+		Assert.assertEquals(s_value, inStream.readByte());
 	}
 	
 	@Test

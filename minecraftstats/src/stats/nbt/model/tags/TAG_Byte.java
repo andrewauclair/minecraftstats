@@ -6,18 +6,18 @@ import java.io.IOException;
 
 public class TAG_Byte extends TAG {
 
-	private Byte m_value = null;
+	private byte m_value = 0;
 	
 	public TAG_Byte(String name) {
 		super(name);
 	}
 	
-	public TAG_Byte(String name, Byte value) {
+	public TAG_Byte(String name, byte value) {
 		super(name);
 		m_value = value;
 	}
 
-	public Byte getValue() {
+	public byte getValue() {
 		return m_value;
 	}
 

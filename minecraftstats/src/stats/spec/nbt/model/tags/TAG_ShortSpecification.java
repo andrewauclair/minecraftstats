@@ -9,7 +9,7 @@ import stats.nbt.model.tags.TAG_Short;
 
 public class TAG_ShortSpecification extends TAGCommonSpecification {
 
-	private static final Short s_value = 15;
+	private static final short s_value = 15;
 	
 	private TAG_Short tagShort = new TAG_Short("", (short)0);
 	
@@ -53,7 +53,7 @@ public class TAG_ShortSpecification extends TAGCommonSpecification {
 		createInputStreamFromOutputStream();
 		
 		assertNameRead();
-		assertEquals(s_value.shortValue(), inStream.readShort());
+		assertEquals(s_value, inStream.readShort());
 	}
 	
 	@Test
@@ -80,7 +80,7 @@ public class TAG_ShortSpecification extends TAGCommonSpecification {
 		createInputStreamFromOutputStream();
 		
 		assertEquals(0, inStream.readShort());
-		assertEquals(s_value.shortValue(), inStream.readShort());
+		assertEquals(s_value, inStream.readShort());
 	}
 	
 	@Test
