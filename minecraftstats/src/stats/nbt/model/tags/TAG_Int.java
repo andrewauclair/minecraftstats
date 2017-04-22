@@ -6,22 +6,22 @@ import java.io.IOException;
 
 public class TAG_Int extends TAG {
 
-	private Integer m_value = null;
+	private int m_value = 0;
 	
 	public TAG_Int(String name) {
 		super(name);
 	}
 	
-	public TAG_Int(String name, Integer value) {
+	public TAG_Int(String name, int value) {
 		super(name);
 		m_value = value;
 	}
 	
-	public Integer getValue() {
+	public int getValue() {
 		return m_value;
 	}
 
-	public void setValue(Integer value) {
+	public void setValue(int value) {
 		m_value = value;
 	}
 	

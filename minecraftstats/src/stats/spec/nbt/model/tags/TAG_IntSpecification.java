@@ -1,5 +1,7 @@
 package stats.spec.nbt.model.tags;
 
+import static org.junit.Assert.*;
+
 import java.io.IOException;
 import org.junit.Assert;
 import org.junit.Test;
@@ -8,7 +10,7 @@ import stats.nbt.model.tags.TAG_Int;
 
 public class TAG_IntSpecification extends TAGCommonSpecification {
 
-	private static final Integer s_value = 15;
+	private static final int s_value = 15;
 	
 	private TAG_Int tagInt = new TAG_Int("", 0);
 	
@@ -39,8 +41,8 @@ public class TAG_IntSpecification extends TAGCommonSpecification {
 	}
 	
 	private void assertNameAndValueAreSet() {
-		Assert.assertEquals(getName(), tagInt.getName());
-		Assert.assertEquals(s_value, tagInt.getValue());
+		assertEquals(getName(), tagInt.getName());
+		assertEquals(s_value, tagInt.getValue());
 	}
 	
 	@Test
@@ -52,7 +54,7 @@ public class TAG_IntSpecification extends TAGCommonSpecification {
 		createInputStreamFromOutputStream();
 		
 		assertNameRead();
-		Assert.assertEquals(s_value.intValue(), inStream.readInt());
+		assertEquals(s_value, inStream.readInt());
 	}
 	
 	@Test
@@ -65,8 +67,8 @@ public class TAG_IntSpecification extends TAGCommonSpecification {
 		
 		tagInt.readFromStream(inStream, true);
 		
-		Assert.assertEquals("", tagInt.getName());
-		Assert.assertEquals(s_value, tagInt.getValue());
+		assertEquals("", tagInt.getName());
+		assertEquals(s_value, tagInt.getValue());
 	}
 
 	@Test
@@ -78,15 +80,15 @@ public class TAG_IntSpecification extends TAGCommonSpecification {
 		
 		createInputStreamFromOutputStream();
 		
-		Assert.assertEquals(0, inStream.readShort());
-		Assert.assertEquals(s_value.intValue(), inStream.readInt());
+		assertEquals(0, inStream.readShort());
+		assertEquals(s_value, inStream.readInt());
 	}
 	
 	@Test
 	public void ShouldAllowSetAndGetOfValue() {
 		tagInt.setValue(s_value);
 		
-		Assert.assertEquals(s_value, tagInt.getValue());
+		assertEquals(s_value, tagInt.getValue());
 	}
 	
 	public void writeValue() throws IOException {

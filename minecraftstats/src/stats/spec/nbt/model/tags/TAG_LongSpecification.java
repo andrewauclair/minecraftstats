@@ -8,7 +8,7 @@ import stats.nbt.model.tags.TAG_Long;
 
 public class TAG_LongSpecification extends TAGCommonSpecification {
 
-	private static final Long s_value = 15L;
+	private static final long s_value = 15L;
 	
 	private TAG_Long tagLong = new TAG_Long("", 0L);
 	
@@ -52,7 +52,7 @@ public class TAG_LongSpecification extends TAGCommonSpecification {
 		createInputStreamFromOutputStream();
 		
 		assertNameRead();
-		Assert.assertEquals(s_value.longValue(), inStream.readLong());
+		Assert.assertEquals(s_value, inStream.readLong());
 	}
 	
 	@Test
@@ -79,7 +79,7 @@ public class TAG_LongSpecification extends TAGCommonSpecification {
 		createInputStreamFromOutputStream();
 		
 		Assert.assertEquals(0, inStream.readShort());
-		Assert.assertEquals(s_value.longValue(), inStream.readLong());
+		Assert.assertEquals(s_value, inStream.readLong());
 	}
 	
 	@Test

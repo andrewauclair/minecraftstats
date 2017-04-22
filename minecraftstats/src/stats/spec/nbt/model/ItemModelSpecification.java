@@ -60,4 +60,11 @@ public class ItemModelSpecification {
 		assertEquals(damage, ((TAG_Short)compound.getTAG("Damage")).getValue());
 		assertEquals(itemID, ((TAG_String)compound.getTAG("id")).getValue());
 	}
+	
+	@Test
+	public void ShouldNotThrowExceptionOnEmptyCompound() {
+		TAG_Compound compound = new TAG_Compound("");
+		
+		itemData.readFromCompound(compound);
+	}
 }

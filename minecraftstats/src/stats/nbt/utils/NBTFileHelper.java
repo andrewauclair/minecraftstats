@@ -29,7 +29,7 @@ public final class NBTFileHelper {
 		TAG_Type type = null;
 		type = TAG_Type.fromInt(in.readByte() & 0xFF);
 		
-		System.out.println("Found tag: " + type);
+		//System.out.println("Found tag: " + type);
 		
 		return readTagPayload(in, parent, type, true);
 	}

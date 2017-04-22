@@ -6,22 +6,22 @@ import java.io.IOException;
 
 public class TAG_Long extends TAG {
 
-	private Long m_value = null;
+	private long m_value = 0;
 	
 	public TAG_Long(String name) {
 		super(name);
 	}
 
-	public TAG_Long(String name, Long value) {
+	public TAG_Long(String name, long value) {
 		super(name);
 		m_value = value;
 	}
 
-	public Long getValue() {
+	public long getValue() {
 		return m_value;
 	}
 
-	public void setValue(Long value) {
+	public void setValue(long value) {
 		m_value = value;
 	}
 	
