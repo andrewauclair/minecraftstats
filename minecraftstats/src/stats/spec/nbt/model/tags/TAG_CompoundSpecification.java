@@ -3,28 +3,23 @@ package stats.spec.nbt.model.tags;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.junit.Before;
 import org.junit.Test;
 
-import stats.nbt.model.tags.TAG;
 import stats.nbt.model.tags.TAG_Byte;
 import stats.nbt.model.tags.TAG_Compound;
+import stats.nbt.model.tags.TAG_End;
 
 public class TAG_CompoundSpecification extends TAGCommonSpecification {
 
-	private TAG_Compound tagCompound = new TAG_Compound("");
-	Map<String, TAG> values = new HashMap<String, TAG>();
+	private TAG_Compound tagCompound;
+	TAG_Byte value1 = new TAG_Byte("value1", (byte)0);
+	TAG_Byte value2 = new TAG_Byte("value2", (byte)0);
 	
 	@Before
 	public void setUp() throws IOException {
 		super.setup();
-		
-		values = new HashMap<String, TAG>();
-		values.put("value1", new TAG_Byte("value1", (byte)0));
-		values.put("value2", new TAG_Byte("value2", (byte)0));
+		tagCompound = new TAG_Compound("");
 	}
 	
 	@Test
@@ -32,14 +27,6 @@ public class TAG_CompoundSpecification extends TAGCommonSpecification {
 		tagCompound = new TAG_Compound(getName());
 		
 		assertEquals(getName(), tagCompound.getName());
-	}
-	
-	@Test
-	public void ShouldCreateObjectWithNameAndValues() {
-		tagCompound = new TAG_Compound(getName(), values);
-		
-		assertEquals(getName(), tagCompound.getName());
-		assertEquals(values, tagCompound.getValue());
 	}
 	
 	@Test
@@ -62,13 +49,16 @@ public class TAG_CompoundSpecification extends TAGCommonSpecification {
 		tagCompound.readFromStream(inStream, true);
 		
 		assertEquals(getName(), tagCompound.getName());
-		assertEquals(3, tagCompound.getValue().size());
+		assertTrue(tagCompound.hasTAG("value1"));
+		assertTrue(tagCompound.hasTAG("value2"));
+		assertEquals(2, tagCompound.count());
 	}
 	
 	@Test
 	public void ShouldWriteValuesToStream() throws IOException {
 		tagCompound = new TAG_Compound(getName());
-		tagCompound.setValue(values);
+		tagCompound.addTAG(value1);
+		tagCompound.addTAG(value2);
 		
 		tagCompound.writeToStream(outStream, true);
 		
@@ -85,10 +75,19 @@ public class TAG_CompoundSpecification extends TAGCommonSpecification {
 	}
 	
 	@Test
-	public void ShouldReturnValuesForFindTag() {
-		tagCompound = new TAG_Compound(getName(), values);
+	public void ShouldReturnValuesForGetTag() {
+		tagCompound = new TAG_Compound(getName());
+		tagCompound.addTAG(value1);
+		tagCompound.addTAG(value2);
 		
-		assertEquals(null, tagCompound.findTAG("nothing"));
-		assertEquals(values.get("value1"), tagCompound.findTAG("value1"));
+		assertEquals(null, tagCompound.getTAG("nothing"));
+		assertEquals(value1, tagCompound.getTAG("value1"));
+	}
+	
+	@Test
+	public void ShouldNotAllowAddOfEndTAG() {
+		tagCompound.addTAG(new TAG_End());
+		
+		assertEquals(0, tagCompound.count());
 	}
 }

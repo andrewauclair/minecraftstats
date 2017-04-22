@@ -15,27 +15,23 @@ public class TAG_Compound extends TAG {
 	public TAG_Compound(String name) {
 		super(name);
 	}
-
-	public TAG_Compound(String name, Map<String, TAG> value) {
-		super(name);
-		m_value = value;
-	}
 	
-	public TAG findTAG(String name) {
+	public TAG getTAG(String name) {
 		return m_value.get(name);
 	}
 	
-	// TODO Break down the getValue and setValue into better access functions such as:
-	// hasX
-	// removeX
-	// addX
-	
-	public Map<String, TAG> getValue() {
-		return m_value;
+	public void addTAG(TAG value) {
+		if (!(value instanceof TAG_End)) {
+			m_value.put(value.getName(), value);
+		}
 	}
-
-	public void setValue(Map<String, TAG> value) {
-		m_value = value;
+	
+	public boolean hasTAG(String name) {
+		return m_value.containsKey(name);
+	}
+	
+	public int count() {
+		return m_value.keySet().size();
 	}
 	
 	@Override
@@ -54,7 +50,9 @@ public class TAG_Compound extends TAG {
 		
 		do {
 			tag = NBTFileHelper.readNextTag(in, this);
-			m_value.put(tag.getName(), tag);
+			if (!(tag instanceof TAG_End)) {
+				m_value.put(tag.getName(), tag);
+			}
 		} while (!(tag instanceof TAG_End));
 	}
 }
