@@ -1,17 +1,9 @@
 package stats.spec.nbt.model.tags;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
-
 import org.junit.Assert;
 import org.junit.Test;
 
-import junit.framework.TestCase;
-import stats.nbt.model.tags.TAG_List;
 import stats.nbt.model.tags.TAG_Long;
 
 public class TAG_LongSpecification extends TAGCommonSpecification {
@@ -22,33 +14,38 @@ public class TAG_LongSpecification extends TAGCommonSpecification {
 	
 	@Test
 	public void ShouldCreateObjectWithName() {
-		tagLong = new TAG_Long(name);
+		tagLong = new TAG_Long(getName());
 		
-		Assert.assertEquals(name, tagLong.getName());
+		Assert.assertEquals(getName(), tagLong.getName());
 	}
 	
 	@Test
 	public void ShouldCreateObjectWithNameAndValue() {
-		tagLong = new TAG_Long(name, s_value);
+		tagLong = new TAG_Long(getName(), s_value);
 		
 		assertNameAndValueAreSet();
 	}
 	
 	@Test
 	public void ShouldReadDataFromInputStream() throws IOException {
+		writeName();
+		writeValue();
+		
+		createInputStreamFromOutputStream();
+		
 		tagLong.readFromStream(inStream, true);
 		
 		assertNameAndValueAreSet();
 	}
 	
 	private void assertNameAndValueAreSet() {
-		Assert.assertEquals(name, tagLong.getName());
+		Assert.assertEquals(getName(), tagLong.getName());
 		Assert.assertEquals(s_value, tagLong.getValue());
 	}
 	
 	@Test
 	public void ShouldWriteDataToOutputStream() throws IOException {
-		tagLong = new TAG_Long(name, s_value);
+		tagLong = new TAG_Long(getName(), s_value);
 		
 		tagLong.writeToStream(outStream, true);
 		
@@ -60,7 +57,11 @@ public class TAG_LongSpecification extends TAGCommonSpecification {
 	
 	@Test
 	public void ShouldReadDataWithEmptyName() throws IOException {
-		clearNameInInputStream();
+		clearName();
+		writeName();
+		writeValue();
+		
+		createInputStreamFromOutputStream();
 		
 		tagLong.readFromStream(inStream, true);
 		
@@ -70,7 +71,7 @@ public class TAG_LongSpecification extends TAGCommonSpecification {
 
 	@Test
 	public void ShouldWriteDataWithEmptyName() throws IOException {
-		clearNameInInputStream();
+		clearName();
 		tagLong.setValue(s_value);
 		
 		tagLong.writeToStream(outStream, true);
@@ -88,7 +89,6 @@ public class TAG_LongSpecification extends TAGCommonSpecification {
 		Assert.assertEquals(s_value, tagLong.getValue());
 	}
 	
-	@Override
 	public void writeValue() throws IOException {
 		outStream.writeLong(s_value);
 	}

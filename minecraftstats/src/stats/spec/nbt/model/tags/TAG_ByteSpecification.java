@@ -1,13 +1,9 @@
 package stats.spec.nbt.model.tags;
 
-import java.io.DataInput;
-import java.io.DataOutput;
 import java.io.IOException;
 import org.junit.Assert;
 import org.junit.Test;
 
-import stats.nbt.model.tags.TAG;
-import stats.nbt.model.tags.TAG.TAG_Type;
 import stats.nbt.model.tags.TAG_Byte;
 
 public class TAG_ByteSpecification extends TAGCommonSpecification {
@@ -17,34 +13,36 @@ public class TAG_ByteSpecification extends TAGCommonSpecification {
 	private TAG_Byte tagByte = new TAG_Byte("", (byte)0);
 	
 	@Test
-	public void ShouldCreateObjectWithName() {
-		tagByte = new TAG_Byte(name);
+	public void ShouldCreateObject() {
+		tagByte = new TAG_Byte(getName());
 		
-		Assert.assertEquals(name, tagByte.getName());
-	}
-	
-	@Test
-	public void ShouldCreateObjectWithNameAndValue() {
-		tagByte = new TAG_Byte(name, s_value);
+		Assert.assertEquals(getName(), tagByte.getName());
+		
+		tagByte = new TAG_Byte(getName(), s_value);
 		
 		assertNameAndValueAreSet();
 	}
 	
 	@Test
-	public void ShouldReadDataFromInputStream() throws IOException {
+	public void ShouldReadDataFromStream() throws IOException {
+		writeName();
+		writeByte(s_value);
+		
+		createInputStreamFromOutputStream();
+		
 		tagByte.readFromStream(inStream, true);
 		
 		assertNameAndValueAreSet();
 	}
 	
 	private void assertNameAndValueAreSet() {
-		Assert.assertEquals(name, tagByte.getName());
+		Assert.assertEquals(getName(), tagByte.getName());
 		Assert.assertEquals(s_value, tagByte.getValue());
 	}
 	
 	@Test
-	public void ShouldWriteDataToOutputStream() throws IOException {
-		tagByte = new TAG_Byte(name, s_value);
+	public void ShouldWriteDataToStream() throws IOException {
+		tagByte = new TAG_Byte(getName(), s_value);
 		
 		tagByte.writeToStream(outStream, true);
 		
@@ -56,7 +54,11 @@ public class TAG_ByteSpecification extends TAGCommonSpecification {
 	
 	@Test
 	public void ShouldReadDataWithEmptyName() throws IOException {
-		clearNameInInputStream();
+		clearName();
+		writeName();
+		writeByte(s_value);
+		
+		createInputStreamFromOutputStream();
 		
 		tagByte.readFromStream(inStream, true);
 		
@@ -66,7 +68,7 @@ public class TAG_ByteSpecification extends TAGCommonSpecification {
 
 	@Test
 	public void ShouldWriteDataWithEmptyName() throws IOException {
-		clearNameInInputStream();
+		clearName();
 		tagByte.setValue(s_value);
 		
 		tagByte.writeToStream(outStream, true);
@@ -82,10 +84,5 @@ public class TAG_ByteSpecification extends TAGCommonSpecification {
 		tagByte.setValue(s_value);
 		
 		Assert.assertEquals(s_value, tagByte.getValue());
-	}
-
-	@Override
-	public void writeValue() throws IOException {
-		outStream.writeByte(s_value);
 	}
 }

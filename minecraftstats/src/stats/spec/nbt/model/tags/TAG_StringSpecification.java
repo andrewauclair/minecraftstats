@@ -1,68 +1,77 @@
 package stats.spec.nbt.model.tags;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import static org.junit.Assert.*;
+
 import java.io.IOException;
 import java.util.Arrays;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import junit.framework.TestCase;
-import stats.nbt.model.tags.TAG_List;
 import stats.nbt.model.tags.TAG_String;
 
 public class TAG_StringSpecification extends TAGCommonSpecification {
 
+	private static final String s_value = "String";
+	
 	private String value = "String";
 	
 	private TAG_String tagString = new TAG_String("", "");
 	
 	@Test
-	public void ShouldCreateObjectWithName() {
-		tagString = new TAG_String(name);
+	public void ShouldCreateObject() {
+		value = s_value;
 		
-		Assert.assertEquals(name, tagString.getName());
-	}
-	
-	@Test
-	public void ShouldCreateObjectWithNameAndValue() {
-		tagString = new TAG_String(name, value);
+		tagString = new TAG_String(getName());
 		
-		assertNameAndValueAreSet();
-	}
-	
-	@Test
-	public void ShouldReadDataFromInputStream() throws IOException {
-		tagString = new TAG_String(name, value);
+		assertEquals(getName(), tagString.getName());
+		
+		tagString = new TAG_String(getName(), value);
 		
 		assertNameAndValueAreSet();
 	}
-	
-	private void assertNameAndValueAreSet() {
-		Assert.assertEquals(name, tagString.getName());
-		Assert.assertEquals(value, tagString.getValue());
-	}
-	
+
 	@Test
-	public void ShouldWriteDataToOutputStream() throws IOException {
+	public void ShouldReadDataFromStream() throws IOException {
+		writeName();
+		writeValue();
+		
+		createInputStreamFromOutputStream();
+		
 		tagString.readFromStream(inStream, true);
 		
 		assertNameAndValueAreSet();
 	}
 	
+	private void assertNameAndValueAreSet() {
+		assertEquals(getName(), tagString.getName());
+		assertEquals(value, tagString.getValue());
+	}
+	
 	@Test
-	public void ShouldReadDataWithEmptyName() throws IOException {
-		tagString = new TAG_String(name, value);
+	public void ShouldWriteDataToStream() throws IOException {
+		tagString = new TAG_String(getName(), value);
 		
 		tagString.writeToStream(outStream, true);
 		
 		createInputStreamFromOutputStream();
 		
 		assertNameRead();
-		assertValueRead();
+		assertReadString(value);
+	}
+	
+	@Test
+	public void ShouldReadDataWithEmptyName() throws IOException {
+		clearName();
+		writeName();
+		writeValue();
+		
+		createInputStreamFromOutputStream();
+		
+		tagString.readFromStream(inStream, true);
+		
+		assertEquals("", tagString.getName());
+		assertEquals(value, tagString.getValue());
 	}
 
 	private void assertValueRead() throws IOException {
@@ -72,42 +81,47 @@ public class TAG_StringSpecification extends TAGCommonSpecification {
 	
 	@Test
 	public void ShouldWriteDataWithEmptyName() throws IOException {
-		clearNameInInputStream();
+		clearName();
 		tagString.setValue(value);
 		
 		tagString.writeToStream(outStream, true);
 		
 		createInputStreamFromOutputStream();
 		
-		Assert.assertEquals(0, inStream.readShort());
+		assertEquals(0, inStream.readShort());
 		assertValueRead();
 	}
 	
 	@Test
 	public void ShouldReadEmptyValue() throws IOException {
-		value = "";
-		clearNameInInputStream();
+		clearValue();
 		
-		tagString.readFromStream(inStream, true);
+		writeName();
+		writeValue();
 		
 		createInputStreamFromOutputStream();
 		
-		Assert.assertEquals(0, inStream.readShort());
-		Assert.assertEquals(0, inStream.readShort());
-		Assert.assertEquals(0, inStream.available());
+		tagString.readFromStream(inStream, true);
+		
+		assertEquals(getName(), tagString.getName());
+		assertEquals("", tagString.getValue());
+	}
+
+	private void clearValue() {
+		value = "";
 	}
 	
 	@Test
 	public void ShouldWriteEmptyValue() throws IOException {
-		tagString = new TAG_String(name, "");
+		tagString = new TAG_String(getName(), "");
 		
 		tagString.writeToStream(outStream, true);
 		
 		createInputStreamFromOutputStream();
 		
 		assertNameRead();
-		Assert.assertEquals(0, inStream.readShort());
-		Assert.assertEquals(0, inStream.available());
+		assertEquals(0, inStream.readShort());
+		assertEquals(0, inStream.available());
 	}
 	
 	@Test
@@ -117,12 +131,10 @@ public class TAG_StringSpecification extends TAGCommonSpecification {
 		
 		nbtInt.setValue(value);
 		
-		Assert.assertEquals(value, nbtInt.getValue());
+		assertEquals(value, nbtInt.getValue());
 	}
 	
-	@Override
 	public void writeValue() throws IOException {
-		outStream.writeShort(value.length());
-		outStream.write(value.getBytes());
+		writeString(value);
 	}
 }

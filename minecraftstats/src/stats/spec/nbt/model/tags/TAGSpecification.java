@@ -2,10 +2,8 @@ package stats.spec.nbt.model.tags;
 
 import static org.junit.Assert.*;
 
-import org.junit.Assert;
 import org.junit.Test;
 
-import stats.nbt.model.tags.TAG;
 import stats.nbt.model.tags.TAG.TAG_Type;
 import stats.nbt.model.tags.TAG_Byte;
 import stats.nbt.model.tags.TAG_Byte_Array;

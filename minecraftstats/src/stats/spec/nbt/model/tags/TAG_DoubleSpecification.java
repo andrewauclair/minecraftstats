@@ -14,33 +14,38 @@ public class TAG_DoubleSpecification extends TAGCommonSpecification {
 	
 	@Test
 	public void ShouldCreateObjectWithName() {
-		tagDouble = new TAG_Double(name);
+		tagDouble = new TAG_Double(getName());
 		
-		Assert.assertEquals(name, tagDouble.getName());
+		Assert.assertEquals(getName(), tagDouble.getName());
 	}
 	
 	@Test
 	public void ShouldCreateObjectWithNameAndValue() {
-		tagDouble = new TAG_Double(name, s_value);
+		tagDouble = new TAG_Double(getName(), s_value);
 		
 		assertNameAndValueAreSet();
 	}
 	
 	@Test
 	public void ShouldReadDataFromInputStream() throws IOException {
+		writeName();
+		writeValue();
+		
+		createInputStreamFromOutputStream();
+		
 		tagDouble.readFromStream(inStream, true);
 		
 		assertNameAndValueAreSet();
 	}
 	
 	private void assertNameAndValueAreSet() {
-		Assert.assertEquals(name, tagDouble.getName());
+		Assert.assertEquals(getName(), tagDouble.getName());
 		Assert.assertEquals(s_value, tagDouble.getValue());
 	}
 	
 	@Test
 	public void ShouldWriteDataToOutputStream() throws IOException {
-		tagDouble = new TAG_Double(name, s_value);
+		tagDouble = new TAG_Double(getName(), s_value);
 		
 		tagDouble.writeToStream(outStream, true);
 		
@@ -52,7 +57,11 @@ public class TAG_DoubleSpecification extends TAGCommonSpecification {
 	
 	@Test
 	public void ShouldReadDataWithEmptyName() throws IOException {
-		clearNameInInputStream();
+		clearName();
+		writeName();
+		writeValue();
+		
+		createInputStreamFromOutputStream();
 		
 		tagDouble.readFromStream(inStream, true);
 		
@@ -62,7 +71,7 @@ public class TAG_DoubleSpecification extends TAGCommonSpecification {
 
 	@Test
 	public void ShouldWriteDataWithEmptyName() throws IOException {
-		clearNameInInputStream();
+		clearName();
 		tagDouble.setValue(s_value);
 		
 		tagDouble.writeToStream(outStream, true);
@@ -80,7 +89,6 @@ public class TAG_DoubleSpecification extends TAGCommonSpecification {
 		Assert.assertEquals(s_value, tagDouble.getValue());
 	}
 	
-	@Override
 	public void writeValue() throws IOException {
 		outStream.writeDouble(s_value);
 	}

@@ -17,33 +17,38 @@ public class TAG_Byte_ArraySpecification extends TAGCommonSpecification {
 	
 	@Test
 	public void ShouldCreateObjectWithName() {
-		tagByteArray = new TAG_Byte_Array(name);
+		tagByteArray = new TAG_Byte_Array(getName());
 		
-		assertEquals(name, tagByteArray.getName());
+		assertEquals(getName(), tagByteArray.getName());
 	}
 	
 	@Test
 	public void ShouldCreateObjectWithNameAndValue() {
-		tagByteArray = new TAG_Byte_Array(name, s_value);
+		tagByteArray = new TAG_Byte_Array(getName(), s_value);
 		
 		assertNameAndValueAreSet();
 	}
 	
 	@Test
 	public void ShouldReadDataFromInputStream() throws IOException {
+		writeName();
+		writeValue();
+		
+		createInputStreamFromOutputStream();
+		
 		tagByteArray.readFromStream(inStream, true);
 		
 		assertNameAndValueAreSet();
 	}
 	
 	private void assertNameAndValueAreSet() {
-		assertEquals(name, tagByteArray.getName());
+		assertEquals(getName(), tagByteArray.getName());
 		assertTrue(Arrays.equals(s_value, tagByteArray.getValue()));
 	}
 	
 	@Test
 	public void ShouldWriteDataToOutputStream() throws IOException {
-		tagByteArray = new TAG_Byte_Array(name, s_value);
+		tagByteArray = new TAG_Byte_Array(getName(), s_value);
 		
 		tagByteArray.writeToStream(outStream, true);
 		
@@ -62,7 +67,11 @@ public class TAG_Byte_ArraySpecification extends TAGCommonSpecification {
 	
 	@Test
 	public void ShouldReadDataWithEmptyName() throws IOException {
-		clearNameInInputStream();
+		clearName();
+		writeName();
+		writeValue();
+		
+		createInputStreamFromOutputStream();
 		
 		tagByteArray.readFromStream(inStream, true);
 		
@@ -72,7 +81,7 @@ public class TAG_Byte_ArraySpecification extends TAGCommonSpecification {
 
 	@Test
 	public void ShouldWriteDataWithEmptyName() throws IOException {
-		clearNameInInputStream();
+		clearName();
 		tagByteArray.setValue(s_value);
 		
 		tagByteArray.writeToStream(outStream, true);
@@ -90,7 +99,6 @@ public class TAG_Byte_ArraySpecification extends TAGCommonSpecification {
 		assertTrue(Arrays.equals(s_value, tagByteArray.getValue()));
 	}
 
-	@Override
 	public void writeValue() throws IOException {
 		outStream.writeInt(s_value.length);
 		for (Byte value : s_value) {

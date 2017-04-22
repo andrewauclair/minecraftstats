@@ -10,20 +10,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import junit.framework.TestCase;
 import stats.nbt.model.tags.TAG;
 import stats.nbt.model.tags.TAG.TAG_Type;
 import stats.nbt.model.tags.TAG_Byte;
 import stats.nbt.model.tags.TAG_List;
-
-// Test list with an arraylist of each tag, that will be 11 test?
-// nested lists, nested with compound
-
-// need to do some form of full structure test with all of the tags
 
 public class TAG_ListSpecification extends TAGCommonSpecification {
 
@@ -34,8 +27,8 @@ public class TAG_ListSpecification extends TAGCommonSpecification {
 	private byte byteValue2 = 20;
 	
 	@Before
-	public void setUp() throws IOException {
-		super.setUp();
+	public void setup() throws IOException {
+		super.setup();
 		
 		values = new ArrayList<>();
 		values.add(new TAG_Byte("byte_1", byteValue1));
@@ -44,16 +37,16 @@ public class TAG_ListSpecification extends TAGCommonSpecification {
 	
 	@Test
 	public void ShouldCreateObjectWithName() {
-		tagList = new TAG_List(name);
+		tagList = new TAG_List(getName());
 		
-		assertEquals(name, tagList.getName());
+		assertEquals(getName(), tagList.getName());
 	}
 	
 	@Test
 	public void ShouldCreateObjectWithNameAndValues() {
-		tagList = new TAG_List(name, values);
+		tagList = new TAG_List(getName(), values);
 		
-		assertEquals(name, tagList.getName());
+		assertEquals(getName(), tagList.getName());
 		assertEquals(values, tagList.getValue());
 	}
 	
@@ -63,8 +56,8 @@ public class TAG_ListSpecification extends TAGCommonSpecification {
 		ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
 		DataOutputStream testOut = new DataOutputStream(expectedStream);
 		
-		testOut.writeShort(name.length());
-		testOut.write(name.getBytes());
+		testOut.writeShort(getName().length());
+		testOut.write(getName().getBytes());
 		testOut.writeByte(1);
 		testOut.writeInt(1);
 		testOut.writeByte(0);
@@ -75,14 +68,14 @@ public class TAG_ListSpecification extends TAGCommonSpecification {
 		TAG_List nbtTAG = new TAG_List("");
 		nbtTAG.readFromStream(nbtIn, true);
 		
-		assertEquals(name, nbtTAG.getName());
+		assertEquals(getName(), nbtTAG.getName());
 		assertEquals(1, ((ArrayList<TAG>)nbtTAG.getValue()).size());
 	}
 	
 	@Test
 	public void ShouldWriteValuesToStream() throws IOException {
 		
-		TAG_List nbtTAG = new TAG_List(name);
+		TAG_List nbtTAG = new TAG_List(getName());
 		ArrayList<TAG> value = new ArrayList<>();
 		value.add(new TAG_Byte("", (byte) 0));
 	
@@ -95,8 +88,8 @@ public class TAG_ListSpecification extends TAGCommonSpecification {
 		ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
 		DataOutputStream testOut = new DataOutputStream(expectedStream);
 		
-		testOut.writeShort(name.length());
-		testOut.write(name.getBytes());
+		testOut.writeShort(getName().length());
+		testOut.write(getName().getBytes());
 		testOut.writeByte(1);
 		testOut.writeInt(1);
 		testOut.writeByte(0);
@@ -107,7 +100,7 @@ public class TAG_ListSpecification extends TAGCommonSpecification {
 	@Test
 	public void ShouldWriteType0WhenEmpty() throws IOException {
 		
-		TAG_List nbtTAG = new TAG_List(name);
+		TAG_List nbtTAG = new TAG_List(getName());
 		
 		nbtTAG.writeToStream(outStream, true);
 		
@@ -131,9 +124,5 @@ public class TAG_ListSpecification extends TAGCommonSpecification {
 		tagList.setValue(new ArrayList<>());
 		
 		assertEquals(null, tagList.getType());
-	}
-	
-	@Override
-	public void writeValue() throws IOException {
 	}
 }

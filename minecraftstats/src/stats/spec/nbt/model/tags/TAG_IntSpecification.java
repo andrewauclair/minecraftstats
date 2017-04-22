@@ -14,33 +14,38 @@ public class TAG_IntSpecification extends TAGCommonSpecification {
 	
 	@Test
 	public void ShouldCreateObjectWithName() {
-		tagInt = new TAG_Int(name);
+		tagInt = new TAG_Int(getName());
 		
-		Assert.assertEquals(name, tagInt.getName());
+		Assert.assertEquals(getName(), tagInt.getName());
 	}
 	
 	@Test
 	public void ShouldCreateObjectWithNameAndValue() {
-		tagInt = new TAG_Int(name, s_value);
+		tagInt = new TAG_Int(getName(), s_value);
 		
 		assertNameAndValueAreSet();
 	}
 	
 	@Test
 	public void ShouldReadDataFromInputStream() throws IOException {
+		writeName();
+		writeValue();
+		
+		createInputStreamFromOutputStream();
+		
 		tagInt.readFromStream(inStream, true);
 		
 		assertNameAndValueAreSet();
 	}
 	
 	private void assertNameAndValueAreSet() {
-		Assert.assertEquals(name, tagInt.getName());
+		Assert.assertEquals(getName(), tagInt.getName());
 		Assert.assertEquals(s_value, tagInt.getValue());
 	}
 	
 	@Test
 	public void ShouldWriteDataToOutputStream() throws IOException {
-		tagInt = new TAG_Int(name, s_value);
+		tagInt = new TAG_Int(getName(), s_value);
 		
 		tagInt.writeToStream(outStream, true);
 		
@@ -52,7 +57,11 @@ public class TAG_IntSpecification extends TAGCommonSpecification {
 	
 	@Test
 	public void ShouldReadDataWithEmptyName() throws IOException {
-		clearNameInInputStream();
+		clearName();
+		writeName();
+		writeValue();
+		
+		createInputStreamFromOutputStream();
 		
 		tagInt.readFromStream(inStream, true);
 		
@@ -62,7 +71,7 @@ public class TAG_IntSpecification extends TAGCommonSpecification {
 
 	@Test
 	public void ShouldWriteDataWithEmptyName() throws IOException {
-		clearNameInInputStream();
+		clearName();
 		tagInt.setValue(s_value);
 		
 		tagInt.writeToStream(outStream, true);
@@ -80,7 +89,6 @@ public class TAG_IntSpecification extends TAGCommonSpecification {
 		Assert.assertEquals(s_value, tagInt.getValue());
 	}
 	
-	@Override
 	public void writeValue() throws IOException {
 		outStream.writeInt(s_value);
 	}

@@ -12,10 +12,16 @@ public class PlayerDataModel {
 		
 	}
 	
+	public PlayerDataModel(String userName, String UUID) {
+		m_userName = userName;
+		m_UUID = UUID;
+	}
+	
 	public PlayerDataModel(NBTFile file) {
 		m_file = file;
 		m_UUID = file.getFile().getName().substring(0, file.getFile().getName().indexOf('.'));
 		
+		// TODO Move this to a utility class
 		try {
 			m_userName = MojangAPI.getUserName(m_UUID.replace("-", ""));
 		}
