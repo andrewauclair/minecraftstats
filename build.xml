@@ -1,0 +1,19 @@
+<project>
+	<target name="clean">
+		<delete dir="build"/>
+	</target>
+	
+	<target name="compile" depends="clean">
+		<mkdir dir="build/classes/"/>
+		<javac srcdir="minecraftstats/src" destdir="build/classes" classpath="minecraftstats/junit-4.12.jar;minecraftstats/gson-2.8.0.jar"/>
+	</target>
+	
+	<target name="jar" depends="compile">
+		<mkdir dir="build/jar"/>
+		<jar destfile="build/jar/minecraftstats.jar" basedir="build/classes">
+			<manifest>
+				<attribute name="Main-Class" value="stats.ui.view.MainView"/>
+			</manifest>
+		</jar>
+	</target>
+</project>
