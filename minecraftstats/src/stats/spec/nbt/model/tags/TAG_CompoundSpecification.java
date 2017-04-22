@@ -90,4 +90,13 @@ public class TAG_CompoundSpecification extends TAGCommonSpecification {
 		
 		assertEquals(0, tagCompound.count());
 	}
+	
+	@Test
+	public void ShouldRemoveTAG() {
+		tagCompound.addTAG(value1);
+		
+		tagCompound.removeTAG(value1.getName());
+		
+		assertFalse(tagCompound.hasTAG(value1.getName()));
+	}
 }

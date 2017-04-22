@@ -26,6 +26,10 @@ public class TAG_Compound extends TAG {
 		}
 	}
 	
+	public void removeTAG(String name) {
+		m_value.remove(name);
+	}
+	
 	public boolean hasTAG(String name) {
 		return m_value.containsKey(name);
 	}
