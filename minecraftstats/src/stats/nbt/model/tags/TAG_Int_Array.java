@@ -4,9 +4,6 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 
-import stats.nbt.utils.NBTInputStream;
-import stats.nbt.utils.NBTOutputStream;
-
 public class TAG_Int_Array extends TAG {
 
 	private Integer[] m_value = new Integer[0];
