@@ -2,11 +2,13 @@ package stats.spec.nbt.model;
 
 import static org.junit.Assert.*;
 import static stats.nbt.model.LevelModel.*;
+import static stats.spec.nbt.model.ModelSpecUtils.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import stats.nbt.model.LevelModel;
+import stats.nbt.model.VersionModel;
 import stats.nbt.model.tags.TAG_Compound;
 import stats.nbt.model.tags.TAG_Int;
 import stats.nbt.model.tags.TAG_Long;
@@ -16,6 +18,7 @@ public class LevelModelSpecification {
 
 	private LevelModel level;
 	
+	private VersionModel versionCompound;
 	private String levelName;
 	private long randomSeed;
 	private int spawnX;
@@ -26,6 +29,7 @@ public class LevelModelSpecification {
 	@Before
 	public void setup() {
 		level = new LevelModel();
+		versionCompound = new VersionModel();
 		levelName = "Minecraft World";
 		randomSeed = -583940300333L;
 		spawnX = 30;
@@ -36,6 +40,8 @@ public class LevelModelSpecification {
 	
 	@Test
 	public void ShouldSetTagNames() {
+		assertEquals("Data", dataCompoundName);
+		assertEquals("Version", versionCompoundName);
 		assertEquals("LevelName", levelNameTagName);
 		assertEquals("RandomSeed", LevelModel.randomSeedTagName);
 		assertEquals("SpawnX", LevelModel.spawnXTagName);
@@ -47,12 +53,15 @@ public class LevelModelSpecification {
 	@Test
 	public void ShouldReadFromCompound() {
 		TAG_Compound compound = new TAG_Compound("");
-		compound.addTAG(new TAG_String(levelNameTagName, levelName));
-		compound.addTAG(new TAG_Long(randomSeedTagName, randomSeed));
-		compound.addTAG(new TAG_Int(spawnXTagName, spawnX));
-		compound.addTAG(new TAG_Int(spawnYTagName, spawnY));
-		compound.addTAG(new TAG_Int(spawnZTagName, spawnZ));
-		compound.addTAG(new TAG_Int(versionTagName, version));
+		TAG_Compound data = new TAG_Compound(dataCompoundName);
+		data.addTAG(new TAG_String(levelNameTagName, levelName));
+		data.addTAG(new TAG_Long(randomSeedTagName, randomSeed));
+		data.addTAG(new TAG_Int(spawnXTagName, spawnX));
+		data.addTAG(new TAG_Int(spawnYTagName, spawnY));
+		data.addTAG(new TAG_Int(spawnZTagName, spawnZ));
+		data.addTAG(new TAG_Int(versionTagName, version));
+		
+		compound.addTAG(data);
 		
 		level.readFromCompound(compound);
 		
@@ -77,13 +86,15 @@ public class LevelModelSpecification {
 		
 		level.writeToCompound(compound);
 		
-		assertTrue(compound.hasTAG("version"));
-		assertEquals(levelName, ((TAG_String)compound.getTAG(levelNameTagName)).getValue());
-		assertEquals(randomSeed, ((TAG_Long)compound.getTAG(randomSeedTagName)).getValue());
-		assertEquals(spawnX, ((TAG_Int)compound.getTAG(spawnXTagName)).getValue());
-		assertEquals(spawnY, ((TAG_Int)compound.getTAG(spawnYTagName)).getValue());
-		assertEquals(spawnZ, ((TAG_Int)compound.getTAG(spawnZTagName)).getValue());
-		assertEquals(version, ((TAG_Int)compound.getTAG(versionTagName)).getValue());
+		TAG_Compound data = (TAG_Compound) compound.getTAG(dataCompoundName);
+		
+		//assertTrue(compound.hasTAG("version"));
+		assertTagString(levelName, levelNameTagName, data);
+		assertTagLong(randomSeed, randomSeedTagName, data);
+		assertTagInt(spawnX, spawnXTagName, data);
+		assertTagInt(spawnY, spawnYTagName, data);
+		assertTagInt(spawnZ, spawnZTagName, data);
+		assertTagInt(version, versionTagName, data);
 	}
 	
 	@Test

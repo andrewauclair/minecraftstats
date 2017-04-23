@@ -18,8 +18,10 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import stats.nbt.model.LevelModel;
 import stats.nbt.model.PlayerDataModel;
 import stats.nbt.model.tags.TAG;
+import stats.nbt.model.tags.TAG_Compound;
 import stats.ui.model.MinecraftSaveData;
 import stats.ui.view.dialog.PlayerStatsDialog;
 import stats.util.MojangAPI;
@@ -34,7 +36,6 @@ public class MainView extends JFrame {
 	
 	private MinecraftSaveData m_currentSave = null;
 	
-	//ArrayList<String> m_players = new ArrayList<>();
 	DefaultListModel<String> model = new DefaultListModel<>();
 	
 	JList<String> m_players = new JList<>(model);
@@ -101,19 +102,16 @@ public class MainView extends JFrame {
 		
 		TAG root = saveData.getLevelDatNBT().getRoot();
 		
-		//TAG data = root.findTAG("Data");
+		LevelModel level = new LevelModel();
+		level.readFromCompound((TAG_Compound)root);
 		
-		//TAG version = data.findTAG("Version");
+		m_seed.setText(Long.toString(level.getRandomSeed()));
+		m_spawnX.setText(Integer.toString(level.getSpawnX()));
+		m_spawnY.setText(Integer.toString(level.getSpawnY()));
+		m_spawnZ.setText(Integer.toString(level.getSpawnZ()));
 		
-		//TAG levelName = data.findTAG("LevelName");
+		setTitle(s_title + " - " + level.getLevelName() + " - ");
 		
-		//TAG versionName = version.findTAG("Name");
-		
-//		m_seed.setText(data.findTAG("RandomSeed").getValue().toString());
-//		m_spawnX.setText(data.findTAG("SpawnX").getValue().toString());
-//		m_spawnY.setText(data.findTAG("SpawnY").getValue().toString());
-//		m_spawnZ.setText(data.findTAG("SpawnZ").getValue().toString());
-//		
 //		setTitle(s_title + " - " + levelName.getValue() + " - " + versionName.getValue());
 	}
 	

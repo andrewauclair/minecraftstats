@@ -1,11 +1,15 @@
 package stats.nbt.model;
 
+import static stats.nbt.utils.ModelUtils.*;
+
 import stats.nbt.model.tags.TAG_Compound;
 import stats.nbt.model.tags.TAG_Int;
 import stats.nbt.model.tags.TAG_Long;
 import stats.nbt.model.tags.TAG_String;
 
 public class LevelModel {
+	public static final String dataCompoundName = "Data";
+	public static final String versionCompoundName = "Version";
 	public static final String levelNameTagName = "LevelName";
 	public static final String randomSeedTagName = "RandomSeed";
 	public static final String spawnXTagName = "SpawnX";
@@ -21,37 +25,27 @@ public class LevelModel {
 	private int version;
 	
 	public void readFromCompound(TAG_Compound compound) {
-		TAG_String tagLevelName = (TAG_String)compound.getTAG(levelNameTagName);
-		TAG_Long tagRandomSeed = (TAG_Long)compound.getTAG(randomSeedTagName);
-		spawnX = readInt(compound, spawnXTagName);
-		spawnY = readInt(compound, spawnYTagName);
-		spawnZ = readInt(compound, spawnZTagName);
-		version = readInt(compound, versionTagName);
+		TAG_Compound data = (TAG_Compound)compound.getTAG(dataCompoundName);
 		
-		if (tagLevelName != null) {
-			levelName = tagLevelName.getValue();
+		if (data != null) {
+			levelName = getStringValue(data, levelNameTagName);
+			randomSeed = getLongValue(data, randomSeedTagName);
+			spawnX = getIntValue(data, spawnXTagName);
+			spawnY = getIntValue(data, spawnYTagName);
+			spawnZ = getIntValue(data, spawnZTagName);
+			version = getIntValue(data, versionTagName);
 		}
-		
-		if (tagRandomSeed != null) {
-			randomSeed = tagRandomSeed.getValue();
-		}
-	}
-	
-	private int readInt(TAG_Compound compound, String name) {
-		TAG_Int tag = (TAG_Int)compound.getTAG(name);
-		if (tag != null) {
-			return tag.getValue();
-		}
-		return 0;
 	}
 	
 	public void writeToCompound(TAG_Compound compound) {
-		compound.addTAG(new TAG_String(levelNameTagName, levelName));
-		compound.addTAG(new TAG_Long(randomSeedTagName, randomSeed));
-		compound.addTAG(new TAG_Int(spawnXTagName, spawnX));
-		compound.addTAG(new TAG_Int(spawnYTagName, spawnY));
-		compound.addTAG(new TAG_Int(spawnZTagName, spawnZ));
-		compound.addTAG(new TAG_Int(versionTagName, version));
+		TAG_Compound data = new TAG_Compound(dataCompoundName);
+		data.addTAG(new TAG_String(levelNameTagName, levelName));
+		data.addTAG(new TAG_Long(randomSeedTagName, randomSeed));
+		data.addTAG(new TAG_Int(spawnXTagName, spawnX));
+		data.addTAG(new TAG_Int(spawnYTagName, spawnY));
+		data.addTAG(new TAG_Int(spawnZTagName, spawnZ));
+		data.addTAG(new TAG_Int(versionTagName, version));
+		compound.addTAG(data);
 	}
 	
 	public String getLevelName() {
