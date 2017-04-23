@@ -18,7 +18,7 @@ import stats.nbt.model.tags.TAG.TAG_Type;
 import stats.nbt.model.tags.TAG_Byte;
 import stats.nbt.model.tags.TAG_List;
 
-public class TAG_ListSpecification extends TAGCommonSpecification {
+public class TAG_ListSpecification extends TAGSpecCommon {
 
 	private TAG_List tagList = new TAG_List("");
 	private ArrayList<TAG> values = new ArrayList<>();

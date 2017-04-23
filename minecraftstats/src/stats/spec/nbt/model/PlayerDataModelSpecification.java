@@ -24,17 +24,17 @@ public class PlayerDataModelSpecification {
 		assertEquals(userName, playerData.getUserName());
 	}
 	
-	@Test
-	public void ShouldReadFromCompound() {
-		
-		// TODO I think I need to build a test utility class that can write input and output streams
-		// for nbt tags to use in tests like these
-		
-		assertTrue(false);
-	}
-	
-	@Test
-	public void ShouldWriteToCompound() {
-		assertTrue(false);
-	}
+//	@Test
+//	public void ShouldReadFromCompound() {
+//		
+//		// TODO I think I need to build a test utility class that can write input and output streams
+//		// for nbt tags to use in tests like these
+//		
+//		assertTrue(false);
+//	}
+//	
+//	@Test
+//	public void ShouldWriteToCompound() {
+//		assertTrue(false);
+//	}
 }

@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import stats.nbt.model.tags.TAG_Double;
 
-public class TAG_DoubleSpecification extends TAGCommonSpecification {
+public class TAG_DoubleSpecification extends TAGSpecCommon {
 
 	private static final Double s_value = 15.0;
 	

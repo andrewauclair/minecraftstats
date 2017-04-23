@@ -110,9 +110,7 @@ public class MainView extends JFrame {
 		m_spawnY.setText(Integer.toString(level.getSpawnY()));
 		m_spawnZ.setText(Integer.toString(level.getSpawnZ()));
 		
-		setTitle(s_title + " - " + level.getLevelName() + " - ");
-		
-//		setTitle(s_title + " - " + levelName.getValue() + " - " + versionName.getValue());
+		setTitle(s_title + " - " + level.getLevelName() + " - " + level.getVersionCompound().getName());
 	}
 	
 	public static void main(String[] args) {

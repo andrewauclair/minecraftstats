@@ -1,39 +1,101 @@
-<project name="junit-example">
-  <property name="main.build.dir" value="build/main"/>
-  <property name="main.src.dir" value="minecraftstats/src/stats"/>
-  <property name="test.build.dir" value="build/test"/>
-  <property name="test.src.dir" value="minecraftstats/src/stats/spec"/>
+<project xmlns:jacoco="antlib:org.jacoco.ant">
+	<property name="lib.dir" location="minecraftstats/lib" />
+	<property name="src.dir" location="minecraftstats/src"/>
+	<property name="result.dir" location="build"/>
+	<property name="result.classes.dir" location="${result.dir}/classes/"/>
+	<property name="result.report.dir" location="${result.dir}/site/jacoco"/>
+	<property name="result.exec.file" location="${result.dir}/jacoco.exec"/>
+	
+	<path id="test.path.id">
+		<path location="${resuilt.classes.dir}" />
+		<path refid="lib.path.id" />
+	</path>
+	
+	<path id="lib.path.id">
+		<fileset dir="${lib.dir}" />
+	</path>
+	
+	<taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
+        <classpath path="minecraftstats/lib/jacocoant.jar"/>
+    </taskdef>
+	
+	<target name="clean">
+		<delete dir="build"/>
+	</target>
+	
+	<target name="compile" depends="clean">
+		<mkdir dir="build/classes/"/>
+		<javac srcdir="minecraftstats/src" destdir="build/classes">
+			<classpath refid="lib.path.id" />
+		</javac>
+	</target>
+	
+	<target name="jar" depends="compile">
+		<mkdir dir="build/jar"/>
+		<jar destfile="build/jar/minecraftstats.jar" basedir="build/classes">
+			<manifest>
+				<attribute name="Main-Class" value="stats.ui.view.MainView"/>
+			</manifest>
+		</jar>
+	</target>
+	
+	<target name="report" depends="jar">
+		<mkdir dir="${result.report.dir}" />
 
-  <path id="classpath.test">
-    <pathelement location="minecraftstats/lib/junit-4.12.jar"/>
-    <pathelement location="minecraftstats/lib/hamcrest-core-1.3.jar"/>
-    <pathelement location="${main.build.dir}"/>
-  </path>
+		<!-- Run all tests -->
+		<jacoco:coverage destfile="${result.exec.file}">
+			<junit fork="yes" haltonfailure="false" dir="${result.dir}" forkmode="once" failureproperty="test.failed">
+				
+				<!-- <jvmarg value="${log4j.config}" /> -->
+				<classpath><!-- refid="test.path.id"> -->
+					<pathelement location="${result.classes.dir}" />
+					<pathelement path="minecraftstats/lib/junit-4.12.jar;minecraftstats/lib/gson-2.8.0.jar;minecraftstats/lib/hamcrest-core-1.3.jar;minecraftstats/lib/mockito-all-1.9.5.jar"/>
+				</classpath>
+				<formatter type="xml" />
+				<batchtest todir="${result.report.dir}">
+					<fileset dir="${result.classes.dir}">
+						<include name="**/*Specification.class" />
+					</fileset>
+				</batchtest>
+			</junit>
+		</jacoco:coverage>
+<fail message="Test(s) failed." if="test.failed" />
+		<!-- Generate HTML report
+			- junit-noframes.html -> Single page HTML-report 
+			- index.html -> HTML-report using frames (several files, but more comfortable to read)-->
+		<junitreport todir="${result.report.dir}">
+			<fileset dir="${result.report.dir}">
+				<include name="TEST-*.xml" />
+			</fileset>
+			<report format="noframes" todir="build/junit" />
+			<report format="frames" todir="build/junit" />
+		</junitreport>
+		
+		<!-- Generate Code Coverage report
+			See: http://www.eclemma.org/jacoco/trunk/doc/ant.html -->
+		<jacoco:report>
+			<executiondata>
+				<file file="${result.exec.file}" />
+			</executiondata>
 
-  <target name="compile">
-    <mkdir dir="${main.build.dir}"/>
-    <javac srcdir="${main.src.dir}" destdir="${main.build.dir}" includeantruntime="false" classpath="minecraftstats/lib/gson-2.8.0.jar">
-		<exclude name="**/spec/" />
-	</javac>
-  </target>
+			<structure name="AntTestReporting">
+				<classfiles>
+					<fileset dir="${result.dir}">
+						<include name="**/*.class" />
+						<!-- Exclude classes necessary for testing only from the code coverage report-->
+						<exclude name="**/*Test*.class" />
+						<!-- Exclude inner classes -->
+						<exclude name="**/*$*.class" />
+					</fileset>
+				</classfiles>
+			</structure>
 
-  <target name="test-compile" depends="compile">
-    <mkdir dir="${test.build.dir}"/>
-    <javac srcdir="${test.src.dir}" destdir="${test.build.dir}" includeantruntime="false">
-        <classpath refid="classpath.test"/>
-    </javac>
-  </target>
-
-  <target name="test" depends="test-compile">
-    <junit printsummary="on" haltonfailure="yes" fork="true">
-        <classpath>
-          <path refid="classpath.test"/>
-          <pathelement location="${test.build.dir}"/>
-        </classpath>
-        <formatter type="brief" usefile="false" />
-        <batchtest>
-            <fileset dir="${test.src.dir}" includes="**/*Specification.java" />
-        </batchtest>
-    </junit>
-  </target>
+			<html destdir="build/jacoco" />
+		</jacoco:report>
+	</target>
+	
+	<target name="test" depends="report">
+	</target>
+	
+	
 </project>

@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import stats.nbt.model.tags.TAG_Byte_Array;
 
-public class TAG_Byte_ArraySpecification extends TAGCommonSpecification {
+public class TAG_Byte_ArraySpecification extends TAGSpecCommon {
 
 	private static final Byte[] s_value = { 1, 2, 3, 4, 5 };
 	

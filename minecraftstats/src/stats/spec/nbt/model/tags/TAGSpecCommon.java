@@ -5,7 +5,7 @@ import org.junit.Before;
 
 import stats.spec.nbt.model.SpecTagHelper;
 
-public class TAGCommonSpecification extends SpecTagHelper {
+public class TAGSpecCommon extends SpecTagHelper {
 
 	private static final String s_name = "Test";
 	

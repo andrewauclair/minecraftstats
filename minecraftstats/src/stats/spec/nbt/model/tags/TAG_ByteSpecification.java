@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import stats.nbt.model.tags.TAG_Byte;
 
-public class TAG_ByteSpecification extends TAGCommonSpecification {
+public class TAG_ByteSpecification extends TAGSpecCommon {
 
 	private static final byte s_value = 15;
 	

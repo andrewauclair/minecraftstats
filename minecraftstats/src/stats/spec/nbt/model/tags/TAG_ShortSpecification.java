@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import stats.nbt.model.tags.TAG_Short;
 
-public class TAG_ShortSpecification extends TAGCommonSpecification {
+public class TAG_ShortSpecification extends TAGSpecCommon {
 
 	private static final short s_value = 15;
 	

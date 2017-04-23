@@ -17,6 +17,7 @@ public class LevelModel {
 	public static final String spawnZTagName = "SpawnZ";
 	public static final String versionTagName = "version";
 	
+	private VersionModel versionCompound = new VersionModel();
 	private String levelName;
 	private long randomSeed;
 	private int spawnX;
@@ -28,6 +29,10 @@ public class LevelModel {
 		TAG_Compound data = (TAG_Compound)compound.getTAG(dataCompoundName);
 		
 		if (data != null) {
+			TAG_Compound versionCompound = (TAG_Compound)data.getTAG(versionCompoundName);
+			if (versionCompound != null) {
+				this.versionCompound.readFromCompound(versionCompound);
+			}
 			levelName = getStringValue(data, levelNameTagName);
 			randomSeed = getLongValue(data, randomSeedTagName);
 			spawnX = getIntValue(data, spawnXTagName);
@@ -39,6 +44,9 @@ public class LevelModel {
 	
 	public void writeToCompound(TAG_Compound compound) {
 		TAG_Compound data = new TAG_Compound(dataCompoundName);
+		TAG_Compound versionData = new TAG_Compound(versionCompoundName);
+		versionCompound.writeToCompound(versionData);
+		data.addTAG(versionData);
 		data.addTAG(new TAG_String(levelNameTagName, levelName));
 		data.addTAG(new TAG_Long(randomSeedTagName, randomSeed));
 		data.addTAG(new TAG_Int(spawnXTagName, spawnX));
@@ -46,6 +54,14 @@ public class LevelModel {
 		data.addTAG(new TAG_Int(spawnZTagName, spawnZ));
 		data.addTAG(new TAG_Int(versionTagName, version));
 		compound.addTAG(data);
+	}
+	
+	public VersionModel getVersionCompound() {
+		return versionCompound;
+	}
+
+	public void setVersionCompound(VersionModel versionCompound) {
+		this.versionCompound = versionCompound;
 	}
 	
 	public String getLevelName() {

@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import stats.nbt.model.tags.TAG_Long;
 
-public class TAG_LongSpecification extends TAGCommonSpecification {
+public class TAG_LongSpecification extends TAGSpecCommon {
 
 	private static final long s_value = 15L;
 	

@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import stats.nbt.model.tags.TAG_Int;
 
-public class TAG_IntSpecification extends TAGCommonSpecification {
+public class TAG_IntSpecification extends TAGSpecCommon {
 
 	private static final int s_value = 15;
 	

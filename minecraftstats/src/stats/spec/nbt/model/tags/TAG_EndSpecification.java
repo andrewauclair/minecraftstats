@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import stats.nbt.model.tags.TAG_End;
 
-public class TAG_EndSpecification extends TAGCommonSpecification {
+public class TAG_EndSpecification extends TAGSpecCommon {
 
 	private TAG_End tagEnd = new TAG_End();
 	

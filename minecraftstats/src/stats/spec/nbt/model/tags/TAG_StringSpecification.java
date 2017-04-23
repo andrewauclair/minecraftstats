@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import stats.nbt.model.tags.TAG_String;
 
-public class TAG_StringSpecification extends TAGCommonSpecification {
+public class TAG_StringSpecification extends TAGSpecCommon {
 
 	private static final String s_value = "String";
 	

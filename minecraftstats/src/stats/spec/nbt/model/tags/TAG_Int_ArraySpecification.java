@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import stats.nbt.model.tags.TAG_Int_Array;
 
-public class TAG_Int_ArraySpecification extends TAGCommonSpecification {
+public class TAG_Int_ArraySpecification extends TAGSpecCommon {
 
 	private static final Integer[] s_value = { 1, 2, 3, 4, 5 };
 	

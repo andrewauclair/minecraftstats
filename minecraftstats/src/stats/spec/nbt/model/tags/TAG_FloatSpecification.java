@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import stats.nbt.model.tags.TAG_Float;
 
-public class TAG_FloatSpecification extends TAGCommonSpecification {
+public class TAG_FloatSpecification extends TAGSpecCommon {
 
 	private static final Float s_value = 15.0f;
 

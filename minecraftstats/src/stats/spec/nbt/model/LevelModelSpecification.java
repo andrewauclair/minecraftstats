@@ -3,9 +3,14 @@ package stats.spec.nbt.model;
 import static org.junit.Assert.*;
 import static stats.nbt.model.LevelModel.*;
 import static stats.spec.nbt.model.ModelSpecUtils.*;
+import static org.mockito.Mockito.*;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.junit.rules.*;
 
 import stats.nbt.model.LevelModel;
 import stats.nbt.model.VersionModel;
@@ -18,7 +23,6 @@ public class LevelModelSpecification {
 
 	private LevelModel level;
 	
-	private VersionModel versionCompound;
 	private String levelName;
 	private long randomSeed;
 	private int spawnX;
@@ -29,7 +33,6 @@ public class LevelModelSpecification {
 	@Before
 	public void setup() {
 		level = new LevelModel();
-		versionCompound = new VersionModel();
 		levelName = "Minecraft World";
 		randomSeed = -583940300333L;
 		spawnX = 30;
@@ -54,6 +57,8 @@ public class LevelModelSpecification {
 	public void ShouldReadFromCompound() {
 		TAG_Compound compound = new TAG_Compound("");
 		TAG_Compound data = new TAG_Compound(dataCompoundName);
+		TAG_Compound versionCompound = new TAG_Compound(versionCompoundName);
+		data.addTAG(versionCompound);
 		data.addTAG(new TAG_String(levelNameTagName, levelName));
 		data.addTAG(new TAG_Long(randomSeedTagName, randomSeed));
 		data.addTAG(new TAG_Int(spawnXTagName, spawnX));
@@ -63,8 +68,15 @@ public class LevelModelSpecification {
 		
 		compound.addTAG(data);
 		
+		VersionModel mockVersion = Mockito.mock(VersionModel.class);
+		
+		level.setVersionCompound(mockVersion);
+		
 		level.readFromCompound(compound);
 		
+		verify(mockVersion).readFromCompound(versionCompound);
+		
+		assertEquals(level.getVersionCompound(), mockVersion);
 		assertEquals(levelName, level.getLevelName());
 		assertEquals(randomSeed, level.getRandomSeed());
 		assertEquals(spawnX, level.getSpawnX());
@@ -84,11 +96,17 @@ public class LevelModelSpecification {
 		level.setSpawnZ(spawnZ);
 		level.setVersion(version);
 		
+		VersionModel mockVersion = Mockito.mock(VersionModel.class);
+		
+		level.setVersionCompound(mockVersion);
+		
 		level.writeToCompound(compound);
 		
-		TAG_Compound data = (TAG_Compound) compound.getTAG(dataCompoundName);
+		TAG_Compound data = (TAG_Compound)compound.getTAG(dataCompoundName);
+		TAG_Compound versionCompound = (TAG_Compound)data.getTAG(versionCompoundName);
 		
 		//assertTrue(compound.hasTAG("version"));
+		verify(mockVersion).writeToCompound(versionCompound);
 		assertTagString(levelName, levelNameTagName, data);
 		assertTagLong(randomSeed, randomSeedTagName, data);
 		assertTagInt(spawnX, spawnXTagName, data);
@@ -100,6 +118,10 @@ public class LevelModelSpecification {
 	@Test
 	public void ShouldNotThrowExceptionOnEmptyCompound() {
 		TAG_Compound compound = new TAG_Compound("");
+		
+		level.readFromCompound(compound);
+		
+		compound.addTAG(new TAG_Compound(dataCompoundName));
 		
 		level.readFromCompound(compound);
 	}

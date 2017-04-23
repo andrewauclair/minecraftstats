@@ -10,7 +10,7 @@ import stats.nbt.model.tags.TAG_Byte;
 import stats.nbt.model.tags.TAG_Compound;
 import stats.nbt.model.tags.TAG_End;
 
-public class TAG_CompoundSpecification extends TAGCommonSpecification {
+public class TAG_CompoundSpecification extends TAGSpecCommon {
 
 	private TAG_Compound tagCompound;
 	TAG_Byte value1 = new TAG_Byte("value1", (byte)0);
