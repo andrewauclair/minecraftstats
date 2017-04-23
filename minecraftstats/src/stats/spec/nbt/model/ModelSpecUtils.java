@@ -10,6 +10,7 @@ import stats.nbt.model.tags.TAG_String;
 
 public final class ModelSpecUtils {
 	public static void assertTagString(String expected, String tagName, TAG_Compound compound) {
+		new ModelSpecUtils();
 		assertEquals(expected, ((TAG_String)compound.getTAG(tagName)).getValue());
 	}
 	
