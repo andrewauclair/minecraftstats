@@ -2,4 +2,4 @@ language: java
 jdk: oraclejdk8
 
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
+  - bash <(curl -s https://codecov.io/bash) -t db9cb3c8-a5de-46d3-99c3-614c33c61735
