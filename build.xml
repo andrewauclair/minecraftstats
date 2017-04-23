@@ -1,11 +1,33 @@
-<project>
+<project xmlns:jacoco="antlib:org.jacoco.ant">
+	<property name="lib.dir" location="minecraftstats/lib" />
+	<property name="src.dir" location="minecraftstats/src"/>
+	<property name="result.dir" location="build"/>
+	<property name="result.classes.dir" location="${result.dir}/classes/"/>
+	<property name="result.report.dir" location="${result.dir}/site/jacoco"/>
+	<property name="result.exec.file" location="${result.dir}/jacoco.exec"/>
+	
+	<path id="test.path.id">
+		<path location="${resuilt.classes.dir}" />
+		<path refid="lib.path.id" />
+	</path>
+	
+	<path id="lib.path.id">
+		<fileset dir="${lib.dir}" />
+	</path>
+	
+	<taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
+        <classpath path="minecraftstats/lib/jacocoant.jar"/>
+    </taskdef>
+	
 	<target name="clean">
 		<delete dir="build"/>
 	</target>
 	
 	<target name="compile" depends="clean">
 		<mkdir dir="build/classes/"/>
-		<javac srcdir="minecraftstats/src" destdir="build/classes" classpath="minecraftstats/junit-4.12.jar;minecraftstats/gson-2.8.0.jar"/>
+		<javac srcdir="minecraftstats/src" destdir="build/classes">
+			<classpath refid="lib.path.id" />
+		</javac>
 	</target>
 	
 	<target name="jar" depends="compile">
@@ -17,6 +39,65 @@
 		</jar>
 	</target>
 	
-	<target name="test" depends="jar">
+	<target name="report" depends="jar">
+		<mkdir dir="${result.report.dir}" />
+
+		<!-- Run all tests -->
+		<jacoco:coverage destfile="${result.exec.file}">
+			<junit fork="yes" haltonfailure="false" dir="${result.dir}" forkmode="once">
+				
+				<!-- <jvmarg value="${log4j.config}" /> -->
+				<classpath><!-- refid="test.path.id"> -->
+					<pathelement location="${result.classes.dir}" />
+					<pathelement path="minecraftstats/lib/junit-4.12.jar;minecraftstats/lib/gson-2.8.0.jar;minecraftstats/lib/hamcrest-junit-2.0.0.0.jar"/>
+				</classpath>
+				<formatter type="xml" />
+				<batchtest todir="${result.report.dir}">
+					<fileset dir="${result.classes.dir}">
+						<!-- Exclude inner classes -->
+						
+						<include name="**/*Specification.class" />
+					</fileset>
+				</batchtest>
+			</junit>
+		</jacoco:coverage>
+
+		<!-- Generate HTML report
+			- junit-noframes.html -> Single page HTML-report 
+			- index.html -> HTML-report using frames (several files, but more comfortable to read)-->
+		<junitreport todir="${result.report.dir}">
+			<fileset dir="${result.dir}">
+				<include name="TEST-*.xml" />
+			</fileset>
+			<report format="noframes" todir="build/junit" />
+			<report format="frames" todir="build/junit" />
+		</junitreport>
+		
+		<!-- Generate Code Coverage report
+			See: http://www.eclemma.org/jacoco/trunk/doc/ant.html -->
+		<jacoco:report>
+			<executiondata>
+				<file file="${result.exec.file}" />
+			</executiondata>
+
+			<structure name="AntTestReporting">
+				<classfiles>
+					<fileset dir="${result.dir}">
+						<include name="**/*.class" />
+						<!-- Exclude classes necessary for testing only from the code coverage report-->
+						<exclude name="**/*Test*.class" />
+						<!-- Exclude inner classes -->
+						<exclude name="**/*$*.class" />
+					</fileset>
+				</classfiles>
+			</structure>
+
+			<html destdir="build/jacoco" />
+		</jacoco:report>
 	</target>
+	
+	<target name="test" depends="report">
+	</target>
+	
+	
 </project>
