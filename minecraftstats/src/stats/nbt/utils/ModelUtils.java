@@ -2,6 +2,7 @@ package stats.nbt.utils;
 
 import stats.nbt.model.tags.TAG_Byte;
 import stats.nbt.model.tags.TAG_Compound;
+import stats.nbt.model.tags.TAG_Float;
 import stats.nbt.model.tags.TAG_Int;
 import stats.nbt.model.tags.TAG_Long;
 import stats.nbt.model.tags.TAG_String;
@@ -37,5 +38,13 @@ public final class ModelUtils {
 			return tag.getValue();
 		}
 		return 0;
+	}
+	
+	public static float getFloatValue(TAG_Compound compound, String name) {
+		TAG_Float tag = (TAG_Float)compound.getTAG(name);
+		if (tag != null) {
+			return tag.getValue();
+		}
+		return 0f;
 	}
 }

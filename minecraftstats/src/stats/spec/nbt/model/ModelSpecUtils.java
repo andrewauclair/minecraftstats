@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import stats.nbt.model.tags.TAG_Byte;
 import stats.nbt.model.tags.TAG_Compound;
+import stats.nbt.model.tags.TAG_Float;
 import stats.nbt.model.tags.TAG_Int;
 import stats.nbt.model.tags.TAG_Long;
 import stats.nbt.model.tags.TAG_String;
@@ -24,5 +25,9 @@ public final class ModelSpecUtils {
 	
 	public static void assertTagLong(long expected, String tagName, TAG_Compound compound) {
 		assertEquals(expected, ((TAG_Long)compound.getTAG(tagName)).getValue());
+	}
+	
+	public static void assertTagFloat(float expected, String tagName, TAG_Compound compound) {
+		assertEquals(expected, ((TAG_Float)compound.getTAG(tagName)).getValue(), 0.001);
 	}
 }

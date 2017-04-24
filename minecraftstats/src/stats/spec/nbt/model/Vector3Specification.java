@@ -29,6 +29,15 @@ public class Vector3Specification {
 	}
 	
 	@Test
+	public void ShouldCreateObjectWithValues() {
+		position = new Vector3(x, y, z);
+		
+		assertEquals(x, position.getX(), 0.001);
+		assertEquals(y, position.getY(), 0.001);
+		assertEquals(z, position.getZ(), 0.001);
+	}
+	
+	@Test
 	public void ShouldReadFromList() {
 		TAG_List list = new TAG_List("");
 		ArrayList<TAG> tags = new ArrayList<>();

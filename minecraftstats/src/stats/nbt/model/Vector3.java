@@ -13,6 +13,15 @@ public class Vector3 {
 	private double y;
 	private double z;
 	
+	public Vector3() {
+	}
+	
+	public Vector3(double x, double y, double z) {
+		this.x = x;
+		this.y = y;
+		this.z = z;
+	}
+	
 	public void readFromList(TAG_List list) {
 		if (list.getType() == TAG_Type.TAG_Double) {
 			ArrayList<TAG> tags = list.getValue();

@@ -12,6 +12,14 @@ public class Vector2 {
 	private float x;
 	private float y;
 	
+	public Vector2() {
+	}
+	
+	public Vector2(float x, float y) {
+		this.x = x;
+		this.y = y;
+	}
+	
 	public void readFromList(TAG_List list) {
 		if (list.getType() == TAG_Type.TAG_Float) {
 			ArrayList<TAG> tags = list.getValue();

@@ -27,6 +27,14 @@ public class Vector2Specification {
 	}
 	
 	@Test
+	public void ShouldCreateObjectWithValues() {
+		rotation = new Vector2(x, y);
+		
+		assertEquals(x, rotation.getX(), 0.001);
+		assertEquals(y, rotation.getY(), 0.001);
+	}
+	
+	@Test
 	public void ShouldReadFromList() {
 		TAG_List list = new TAG_List("");
 		ArrayList<TAG> tags = new ArrayList<>();
