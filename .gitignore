@@ -4,3 +4,4 @@ minecraftstats/bin/
 .recommenders
 build
 test
+report.xml

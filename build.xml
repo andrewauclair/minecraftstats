@@ -94,7 +94,7 @@
 					<fileset dir="${result.dir}">
 						<include name="**/*.class" />
 						<!-- Exclude classes necessary for testing only from the code coverage report-->
-						<exclude name="**/*Test*.class" />
+						<exclude name="**/*Specification.class" />
 						<!-- Exclude inner classes -->
 						<exclude name="**/*$*.class" />
 					</fileset>
@@ -102,6 +102,7 @@
 			</structure>
 
 			<html destdir="build/jacoco" />
+			<xml destfile="report.xml" />
 		</jacoco:report>
 	</target>
 	
