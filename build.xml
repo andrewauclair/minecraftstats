@@ -23,9 +23,20 @@
 		<delete dir="build"/>
 	</target>
 	
+	<target name="clean-test">
+		<delete dir="test"/>
+	</target>
+	
 	<target name="compile" depends="clean">
 		<mkdir dir="build/classes/"/>
 		<javac srcdir="minecraftstats/src" destdir="build/classes">
+			<classpath refid="lib.path.id" />
+		</javac>
+	</target>
+	
+	<target name="compile-test" depends="clean-test">
+		<mkdir dir="test/classes/"/>
+		<javac srcdir="minecraftstats/src" destdir="test/classes" debug="on">
 			<classpath refid="lib.path.id" />
 		</javac>
 	</target>
@@ -39,7 +50,7 @@
 		</jar>
 	</target>
 	
-	<target name="report" depends="jar">
+	<target name="report" depends="compile-test">
 		<mkdir dir="${result.report.dir}" />
 
 		<!-- Run all tests -->
@@ -94,7 +105,7 @@
 		</jacoco:report>
 	</target>
 	
-	<target name="test" depends="report">
+	<target name="test" depends="jar,report">
 	</target>
 	
 	
