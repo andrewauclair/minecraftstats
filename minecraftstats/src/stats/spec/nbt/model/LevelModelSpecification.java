@@ -6,12 +6,8 @@ import static stats.spec.nbt.model.ModelSpecUtils.*;
 import static org.mockito.Mockito.*;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.junit.rules.*;
-
 import stats.nbt.model.LevelModel;
 import stats.nbt.model.VersionModel;
 import stats.nbt.model.tags.TAG_Compound;

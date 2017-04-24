@@ -12,7 +12,7 @@ public class TAG_Float extends TAG {
 		super(name);
 	}
 	
-	public TAG_Float(String name, Float value) {
+	public TAG_Float(String name, float value) {
 		super(name);
 		m_value = value;
 	}

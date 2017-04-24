@@ -8,7 +8,7 @@ import stats.nbt.model.tags.TAG_Double;
 
 public class TAG_DoubleSpecification extends TAGSpecCommon {
 
-	private static final Double s_value = 15.0;
+	private static final double s_value = 15.0;
 	
 	private TAG_Double tagDouble = new TAG_Double("", 0.0);
 	
@@ -40,7 +40,7 @@ public class TAG_DoubleSpecification extends TAGSpecCommon {
 	
 	private void assertNameAndValueAreSet() {
 		Assert.assertEquals(getName(), tagDouble.getName());
-		Assert.assertEquals(s_value, tagDouble.getValue());
+		Assert.assertEquals(s_value, tagDouble.getValue(), 0.001);
 	}
 	
 	@Test
@@ -52,7 +52,7 @@ public class TAG_DoubleSpecification extends TAGSpecCommon {
 		createInputStreamFromOutputStream();
 		
 		assertNameRead();
-		Assert.assertEquals(s_value.doubleValue(), inStream.readDouble(), 0.001);
+		Assert.assertEquals(s_value, inStream.readDouble(), 0.001);
 	}
 	
 	@Test
@@ -66,7 +66,7 @@ public class TAG_DoubleSpecification extends TAGSpecCommon {
 		tagDouble.readFromStream(inStream, true);
 		
 		Assert.assertEquals("", tagDouble.getName());
-		Assert.assertEquals(s_value, tagDouble.getValue());
+		Assert.assertEquals(s_value, tagDouble.getValue(), 0.001);
 	}
 
 	@Test
@@ -79,14 +79,14 @@ public class TAG_DoubleSpecification extends TAGSpecCommon {
 		createInputStreamFromOutputStream();
 		
 		Assert.assertEquals(0, inStream.readShort());
-		Assert.assertEquals(s_value.doubleValue(), inStream.readDouble(), 0.001);
+		Assert.assertEquals(s_value, inStream.readDouble(), 0.001);
 	}
 	
 	@Test
 	public void ShouldAllowSetAndGetOfValue() {
 		tagDouble.setValue(s_value);
 		
-		Assert.assertEquals(s_value, tagDouble.getValue());
+		Assert.assertEquals(s_value, tagDouble.getValue(), 0.001);
 	}
 	
 	public void writeValue() throws IOException {

@@ -6,22 +6,22 @@ import java.io.IOException;
 
 public class TAG_Double extends TAG {
 
-	private Double m_value = null;
+	private double m_value = 0;
 	
 	public TAG_Double(String name) {
 		super(name);
 	}
 	
-	public TAG_Double(String name, Double value) {
+	public TAG_Double(String name, double value) {
 		super(name);
 		m_value = value;
 	}
 
-	public Double getValue() {
+	public double getValue() {
 		return m_value;
 	}
 
-	public void setValue(Double value) {
+	public void setValue(double value) {
 		m_value = value;
 	}
 	

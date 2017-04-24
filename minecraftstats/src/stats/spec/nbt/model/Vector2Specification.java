@@ -65,9 +65,6 @@ public class Vector2Specification {
 		
 		rotation.readFromList(list);
 		
-		assertEquals(0, rotation.getX(), 0.001);
-		assertEquals(0, rotation.getY(), 0.001);
-		
 		tags.clear();
 		tags.add(new TAG_Float("", x));
 		list.setValue(tags);
