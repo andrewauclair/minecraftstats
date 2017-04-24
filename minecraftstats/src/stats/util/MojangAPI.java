@@ -3,13 +3,22 @@ package stats.util;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 public final class MojangAPI {
 
+	private static Map<String, String> uuidToUsername = new HashMap<>();
+	
 	public static String getUserName(String UUID) {
+		UUID = UUID.replace("-", "");
+		
+		if (uuidToUsername.containsKey(UUID)) {
+			return uuidToUsername.get(UUID);
+		}
 		
 		String urlString = "https://sessionserver.mojang.com/session/minecraft/profile/" + UUID;
 		
@@ -27,14 +36,14 @@ public final class MojangAPI {
 			
 			try {
 				jsonObject = new JsonParser().parse(data).getAsJsonObject();
-				return jsonObject.get("name").getAsString();
+				String username = jsonObject.get("name").getAsString();
+				uuidToUsername.put(UUID, username);
+				return username;
 			}
 			catch (IllegalStateException e) {
 				System.out.println("Error fetching: " + UUID);
 				e.printStackTrace();
 			}
-			
-			
 		}
 		catch (Exception e) {
 			e.printStackTrace();

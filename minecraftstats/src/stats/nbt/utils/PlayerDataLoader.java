@@ -17,7 +17,8 @@ public final class PlayerDataLoader {
 			NBTFile nbtFile = NBTFileHelper.readNBTFile(file);
 			
 			if (nbtFile != null) {
-				data = new PlayerDataModel(nbtFile);
+				String uuid = file.getName().substring(0, file.getName().indexOf('.'));
+				data = new PlayerDataModel(uuid);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

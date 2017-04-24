@@ -64,4 +64,11 @@ public class VersionModelSpecification {
 		assertTagString(name, nameTagName, compound);
 		assertTagByte(snapshot, snapshotTagName, compound);
 	}
+	
+	@Test
+	public void ShouldNotThrowExceptionOnEmptyCompound() {
+		TAG_Compound compound = new TAG_Compound("");
+		
+		version.readFromCompound(compound);
+	}
 }

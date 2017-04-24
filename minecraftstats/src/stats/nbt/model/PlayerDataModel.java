@@ -5,7 +5,6 @@ import static stats.nbt.utils.ModelUtils.*;
 import stats.nbt.model.tags.TAG_Compound;
 import stats.nbt.model.tags.TAG_Float;
 import stats.nbt.model.tags.TAG_Int;
-import stats.util.MojangAPI;
 
 public class PlayerDataModel {
 	public static final String dimensionTagName = "Dimension";
@@ -14,9 +13,6 @@ public class PlayerDataModel {
 	public static final String xpLevelTagName = "XpLevel";
 	
 	private String m_UUID = "";
-	private String m_userName = "";
-	private NBTFile m_file = null;
-	
 	private int dimension;
 	private float health;
 	private int playerGameType;
@@ -26,24 +22,22 @@ public class PlayerDataModel {
 		
 	}
 	
-	public PlayerDataModel(String userName, String UUID) {
-		m_userName = userName;
+	public PlayerDataModel(String UUID) {
 		m_UUID = UUID;
 	}
 	
-	public PlayerDataModel(NBTFile file) {
-		m_file = file;
-		m_UUID = file.getFile().getName().substring(0, file.getFile().getName().indexOf('.'));
-		
-		// TODO Move this to a utility class
-		try {
-			m_userName = MojangAPI.getUserName(m_UUID.replace("-", ""));
-		}
-		catch (Exception e) {
-			System.out.println("Error getting username");
-			e.printStackTrace();
-		}
-	}
+//	public PlayerDataModel(NBTFile file) {
+//		m_UUID = file.getFile().getName().substring(0, file.getFile().getName().indexOf('.'));
+//		
+//		// TODO Move this to a utility class
+//		try {
+//			m_userName = MojangAPI.getUserName(m_UUID.replace("-", ""));
+//		}
+//		catch (Exception e) {
+//			System.out.println("Error getting username");
+//			e.printStackTrace();
+//		}
+//	}
 	
 	public void readFromCompound(TAG_Compound compound) {
 		dimension = getIntValue(compound, dimensionTagName);
@@ -61,10 +55,6 @@ public class PlayerDataModel {
 	
 	public String getUUID() {
 		return m_UUID;
-	}
-	
-	public String getUserName() {
-		return m_userName;
 	}
 
 	public int getDimension() {

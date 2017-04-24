@@ -1,7 +1,6 @@
 package stats.spec.nbt.model;
 
 import static org.junit.Assert.*;
-import static stats.nbt.model.LevelModel.dataCompoundName;
 import static stats.nbt.model.PlayerDataModel.*;
 import static stats.spec.nbt.model.ModelSpecUtils.*;
 
@@ -16,7 +15,6 @@ import stats.nbt.model.tags.TAG_Int;
 public class PlayerDataModelSpecification {
 
 	private String UUID = "1a0857f7-b10c-457b-b136-9643b4f26ab4";
-	private String userName = "Player1";
 	private PlayerDataModel playerData;
 	private int dimension;
 	private float health;
@@ -25,7 +23,7 @@ public class PlayerDataModelSpecification {
 	
 	@Before
 	public void setup() {
-		playerData = new PlayerDataModel(userName, UUID);
+		playerData = new PlayerDataModel(UUID);
 		dimension = 4;
 		health = 4.88f;
 		playerGameType = 1;
@@ -41,9 +39,8 @@ public class PlayerDataModelSpecification {
 	}
 	
 	@Test
-	public void ShouldCreateObjectWithUUIDAndUsername() {
+	public void ShouldCreateObjectWithUUID() {
 		assertEquals(UUID, playerData.getUUID());
-		assertEquals(userName, playerData.getUserName());
 	}
 	
 	@Test

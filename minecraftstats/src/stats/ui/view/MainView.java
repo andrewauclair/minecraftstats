@@ -97,7 +97,7 @@ public class MainView extends JFrame {
 		m_currentSave = saveData;
 		
 		for (PlayerDataModel player : saveData.getPlayers()) {
-			model.addElement(player.getUserName());
+			model.addElement(MojangAPI.getUserName(player.getUUID()));
 		}
 		
 		TAG root = saveData.getLevelDatNBT().getRoot();

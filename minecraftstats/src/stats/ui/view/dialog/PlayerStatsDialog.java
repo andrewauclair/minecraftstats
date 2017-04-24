@@ -23,7 +23,7 @@ public class PlayerStatsDialog extends JDialog {
 	
 		m_playerData = playerData;
 		
-		setTitle(playerData.getUserName());
+		setTitle(MojangAPI.getUserName(playerData.getUUID()));
 		
 		setMinimumSize(new Dimension(200, 200));
 		setPreferredSize(getMinimumSize());
