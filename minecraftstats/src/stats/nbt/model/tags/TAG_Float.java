@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class TAG_Float extends TAG {
 
-	private Float m_value = null;
+	private float m_value = 0f;
 	
 	public TAG_Float(String name) {
 		super(name);
@@ -17,11 +17,11 @@ public class TAG_Float extends TAG {
 		m_value = value;
 	}
 
-	public Float getValue() {
+	public float getValue() {
 		return m_value;
 	}
 
-	public void setValue(Float value) {
+	public void setValue(float value) {
 		m_value = value;
 	}
 	

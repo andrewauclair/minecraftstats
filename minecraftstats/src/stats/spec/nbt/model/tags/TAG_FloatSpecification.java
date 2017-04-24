@@ -1,14 +1,15 @@
 package stats.spec.nbt.model.tags;
 
+import static org.junit.Assert.*;
+
 import java.io.IOException;
-import org.junit.Assert;
 import org.junit.Test;
 
 import stats.nbt.model.tags.TAG_Float;
 
 public class TAG_FloatSpecification extends TAGSpecCommon {
 
-	private static final Float s_value = 15.0f;
+	private static final float s_value = 15.0f;
 
 	private TAG_Float tagFloat = new TAG_Float("", 0.0f);
 	
@@ -16,7 +17,7 @@ public class TAG_FloatSpecification extends TAGSpecCommon {
 	public void ShouldCreateObjectWithName() {
 		tagFloat = new TAG_Float(getName());
 		
-		Assert.assertEquals(getName(), tagFloat.getName());
+		assertEquals(getName(), tagFloat.getName());
 	}
 	
 	@Test
@@ -39,8 +40,8 @@ public class TAG_FloatSpecification extends TAGSpecCommon {
 	}
 	
 	private void assertNameAndValueAreSet() {
-		Assert.assertEquals(getName(), tagFloat.getName());
-		Assert.assertEquals(s_value, tagFloat.getValue());
+		assertEquals(getName(), tagFloat.getName());
+		assertEquals(s_value, tagFloat.getValue(), 0.001);
 	}
 	
 	@Test
@@ -52,7 +53,7 @@ public class TAG_FloatSpecification extends TAGSpecCommon {
 		createInputStreamFromOutputStream();
 		
 		assertNameRead();
-		Assert.assertEquals(s_value.floatValue(), inStream.readFloat(), 0.001);
+		assertEquals(s_value, inStream.readFloat(), 0.001);
 	}
 	
 	@Test
@@ -65,8 +66,8 @@ public class TAG_FloatSpecification extends TAGSpecCommon {
 		
 		tagFloat.readFromStream(inStream, true);
 		
-		Assert.assertEquals("", tagFloat.getName());
-		Assert.assertEquals(s_value, tagFloat.getValue());
+		assertEquals("", tagFloat.getName());
+		assertEquals(s_value, tagFloat.getValue(), 0.001);
 	}
 
 	@Test
@@ -78,15 +79,15 @@ public class TAG_FloatSpecification extends TAGSpecCommon {
 		
 		createInputStreamFromOutputStream();
 		
-		Assert.assertEquals(0, inStream.readShort());
-		Assert.assertEquals(s_value.floatValue(), inStream.readFloat(), 0.001);
+		assertEquals(0, inStream.readShort());
+		assertEquals(s_value, inStream.readFloat(), 0.001);
 	}
 	
 	@Test
 	public void ShouldAllowSetAndGetOfValue() {
 		tagFloat.setValue(s_value);
 		
-		Assert.assertEquals(s_value, tagFloat.getValue());
+		assertEquals(s_value, tagFloat.getValue(), 0.001);
 	}
 	
 	public void writeValue() throws IOException {
