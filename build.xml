@@ -3,6 +3,7 @@
 	<property name="src.dir" location="minecraftstats/src"/>
 	<property name="result.dir" location="build"/>
 	<property name="result.classes.dir" location="${result.dir}/classes/"/>
+	<property name="test.classes.dir" location="test/classes/" />
 	<property name="result.report.dir" location="${result.dir}/site/jacoco"/>
 	<property name="result.exec.file" location="${result.dir}/jacoco.exec"/>
 	
@@ -59,12 +60,12 @@
 				
 				<!-- <jvmarg value="${log4j.config}" /> -->
 				<classpath><!-- refid="test.path.id"> -->
-					<pathelement location="${result.classes.dir}" />
+					<pathelement location="${test.classes.dir}" />
 					<pathelement path="minecraftstats/lib/junit-4.12.jar;minecraftstats/lib/gson-2.8.0.jar;minecraftstats/lib/hamcrest-core-1.3.jar;minecraftstats/lib/mockito-all-1.9.5.jar"/>
 				</classpath>
 				<formatter type="xml" />
 				<batchtest todir="${result.report.dir}">
-					<fileset dir="${result.classes.dir}">
+					<fileset dir="${test.classes.dir}">
 						<include name="**/*Specification.class" />
 					</fileset>
 				</batchtest>
@@ -91,7 +92,7 @@
 
 			<structure name="AntTestReporting">
 				<classfiles>
-					<fileset dir="${result.dir}">
+					<fileset dir="${test.classes.dir}">
 						<include name="**/*.class" />
 						<!-- Exclude classes necessary for testing only from the code coverage report-->
 						<exclude name="**/*Specification.class" />
