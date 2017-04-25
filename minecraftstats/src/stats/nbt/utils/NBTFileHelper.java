@@ -29,8 +29,6 @@ public final class NBTFileHelper {
 		TAG_Type type = null;
 		type = TAG_Type.fromInt(in.readByte() & 0xFF);
 		
-		//System.out.println("Found tag: " + type);
-		
 		return readTagPayload(in, parent, type, true);
 	}
 	
@@ -124,18 +122,5 @@ public final class NBTFileHelper {
 		// write the TAG to the file
 		
 		// if requested, compress the file using gzip
-	}
-	
-	public static void main(String[] args) {
-		try {
-			//readNBTFile(new File("idcounts.dat"));
-			//readNBTFile(new File("map_0.dat"));
-			//readNBTFile(new File("level.dat"));
-			//readNBTFile(new File("r.0.0.mca"));
-			readNBTFile(new File("1a0857f7-b10c-457b-b136-9643b4f26ab4.dat"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 }

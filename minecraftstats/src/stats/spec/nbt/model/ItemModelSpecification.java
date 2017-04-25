@@ -1,6 +1,8 @@
 package stats.spec.nbt.model;
 
 import static org.junit.Assert.*;
+import static stats.nbt.model.ItemModel.*;
+import static stats.spec.nbt.model.ModelSpecUtils.*;
 
 import java.io.IOException;
 
@@ -18,28 +20,35 @@ public class ItemModelSpecification {
 	private ItemModel itemData;
 	private byte count;
 	private short damage;
-	private String itemID;
+	private String id;
 	
 	@Before
 	public void setup() throws IOException {
 		itemData = new ItemModel();
 		count = 5;
 		damage = 1;
-		itemID = "minecraft:wheat_seeds";
+		id = "minecraft:wheat_seeds";
+	}
+	
+	@Test
+	public void ShouldSetTagNames() {
+		assertEquals("Count", countTagName);
+		assertEquals("Damage", damageTagName);
+		assertEquals("id", idTagName);
 	}
 	
 	@Test
 	public void ShouldReadFromCompound() throws IOException {
 		TAG_Compound compound = new TAG_Compound("Item");
-		compound.addTAG(new TAG_Byte("Count", count));
-		compound.addTAG(new TAG_Short("Damage", damage));
-		compound.addTAG(new TAG_String("id", itemID));
+		compound.addTAG(new TAG_Byte(countTagName, count));
+		compound.addTAG(new TAG_Short(damageTagName, damage));
+		compound.addTAG(new TAG_String(idTagName, id));
 		
 		itemData.readFromCompound(compound);
 		
 		assertEquals(count, itemData.getCount());
 		assertEquals(damage, itemData.getDamage());
-		assertEquals(itemID, itemData.getItemID());
+		assertEquals(id, itemData.getItemID());
 	}
 	
 	@Test
@@ -49,16 +58,13 @@ public class ItemModelSpecification {
 		
 		itemData.setCount(count);
 		itemData.setDamage(damage);
-		itemData.setItemID(itemID);
+		itemData.setItemID(id);
 		
 		itemData.writeToCompound(compound);
 		
-		assertTrue(compound.hasTAG("Count"));
-		assertTrue(compound.hasTAG("Damage"));
-		assertTrue(compound.hasTAG("id"));
-		assertEquals(count, ((TAG_Byte)compound.getTAG("Count")).getValue());
-		assertEquals(damage, ((TAG_Short)compound.getTAG("Damage")).getValue());
-		assertEquals(itemID, ((TAG_String)compound.getTAG("id")).getValue());
+		assertTagByte(count, countTagName, compound);
+		assertTagShort(damage, damageTagName, compound);
+		assertTagString(id, idTagName, compound);
 	}
 	
 	@Test

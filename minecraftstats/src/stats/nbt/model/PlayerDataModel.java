@@ -18,26 +18,9 @@ public class PlayerDataModel {
 	private int playerGameType;
 	private int xpLevel;
 	
-	public PlayerDataModel() {
-		
-	}
-	
 	public PlayerDataModel(String UUID) {
 		m_UUID = UUID;
 	}
-	
-//	public PlayerDataModel(NBTFile file) {
-//		m_UUID = file.getFile().getName().substring(0, file.getFile().getName().indexOf('.'));
-//		
-//		// TODO Move this to a utility class
-//		try {
-//			m_userName = MojangAPI.getUserName(m_UUID.replace("-", ""));
-//		}
-//		catch (Exception e) {
-//			System.out.println("Error getting username");
-//			e.printStackTrace();
-//		}
-//	}
 	
 	public void readFromCompound(TAG_Compound compound) {
 		dimension = getIntValue(compound, dimensionTagName);

@@ -5,6 +5,7 @@ import stats.nbt.model.tags.TAG_Compound;
 import stats.nbt.model.tags.TAG_Float;
 import stats.nbt.model.tags.TAG_Int;
 import stats.nbt.model.tags.TAG_Long;
+import stats.nbt.model.tags.TAG_Short;
 import stats.nbt.model.tags.TAG_String;
 
 public final class ModelUtils {
@@ -46,5 +47,13 @@ public final class ModelUtils {
 			return tag.getValue();
 		}
 		return 0f;
+	}
+	
+	public static short getShortValue(TAG_Compound compound, String name) {
+		TAG_Short tag = (TAG_Short)compound.getTAG(name);
+		if (tag != null) {
+			return tag.getValue();
+		}
+		return 0;
 	}
 }

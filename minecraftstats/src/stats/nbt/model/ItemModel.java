@@ -1,38 +1,31 @@
 package stats.nbt.model;
 
+import static stats.nbt.utils.ModelUtils.*;
+
 import stats.nbt.model.tags.TAG_Byte;
 import stats.nbt.model.tags.TAG_Compound;
 import stats.nbt.model.tags.TAG_Short;
 import stats.nbt.model.tags.TAG_String;
 
 public class ItemModel {
-
+	public static final String countTagName = "Count";
+	public static final String damageTagName = "Damage";
+	public static final String idTagName = "id";
+	
 	private byte count;
 	private short damage;
-	private String itemID;
+	private String id;
 	
 	public void readFromCompound(TAG_Compound compound) {
-		TAG_Byte tagCount = (TAG_Byte) compound.getTAG("Count");
-		TAG_Short tagDamage = (TAG_Short) compound.getTAG("Damage");
-		TAG_String tagID = (TAG_String) compound.getTAG("id");
-		
-		if (tagCount != null) {
-			count = tagCount.getValue();
-		}
-		
-		if (tagDamage != null) {
-			damage = tagDamage.getValue();
-		}
-		
-		if (tagID != null) {
-			itemID = tagID.getValue();
-		}
+		count = getByteValue(compound, countTagName);
+		damage = getShortValue(compound, damageTagName);
+		id = getStringValue(compound, idTagName);
 	}
 	
 	public void writeToCompound(TAG_Compound compound) {
-		compound.addTAG(new TAG_Byte("Count", count));
-		compound.addTAG(new TAG_Short("Damage", damage));
-		compound.addTAG(new TAG_String("id", itemID));
+		compound.addTAG(new TAG_Byte(countTagName, count));
+		compound.addTAG(new TAG_Short(damageTagName, damage));
+		compound.addTAG(new TAG_String(idTagName, id));
 	}
 	
 	public byte getCount() {
@@ -52,10 +45,10 @@ public class ItemModel {
 	}
 	
 	public String getItemID() {
-		return itemID;
+		return id;
 	}
 	
 	public void setItemID(String itemID) {
-		this.itemID = itemID;
+		this.id = itemID;
 	}
 }
