@@ -1,35 +1,33 @@
 package stats.nbt.model;
 
-import java.io.File;
-
 import stats.nbt.model.tags.TAG;
 
 // contains the tree of nbt tags that make up a file
 public class NBTFile {
 
-	private File m_file;
-	private TAG m_root;
-	private boolean m_gZipped;
+	private String path;
+	private TAG root;
+	private boolean gZipped;
 	
-	public NBTFile(final File file, TAG root, boolean gZipped) {
-		m_file = file;
-		m_root = root;
-		m_gZipped = gZipped;
+	public NBTFile(String path, TAG root, boolean gZipped) {
+		this.path = path;
+		this.root = root;
+		this.gZipped = gZipped;
 	}
 	
-	public File getFile() {
-		return m_file;
+	public String getPath() {
+		return path;
 	}
 	
-	public void setFile(File file) {
-		m_file = file;
+	public void setPath(String path) {
+		this.path = path;
 	}
 	
 	public TAG getRoot() {
-		return m_root;
+		return root;
 	}
 	
 	public boolean isGZipped() {
-		return m_gZipped;
+		return gZipped;
 	}
 }

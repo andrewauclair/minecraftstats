@@ -107,7 +107,7 @@ public final class NBTFileHelper {
 		
 		System.out.println("Finished reading file.");
 		
-		return new NBTFile(file, root, gzipped);
+		return new NBTFile(file.getAbsolutePath(), root, gzipped);
 		
 		// NBTExplorer appears to sort the byte, short, int, long, string, double and float types
 		// it puts lists at the beginning and byte arrays at the end

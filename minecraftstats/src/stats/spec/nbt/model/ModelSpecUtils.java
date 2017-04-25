@@ -9,10 +9,12 @@ import stats.nbt.model.tags.TAG_Int;
 import stats.nbt.model.tags.TAG_Long;
 import stats.nbt.model.tags.TAG_Short;
 import stats.nbt.model.tags.TAG_String;
+import stats.nbt.utils.ModelUtils;
 
 public final class ModelSpecUtils {
 	public static void assertTagString(String expected, String name, TAG_Compound compound) {
 		new ModelSpecUtils();
+		new ModelUtils();
 		assertEquals(expected, ((TAG_String)compound.getTAG(name)).getValue());
 	}
 	
