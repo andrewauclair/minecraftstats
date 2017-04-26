@@ -1,6 +1,7 @@
 package stats.nbt.utils;
 
 import stats.nbt.model.tags.TAG_Byte;
+import stats.nbt.model.tags.TAG_Byte_Array;
 import stats.nbt.model.tags.TAG_Compound;
 import stats.nbt.model.tags.TAG_Float;
 import stats.nbt.model.tags.TAG_Int;
@@ -55,5 +56,13 @@ public final class ModelUtils {
 			return tag.getValue();
 		}
 		return 0;
+	}
+	
+	public static byte[] getByteArrayValue(TAG_Compound compound, String name) {
+		TAG_Byte_Array tag = (TAG_Byte_Array)compound.getTAG(name);
+		if (tag != null) {
+			return tag.getValue();
+		}
+		return new byte[0];
 	}
 }

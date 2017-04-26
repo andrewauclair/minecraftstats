@@ -58,7 +58,6 @@ public class TAG_List extends TAG {
 	
 	@Override
 	public void readPayloadFromStream(DataInput in) throws IOException {
-		// needs to read the type, size and all the tags
 		m_type = TAG_Type.fromInt(in.readByte());
 		int size = in.readInt();
 		

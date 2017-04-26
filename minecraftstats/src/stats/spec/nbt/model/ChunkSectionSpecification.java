@@ -24,10 +24,10 @@ public class ChunkSectionSpecification {
 	public void setup() {
 		chunkSection = new ChunkSectionModel();
 		y = 5;
-		blockLight = new TAG_Byte_Array(blockLightTagName);
-		blocks = new TAG_Byte_Array(blocksTagName);
-		data = new TAG_Byte_Array(dataTagName);
-		skyLight = new TAG_Byte_Array(skyLightTagName);
+		blockLight = new TAG_Byte_Array(blockLightTagName, new byte[] { 1, 2, 3});
+		blocks = new TAG_Byte_Array(blocksTagName, new byte[] { 5, 6, 7});
+		data = new TAG_Byte_Array(dataTagName, new byte[] { 8, 9, 10});
+		skyLight = new TAG_Byte_Array(skyLightTagName, new byte[] { 11, 12, 13});
 	}
 	
 	@Test
@@ -43,10 +43,18 @@ public class ChunkSectionSpecification {
 	public void ShouldReadFromCompound() {
 		TAG_Compound compound = new TAG_Compound("");
 		compound.addTAG(new TAG_Byte(yTagName, y));
+		compound.addTAG(blockLight);
+		compound.addTAG(blocks);
+		compound.addTAG(data);
+		compound.addTAG(skyLight);
 		
 		chunkSection.readFromCompound(compound);
 		
 		assertEquals(y, chunkSection.getY());
+		assertEquals(blockLight.getValue(), chunkSection.getBlockLight());
+		assertEquals(blocks.getValue(), chunkSection.getBlocks());
+		assertEquals(data.getValue(), chunkSection.getData());
+		assertEquals(skyLight.getValue(), chunkSection.getSkyLight());
 	}
 	
 	@Test
