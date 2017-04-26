@@ -63,7 +63,7 @@ public class TAG_List extends TAG {
 		int size = in.readInt();
 		
 		for (int i = 0; i < size; i++) {
-			m_value.add(NBTFileHelper.readTagPayload(in, this, m_type, false));
+			m_value.add(NBTFileHelper.readTagPayload(in, m_type, false));
 		}
 	}
 }

@@ -53,7 +53,7 @@ public class TAG_Compound extends TAG {
 		TAG tag = null;
 		
 		do {
-			tag = NBTFileHelper.readNextTag(in, this);
+			tag = NBTFileHelper.readNextTag(in);
 			if (!(tag instanceof TAG_End)) {
 				m_value.put(tag.getName(), tag);
 			}

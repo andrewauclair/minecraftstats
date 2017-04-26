@@ -4,6 +4,7 @@ import java.io.DataInput;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.zip.GZIPInputStream;
 
@@ -25,14 +26,14 @@ import stats.nbt.model.tags.TAG_String;
 
 public final class NBTFileHelper {
 
-	public static TAG readNextTag(DataInput in, TAG parent) throws IOException {
+	public static TAG readNextTag(DataInput in) throws IOException {
 		TAG_Type type = null;
 		type = TAG_Type.fromInt(in.readByte() & 0xFF);
 		
-		return readTagPayload(in, parent, type, true);
+		return readTagPayload(in, type, true);
 	}
 	
-	public static TAG readTagPayload(DataInput in, TAG parent, TAG_Type type, boolean readName) throws IOException {
+	public static TAG readTagPayload(DataInput in, TAG_Type type, boolean readName) throws IOException {
 		
 		TAG newTag = null;
 		
@@ -90,6 +91,22 @@ public final class NBTFileHelper {
 		// attempt to read as a gzip file
 		boolean gzipped = true;
 		
+		DataInputStream input = openFileStream(file);
+		
+		TAG root = readNextTag(input);
+		
+		System.out.println("Finished reading file.");
+		
+		return new NBTFile(file.getAbsolutePath(), root, gzipped);
+		
+		// NBTExplorer appears to sort the byte, short, int, long, string, double and float types
+		// it puts lists at the beginning and byte arrays at the end
+		// if reading as gzip fails, try to read as a normal file
+		
+		// if this also fails, return null
+	}
+
+	private static DataInputStream openFileStream(final File file) throws FileNotFoundException {
 		DataInputStream input = null;
 		
 		try {
@@ -102,18 +119,7 @@ public final class NBTFileHelper {
 			System.out.println("Not a GZipped file.");
 			input = new DataInputStream(new FileInputStream(file));
 		}
-		
-		TAG root = readNextTag(input, null);
-		
-		System.out.println("Finished reading file.");
-		
-		return new NBTFile(file.getAbsolutePath(), root, gzipped);
-		
-		// NBTExplorer appears to sort the byte, short, int, long, string, double and float types
-		// it puts lists at the beginning and byte arrays at the end
-		// if reading as gzip fails, try to read as a normal file
-		
-		// if this also fails, return null
+		return input;
 	}
 	
 	// Writes an NBT Tag to the given file
