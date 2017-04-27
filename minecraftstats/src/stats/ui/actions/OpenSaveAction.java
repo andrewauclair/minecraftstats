@@ -20,16 +20,19 @@ public class OpenSaveAction extends AbstractAction {
 	public void actionPerformed(ActionEvent arg0) {
 
 		JFileChooser chooser = new JFileChooser();
-		String appdata = System.getenv("APPDATA");
 		
 		chooser.setCurrentDirectory(new File(System.getenv("APPDATA") + "/.minecraft/saves"));
 		
-		chooser.showOpenDialog(MainView.s_mainView);
-		try {
-			MainView.s_mainView.setLoadedSave(MinecraftSaveLoader.loadSave(chooser.getSelectedFile()));
-		} catch (IOException e) {
-			System.out.println("Error loading save.");
-			e.printStackTrace();
+		int option = chooser.showOpenDialog(MainView.s_mainView);
+		
+		if (option == JFileChooser.APPROVE_OPTION) {
+			try {
+				MainView.s_mainView.setLoadedSave(MinecraftSaveLoader.loadSave(chooser.getSelectedFile()));
+			} 
+			catch (IOException e) {
+				System.out.println("Error loading save.");
+				e.printStackTrace();
+			}
 		}
 	}
 
