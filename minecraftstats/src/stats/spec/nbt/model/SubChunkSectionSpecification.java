@@ -1,19 +1,19 @@
 package stats.spec.nbt.model;
 
 import static org.junit.Assert.*;
-import static stats.nbt.model.ChunkSectionModel.*;
+import static stats.nbt.model.SubChunkSectionModel.*;
 import static stats.spec.nbt.model.ModelSpecUtils.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import stats.nbt.model.ChunkSectionModel;
+import stats.nbt.model.SubChunkSectionModel;
 import stats.nbt.model.tags.TAG_Byte;
 import stats.nbt.model.tags.TAG_Byte_Array;
 import stats.nbt.model.tags.TAG_Compound;
 
-public class ChunkSectionSpecification {
-	ChunkSectionModel chunkSection;
+public class SubChunkSectionSpecification {
+	SubChunkSectionModel chunkSection;
 	private byte y;
 	TAG_Byte_Array blockLight;
 	TAG_Byte_Array blocks;
@@ -22,7 +22,7 @@ public class ChunkSectionSpecification {
 	
 	@Before
 	public void setup() {
-		chunkSection = new ChunkSectionModel();
+		chunkSection = new SubChunkSectionModel();
 		y = 5;
 		blockLight = new TAG_Byte_Array(blockLightTagName, new byte[] { 1, 2, 3});
 		blocks = new TAG_Byte_Array(blocksTagName, new byte[] { 5, 6, 7});

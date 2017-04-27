@@ -6,7 +6,7 @@ import stats.nbt.model.tags.TAG_Byte;
 import stats.nbt.model.tags.TAG_Byte_Array;
 import stats.nbt.model.tags.TAG_Compound;
 
-public class ChunkSectionModel {
+public class SubChunkSectionModel {
 	public static final String yTagName = "Y";
 	public static final String blockLightTagName = "BlockLight";
 	public static final String blocksTagName = "Blocks";
