@@ -3,6 +3,7 @@ package stats.nbt.model;
 import static stats.nbt.utils.ModelUtils.*;
 
 import stats.nbt.model.tags.TAG_Byte;
+import stats.nbt.model.tags.TAG_Byte_Array;
 import stats.nbt.model.tags.TAG_Compound;
 
 public class ChunkSectionModel {
@@ -28,6 +29,10 @@ public class ChunkSectionModel {
 	
 	public void writeToStream(TAG_Compound compound) {
 		compound.addTAG(new TAG_Byte(yTagName, y));
+		compound.addTAG(new TAG_Byte_Array(blockLightTagName, blockLight));
+		compound.addTAG(new TAG_Byte_Array(blocksTagName, blocks));
+		compound.addTAG(new TAG_Byte_Array(dataTagName, data));
+		compound.addTAG(new TAG_Byte_Array(skyLightTagName, skyLight));
 	}
 	
 	public byte getY() {

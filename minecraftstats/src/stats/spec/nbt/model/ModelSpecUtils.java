@@ -3,6 +3,7 @@ package stats.spec.nbt.model;
 import static org.junit.Assert.*;
 
 import stats.nbt.model.tags.TAG_Byte;
+import stats.nbt.model.tags.TAG_Byte_Array;
 import stats.nbt.model.tags.TAG_Compound;
 import stats.nbt.model.tags.TAG_Float;
 import stats.nbt.model.tags.TAG_Int;
@@ -36,5 +37,9 @@ public final class ModelSpecUtils {
 	
 	public static void assertTagShort(short expected, String name, TAG_Compound compound) {
 		assertEquals(expected, ((TAG_Short)compound.getTAG(name)).getValue());
+	}
+	
+	public static void assertTagByteArray(byte[] expected, String name, TAG_Compound compound) {
+		assertEquals(expected, ((TAG_Byte_Array)compound.getTAG(name)).getValue());
 	}
 }

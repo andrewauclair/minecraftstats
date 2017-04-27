@@ -62,10 +62,18 @@ public class ChunkSectionSpecification {
 		TAG_Compound compound = new TAG_Compound("");
 		
 		chunkSection.setY(y);
+		chunkSection.setBlockLight(blockLight.getValue());
+		chunkSection.setBlocks(blocks.getValue());
+		chunkSection.setData(data.getValue());
+		chunkSection.setSkyLight(skyLight.getValue());
 		
 		chunkSection.writeToStream(compound);
 		
 		assertTagByte(y, yTagName, compound);
+		assertTagByteArray(blockLight.getValue(), blockLightTagName, compound);
+		assertTagByteArray(blocks.getValue(), blocksTagName, compound);
+		assertTagByteArray(data.getValue(), dataTagName, compound);
+		assertTagByteArray(skyLight.getValue(), skyLightTagName, compound);
 	}
 	
 	@Test
