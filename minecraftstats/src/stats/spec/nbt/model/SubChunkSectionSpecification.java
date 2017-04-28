@@ -13,7 +13,7 @@ import stats.nbt.model.tags.TAG_Byte_Array;
 import stats.nbt.model.tags.TAG_Compound;
 
 public class SubChunkSectionSpecification {
-	SubChunkSectionModel chunkSection;
+	SubChunkSectionModel subChunkSection;
 	private byte y;
 	TAG_Byte_Array blockLight;
 	TAG_Byte_Array blocks;
@@ -22,7 +22,7 @@ public class SubChunkSectionSpecification {
 	
 	@Before
 	public void setup() {
-		chunkSection = new SubChunkSectionModel();
+		subChunkSection = new SubChunkSectionModel();
 		y = 5;
 		blockLight = new TAG_Byte_Array(blockLightTagName, new byte[] { 1, 2, 3});
 		blocks = new TAG_Byte_Array(blocksTagName, new byte[] { 5, 6, 7});
@@ -48,26 +48,26 @@ public class SubChunkSectionSpecification {
 		compound.addTAG(data);
 		compound.addTAG(skyLight);
 		
-		chunkSection.readFromCompound(compound);
+		subChunkSection.readFromCompound(compound);
 		
-		assertEquals(y, chunkSection.getY());
-		assertEquals(blockLight.getValue(), chunkSection.getBlockLight());
-		assertEquals(blocks.getValue(), chunkSection.getBlocks());
-		assertEquals(data.getValue(), chunkSection.getData());
-		assertEquals(skyLight.getValue(), chunkSection.getSkyLight());
+		assertEquals(y, subChunkSection.getY());
+		assertEquals(blockLight.getValue(), subChunkSection.getBlockLight());
+		assertEquals(blocks.getValue(), subChunkSection.getBlocks());
+		assertEquals(data.getValue(), subChunkSection.getData());
+		assertEquals(skyLight.getValue(), subChunkSection.getSkyLight());
 	}
 	
 	@Test
 	public void ShouldWriteToCompound() {
 		TAG_Compound compound = new TAG_Compound("");
 		
-		chunkSection.setY(y);
-		chunkSection.setBlockLight(blockLight.getValue());
-		chunkSection.setBlocks(blocks.getValue());
-		chunkSection.setData(data.getValue());
-		chunkSection.setSkyLight(skyLight.getValue());
+		subChunkSection.setY(y);
+		subChunkSection.setBlockLight(blockLight.getValue());
+		subChunkSection.setBlocks(blocks.getValue());
+		subChunkSection.setData(data.getValue());
+		subChunkSection.setSkyLight(skyLight.getValue());
 		
-		chunkSection.writeToStream(compound);
+		subChunkSection.writeToStream(compound);
 		
 		assertTagByte(y, yTagName, compound);
 		assertTagByteArray(blockLight.getValue(), blockLightTagName, compound);
@@ -80,6 +80,6 @@ public class SubChunkSectionSpecification {
 	public void ShouldNotThrowExceptionOnEmptyCompound() {
 		TAG_Compound compound = new TAG_Compound("");
 		
-		chunkSection.readFromCompound(compound);
+		subChunkSection.readFromCompound(compound);
 	}
 }

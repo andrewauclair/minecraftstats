@@ -6,22 +6,22 @@ import java.io.IOException;
 
 public class TAG_Int_Array extends TAG {
 
-	private Integer[] m_value = new Integer[0];
+	private int[] m_value = new int[0];
 	
 	public TAG_Int_Array(String name) {
 		super(name);
 	}
 
-	public TAG_Int_Array(String name, Integer[] value) {
+	public TAG_Int_Array(String name, int[] value) {
 		super(name);
 		m_value = value;
 	}
 	
-	public Integer[] getValue() {
+	public int[] getValue() {
 		return m_value;
 	}
 
-	public void setValue(Integer[] value) {
+	public void setValue(int[] value) {
 		m_value = value;
 	}
 	
@@ -38,7 +38,7 @@ public class TAG_Int_Array extends TAG {
 	public void readPayloadFromStream(DataInput in) throws IOException {
 		int size = in.readInt();
 		
-		m_value = new Integer[size];
+		m_value = new int[size];
 		
 		for (int i = 0; i < size; i++) {
 			m_value[i] = in.readInt();
