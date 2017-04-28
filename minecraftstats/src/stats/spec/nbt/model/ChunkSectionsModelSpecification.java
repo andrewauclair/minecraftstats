@@ -13,6 +13,7 @@ import stats.nbt.model.ChunkSectionsModel;
 import stats.nbt.model.tags.TAG_Byte;
 import stats.nbt.model.tags.TAG_Byte_Array;
 import stats.nbt.model.tags.TAG_Compound;
+import stats.nbt.model.tags.TAG_Int;
 import stats.nbt.model.tags.TAG_Int_Array;
 import stats.nbt.model.tags.TAG_Long;
 
@@ -62,6 +63,8 @@ public class ChunkSectionsModelSpecification {
 		compound.addTAG(new TAG_Long(lastUpdateTagName, lastUpdate));
 		compound.addTAG(new TAG_Byte(lightPopulatedTagName, lightPopulated));
 		compound.addTAG(new TAG_Byte(terrainPopulatedTagName, terrainPopulated));
+		compound.addTAG(new TAG_Int(xPosTagName, xPos));
+		compound.addTAG(new TAG_Int(zPosTagName, zPos));
 		compound.addTAG(biomes);
 		compound.addTAG(heightMap);
 		
@@ -71,6 +74,8 @@ public class ChunkSectionsModelSpecification {
 		assertEquals(lastUpdate, chunkSections.getLastUpdate());
 		assertEquals(lightPopulated, chunkSections.getLightPopulated());
 		assertEquals(terrainPopulated, chunkSections.getTerrainPopulated());
+		assertEquals(xPos, chunkSections.getxPos());
+		assertEquals(zPos, chunkSections.getzPos());
 		assertTrue(Arrays.equals(biomes.getValue(), chunkSections.getBiomes()));
 		assertTrue(Arrays.equals(heightMap.getValue(), chunkSections.getHeightMap()));
 	}
