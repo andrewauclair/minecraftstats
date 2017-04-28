@@ -16,7 +16,7 @@ import stats.nbt.model.tags.TAG_Short;
 import stats.nbt.model.tags.TAG_String;
 
 public class ItemModelSpecification {
-
+	private TAG_Compound compound;
 	private ItemModel itemData;
 	private byte count;
 	private short damage;
@@ -25,6 +25,7 @@ public class ItemModelSpecification {
 	@Before
 	public void setup() throws IOException {
 		itemData = new ItemModel();
+		compound = new TAG_Compound("");
 		count = 5;
 		damage = 1;
 		id = "minecraft:wheat_seeds";
@@ -39,7 +40,6 @@ public class ItemModelSpecification {
 	
 	@Test
 	public void ShouldReadFromCompound() throws IOException {
-		TAG_Compound compound = new TAG_Compound("Item");
 		compound.addTAG(new TAG_Byte(countTagName, count));
 		compound.addTAG(new TAG_Short(damageTagName, damage));
 		compound.addTAG(new TAG_String(idTagName, id));
@@ -53,9 +53,6 @@ public class ItemModelSpecification {
 	
 	@Test
 	public void ShouldWriteToStream() throws IOException {
-		
-		TAG_Compound compound = new TAG_Compound("Item");
-		
 		itemData.setCount(count);
 		itemData.setDamage(damage);
 		itemData.setItemID(id);
@@ -69,8 +66,6 @@ public class ItemModelSpecification {
 	
 	@Test
 	public void ShouldNotThrowExceptionOnEmptyCompound() {
-		TAG_Compound compound = new TAG_Compound("");
-		
 		itemData.readFromCompound(compound);
 	}
 }

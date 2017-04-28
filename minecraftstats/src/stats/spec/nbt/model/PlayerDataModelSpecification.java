@@ -16,6 +16,7 @@ public class PlayerDataModelSpecification {
 
 	private String UUID = "1a0857f7-b10c-457b-b136-9643b4f26ab4";
 	private PlayerDataModel playerData;
+	private TAG_Compound compound;
 	private int dimension;
 	private float health;
 	private int playerGameType;
@@ -24,6 +25,7 @@ public class PlayerDataModelSpecification {
 	@Before
 	public void setup() {
 		playerData = new PlayerDataModel(UUID);
+		compound = new TAG_Compound("");
 		dimension = 4;
 		health = 4.88f;
 		playerGameType = 1;
@@ -45,7 +47,6 @@ public class PlayerDataModelSpecification {
 	
 	@Test
 	public void ShouldReadFromCompound() {
-		TAG_Compound compound = new TAG_Compound("");
 		compound.addTAG(new TAG_Int(dimensionTagName, dimension));
 		compound.addTAG(new TAG_Float(healthTagName, health));
 		compound.addTAG(new TAG_Int(playerGameTypeTagName, playerGameType));
@@ -61,8 +62,6 @@ public class PlayerDataModelSpecification {
 	
 	@Test
 	public void ShouldWriteToCompound() {
-		TAG_Compound compound = new TAG_Compound("");
-		
 		playerData.setDimension(dimension);
 		playerData.setHealth(health);
 		playerData.setPlayerGameType(playerGameType);
@@ -78,8 +77,6 @@ public class PlayerDataModelSpecification {
 	
 	@Test
 	public void ShouldNotThrowExceptionOnEmptyCompound() {
-		TAG_Compound compound = new TAG_Compound("");
-		
 		playerData.readFromCompound(compound);
 	}
 }

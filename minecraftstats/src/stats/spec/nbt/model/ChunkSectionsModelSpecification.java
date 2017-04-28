@@ -18,7 +18,7 @@ import stats.nbt.model.tags.TAG_Int_Array;
 import stats.nbt.model.tags.TAG_Long;
 
 public class ChunkSectionsModelSpecification {
-	ChunkSectionsModel chunkSections;
+	private ChunkSectionsModel chunkSections;
 	private TAG_Compound compound;
 	
 	private long inhabitedTime;

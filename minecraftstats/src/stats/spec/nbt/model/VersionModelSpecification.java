@@ -14,9 +14,8 @@ import stats.nbt.model.tags.TAG_Int;
 import stats.nbt.model.tags.TAG_String;
 
 public class VersionModelSpecification {
-
 	private VersionModel version;
-	
+	private TAG_Compound compound;
 	private int id;
 	private String name;
 	private byte snapshot;
@@ -24,6 +23,7 @@ public class VersionModelSpecification {
 	@Before
 	public void setup() {
 		version = new VersionModel();
+		compound = new TAG_Compound("");
 		id = 512;
 		name = "1.11.2";
 		snapshot = 1;
@@ -38,7 +38,6 @@ public class VersionModelSpecification {
 	
 	@Test
 	public void ShouldReadFromCompound() {
-		TAG_Compound compound = new TAG_Compound("");
 		compound.addTAG(new TAG_Int(idTagName, id));
 		compound.addTAG(new TAG_String(nameTagName, name));
 		compound.addTAG(new TAG_Byte(snapshotTagName, snapshot));
@@ -52,8 +51,6 @@ public class VersionModelSpecification {
 	
 	@Test
 	public void ShouldWriteToCompound() {
-		TAG_Compound compound = new TAG_Compound("");
-		
 		version.setId(id);
 		version.setName(name);
 		version.setSnapshot(snapshot);
@@ -67,8 +64,6 @@ public class VersionModelSpecification {
 	
 	@Test
 	public void ShouldNotThrowExceptionOnEmptyCompound() {
-		TAG_Compound compound = new TAG_Compound("");
-		
 		version.readFromCompound(compound);
 	}
 }

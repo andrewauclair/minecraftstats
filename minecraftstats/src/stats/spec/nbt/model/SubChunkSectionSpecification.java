@@ -11,18 +11,21 @@ import stats.nbt.model.SubChunkSectionModel;
 import stats.nbt.model.tags.TAG_Byte;
 import stats.nbt.model.tags.TAG_Byte_Array;
 import stats.nbt.model.tags.TAG_Compound;
+import stats.spec.nbt.model.tags.TAG_CompoundSpecification;
 
 public class SubChunkSectionSpecification {
 	SubChunkSectionModel subChunkSection;
+	private TAG_Compound compound;
 	private byte y;
-	TAG_Byte_Array blockLight;
-	TAG_Byte_Array blocks;
-	TAG_Byte_Array data;
-	TAG_Byte_Array skyLight;
+	private TAG_Byte_Array blockLight;
+	private TAG_Byte_Array blocks;
+	private TAG_Byte_Array data;
+	private TAG_Byte_Array skyLight;
 	
 	@Before
 	public void setup() {
 		subChunkSection = new SubChunkSectionModel();
+		compound = new TAG_Compound("");
 		y = 5;
 		blockLight = new TAG_Byte_Array(blockLightTagName, new byte[] { 1, 2, 3});
 		blocks = new TAG_Byte_Array(blocksTagName, new byte[] { 5, 6, 7});
@@ -41,7 +44,6 @@ public class SubChunkSectionSpecification {
 	
 	@Test
 	public void ShouldReadFromCompound() {
-		TAG_Compound compound = new TAG_Compound("");
 		compound.addTAG(new TAG_Byte(yTagName, y));
 		compound.addTAG(blockLight);
 		compound.addTAG(blocks);
@@ -59,8 +61,6 @@ public class SubChunkSectionSpecification {
 	
 	@Test
 	public void ShouldWriteToCompound() {
-		TAG_Compound compound = new TAG_Compound("");
-		
 		subChunkSection.setY(y);
 		subChunkSection.setBlockLight(blockLight.getValue());
 		subChunkSection.setBlocks(blocks.getValue());
@@ -78,8 +78,6 @@ public class SubChunkSectionSpecification {
 	
 	@Test
 	public void ShouldNotThrowExceptionOnEmptyCompound() {
-		TAG_Compound compound = new TAG_Compound("");
-		
 		subChunkSection.readFromCompound(compound);
 	}
 }

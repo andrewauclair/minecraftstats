@@ -16,8 +16,8 @@ import stats.nbt.model.tags.TAG_Long;
 import stats.nbt.model.tags.TAG_String;
 
 public class LevelModelSpecification {
-
 	private LevelModel level;
+	private TAG_Compound compound;
 	
 	private String levelName;
 	private long randomSeed;
@@ -29,6 +29,7 @@ public class LevelModelSpecification {
 	@Before
 	public void setup() {
 		level = new LevelModel();
+		compound = new TAG_Compound("");
 		levelName = "Minecraft World";
 		randomSeed = -583940300333L;
 		spawnX = 30;
@@ -51,7 +52,6 @@ public class LevelModelSpecification {
 	
 	@Test
 	public void ShouldReadFromCompound() {
-		TAG_Compound compound = new TAG_Compound("");
 		TAG_Compound data = new TAG_Compound(dataCompoundName);
 		TAG_Compound versionCompound = new TAG_Compound(versionCompoundName);
 		data.addTAG(versionCompound);
@@ -83,8 +83,6 @@ public class LevelModelSpecification {
 	
 	@Test
 	public void ShouldWriteToCompound() {
-		TAG_Compound compound = new TAG_Compound("");
-		
 		level.setLevelName(levelName);
 		level.setRandomSeed(randomSeed);
 		level.setSpawnX(spawnX);
@@ -113,8 +111,6 @@ public class LevelModelSpecification {
 	
 	@Test
 	public void ShouldNotThrowExceptionOnEmptyCompound() {
-		TAG_Compound compound = new TAG_Compound("");
-		
 		level.readFromCompound(compound);
 		
 		compound.addTAG(new TAG_Compound(dataCompoundName));
