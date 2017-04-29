@@ -14,6 +14,7 @@ import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import stats.nbt.model.ChunkModel;
@@ -32,6 +33,10 @@ public class RegionFileLoaderSpecification {
 	private int payloadSize;
 	
 	// TODO Expand this test to cover 2 loaded chunks
+//	@BeforeClass
+//	public void setupClass() {
+//		// TODO Build the input array
+//	}
 	
 	@Before
 	public void setup() throws IOException {
@@ -52,6 +57,8 @@ public class RegionFileLoaderSpecification {
 		compress.setInput(byteStream.toByteArray());
 		compress.finish();
 		payloadSize = compress.deflate(chunkData);
+		
+		// TODO build only the input stream here
 	}
 	
 	@Test

@@ -1,51 +1,41 @@
 package stats.ui.model;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-import stats.nbt.model.NBTFile;
 import stats.nbt.model.PlayerDataModel;
-import stats.nbt.utils.NBTFileHelper;
-import stats.nbt.utils.PlayerDataLoader;
-import stats.util.MojangAPI;
+import stats.nbt.model.tags.TAG_Compound;
 
 public class MinecraftSaveData {
-
-	private File m_levelDat;
-	
-	private NBTFile m_levelDatNBT;
-	
-	private ArrayList<PlayerDataModel> m_players = new ArrayList<>();
-	
-	public File getStatsDir() {
-		return new File(m_levelDat.getParent() + "/stats");
-	}
-	
-	public File getPlayerDir() {
-		return new File(m_levelDat.getParent() + "/playerdata");
-	}
-	
-	public NBTFile getLevelDatNBT() {
-		return m_levelDatNBT;
-	}
+	private TAG_Compound root;
+	private Map<String, PlayerDataModel> players = new HashMap<>();
 	
 	public ArrayList<PlayerDataModel> getPlayers() {
-		return m_players;
+		ArrayList<PlayerDataModel> players = new ArrayList<>();
+		for (PlayerDataModel player : this.players.values()) {
+			players.add(player);
+		}
+		return players;
 	}
 	
-	public void setLevelDat(File levelDatfile) throws IOException {
-		m_levelDat = levelDatfile;
-		m_levelDatNBT = NBTFileHelper.readNBTFile(levelDatfile);
-		
-		m_players.clear();
-		
-		File[] playerFiles = getPlayerDir().listFiles();
-		
-		for (File file : playerFiles) {
-			if (file.isFile()) {
-				m_players.add(PlayerDataLoader.LoadPlayerData(file));
-			}
-		}
+	public void setRoot(TAG_Compound root) {
+		this.root = root;
+	}
+	
+	public TAG_Compound getRoot() {
+		return root;
+	}
+	
+	public void addPlayer(PlayerDataModel player) {
+		players.put(player.getUUID(), player);
+	}
+	
+	public void removePlayer(PlayerDataModel player) {
+		players.remove(player.getUUID());
+	}
+	
+	public PlayerDataModel getPlayer(String UUID) {
+		return players.get(UUID);
 	}
 }

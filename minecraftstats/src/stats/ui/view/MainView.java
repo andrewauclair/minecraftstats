@@ -100,7 +100,7 @@ public class MainView extends JFrame {
 			model.addElement(MojangAPI.getUserName(player.getUUID()));
 		}
 		
-		TAG root = saveData.getLevelDatNBT().getRoot();
+		TAG root = saveData.getRoot();
 		
 		LevelModel level = new LevelModel();
 		level.readFromCompound((TAG_Compound)root);
