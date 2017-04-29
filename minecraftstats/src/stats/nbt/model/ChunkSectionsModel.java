@@ -10,6 +10,7 @@ import stats.nbt.model.tags.TAG_Int_Array;
 import stats.nbt.model.tags.TAG_Long;
 
 public class ChunkSectionsModel {
+	public static final String levelTagName = "Level";
 	public static final String inhabitedTimeTagName = "InhabitedTime";
 	public static final String lastUpdateTagName = "LastUpdate";
 	public static final String lightPopulatedTagName = "LightPopulated";
@@ -18,6 +19,7 @@ public class ChunkSectionsModel {
 	public static final String zPosTagName = "zPos";
 	public static final String biomesTagName = "Biomes";
 	public static final String heightMapTagName = "HeightMap";
+	public static final String dataVersionTagName = "DataVersion";
 	
 	private long inhabitedTime;
 	private long lastUpdate;
@@ -27,27 +29,35 @@ public class ChunkSectionsModel {
 	private int zPos;
 	private byte[] biomes;
 	private int[] heightMap;
+	private int dataVersion;
 	
 	public void readFromCompound(TAG_Compound compound) {
-		inhabitedTime = getLongValue(compound, inhabitedTimeTagName);
-		lastUpdate = getLongValue(compound, lastUpdateTagName);
-		lightPopulated = getByteValue(compound, lightPopulatedTagName);
-		terrainPopulated = getByteValue(compound, terrainPopulatedTagName);
-		xPos = getIntValue(compound, xPosTagName);
-		zPos = getIntValue(compound, zPosTagName);
-		biomes = getByteArrayValue(compound, biomesTagName);
-		heightMap = getIntArrayValue(compound, heightMapTagName);
+		TAG_Compound level = (TAG_Compound)compound.getTAG(levelTagName);
+		if (level != null) {
+			inhabitedTime = getLongValue(level, inhabitedTimeTagName);
+			lastUpdate = getLongValue(level, lastUpdateTagName);
+			lightPopulated = getByteValue(level, lightPopulatedTagName);
+			terrainPopulated = getByteValue(level, terrainPopulatedTagName);
+			xPos = getIntValue(level, xPosTagName);
+			zPos = getIntValue(level, zPosTagName);
+			biomes = getByteArrayValue(level, biomesTagName);
+			heightMap = getIntArrayValue(level, heightMapTagName);
+		}
+		dataVersion = getIntValue(compound, dataVersionTagName);
 	}
 	
 	public void writeToCompound(TAG_Compound compound) {
-		compound.addTAG(new TAG_Long(inhabitedTimeTagName, inhabitedTime));
-		compound.addTAG(new TAG_Long(lastUpdateTagName, lastUpdate));
-		compound.addTAG(new TAG_Byte(lightPopulatedTagName, lightPopulated));
-		compound.addTAG(new TAG_Byte(terrainPopulatedTagName, terrainPopulated));
-		compound.addTAG(new TAG_Int(xPosTagName, xPos));
-		compound.addTAG(new TAG_Int(zPosTagName, zPos));
-		compound.addTAG(new TAG_Byte_Array(biomesTagName, biomes));
-		compound.addTAG(new TAG_Int_Array(heightMapTagName, heightMap));
+		TAG_Compound level = new TAG_Compound(levelTagName);
+		level.addTAG(new TAG_Long(inhabitedTimeTagName, inhabitedTime));
+		level.addTAG(new TAG_Long(lastUpdateTagName, lastUpdate));
+		level.addTAG(new TAG_Byte(lightPopulatedTagName, lightPopulated));
+		level.addTAG(new TAG_Byte(terrainPopulatedTagName, terrainPopulated));
+		level.addTAG(new TAG_Int(xPosTagName, xPos));
+		level.addTAG(new TAG_Int(zPosTagName, zPos));
+		level.addTAG(new TAG_Byte_Array(biomesTagName, biomes));
+		level.addTAG(new TAG_Int_Array(heightMapTagName, heightMap));
+		compound.addTAG(level);
+		compound.addTAG(new TAG_Int(dataVersionTagName, dataVersion));
 	}
 
 	public long getInhabitedTime() {
@@ -112,5 +122,13 @@ public class ChunkSectionsModel {
 
 	public void setHeightMap(int[] heightMap) {
 		this.heightMap = heightMap;
+	}
+
+	public int getDataVersion() {
+		return dataVersion;
+	}
+
+	public void setDataVersion(int dataVersion) {
+		this.dataVersion = dataVersion;
 	}
 }
