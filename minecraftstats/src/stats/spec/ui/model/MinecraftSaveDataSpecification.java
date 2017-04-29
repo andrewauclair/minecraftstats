@@ -12,6 +12,7 @@ import stats.nbt.model.tags.TAG_Compound;
 import stats.ui.model.MinecraftSaveData;
 
 public class MinecraftSaveDataSpecification {
+	private static final String UUID = "Test-123";
 	private MinecraftSaveData save;
 	
 	@Before
@@ -29,24 +30,24 @@ public class MinecraftSaveDataSpecification {
 	
 	@Test
 	public void ShouldAddPlayer() {
-		PlayerDataModel player = new PlayerDataModel("Test-123");
+		PlayerDataModel player = new PlayerDataModel(UUID);
 		
 		save.addPlayer(player);
 		
-		assertEquals(player, save.getPlayer("Test-123"));
+		assertEquals(player, save.getPlayer(UUID));
 	}
 	
 	@Test
 	public void ShouldRemovePlayer() {
-		PlayerDataModel player = new PlayerDataModel("Test-123");
+		PlayerDataModel player = new PlayerDataModel(UUID);
 		
 		save.addPlayer(player);
 		
-		assertEquals(player, save.getPlayer("Test-123"));
+		assertEquals(player, save.getPlayer(UUID));
 		
 		save.removePlayer(player);
 		
-		assertNull(save.getPlayer("Test-123"));
+		assertNull(save.getPlayer(UUID));
 	}
 	
 	@Test
