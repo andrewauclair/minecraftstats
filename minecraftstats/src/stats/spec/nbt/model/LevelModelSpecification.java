@@ -3,13 +3,11 @@ package stats.spec.nbt.model;
 import static org.junit.Assert.*;
 import static stats.nbt.model.LevelModel.*;
 import static stats.spec.nbt.model.ModelSpecUtils.*;
-import static org.mockito.Mockito.*;
-
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 import stats.nbt.model.LevelModel;
 import stats.nbt.model.VersionModel;
+import stats.nbt.model.tags.TAG_Byte;
 import stats.nbt.model.tags.TAG_Compound;
 import stats.nbt.model.tags.TAG_Int;
 import stats.nbt.model.tags.TAG_Long;
@@ -25,6 +23,10 @@ public class LevelModelSpecification {
 	private int spawnY;
 	private int spawnZ;
 	private int version;
+	private VersionModel versionCompound;
+	private int id;
+	private String name;
+	private byte snapshot;
 	
 	@Before
 	public void setup() {
@@ -36,6 +38,13 @@ public class LevelModelSpecification {
 		spawnY = 64;
 		spawnZ = 100;
 		version = 19133;
+		id = 15;
+		name = "Test";
+		snapshot = 2;
+		versionCompound = new VersionModel();
+		versionCompound.setId(id);
+		versionCompound.setName(name);
+		versionCompound.setSnapshot(snapshot);
 	}
 	
 	@Test
@@ -54,6 +63,9 @@ public class LevelModelSpecification {
 	public void ShouldReadFromCompound() {
 		TAG_Compound data = new TAG_Compound(dataCompoundName);
 		TAG_Compound versionCompound = new TAG_Compound(versionCompoundName);
+		versionCompound.addTAG(new TAG_Int(VersionModel.idTagName, id));
+		versionCompound.addTAG(new TAG_String(VersionModel.nameTagName, name));
+		versionCompound.addTAG(new TAG_Byte(VersionModel.snapshotTagName, snapshot));
 		data.addTAG(versionCompound);
 		data.addTAG(new TAG_String(levelNameTagName, levelName));
 		data.addTAG(new TAG_Long(randomSeedTagName, randomSeed));
@@ -64,15 +76,13 @@ public class LevelModelSpecification {
 		
 		compound.addTAG(data);
 		
-		VersionModel mockVersion = Mockito.mock(VersionModel.class);
-		
-		level.setVersionCompound(mockVersion);
-		
 		level.readFromCompound(compound);
 		
-		verify(mockVersion).readFromCompound(versionCompound);
+		VersionModel verModel = level.getVersionCompound();
 		
-		assertEquals(level.getVersionCompound(), mockVersion);
+		assertEquals(this.versionCompound.getId(), verModel.getId());
+		assertEquals(this.versionCompound.getName(), verModel.getName());
+		assertEquals(this.versionCompound.getSnapshot(), verModel.getSnapshot());
 		assertEquals(levelName, level.getLevelName());
 		assertEquals(randomSeed, level.getRandomSeed());
 		assertEquals(spawnX, level.getSpawnX());
@@ -89,18 +99,16 @@ public class LevelModelSpecification {
 		level.setSpawnY(spawnY);
 		level.setSpawnZ(spawnZ);
 		level.setVersion(version);
-		
-		VersionModel mockVersion = Mockito.mock(VersionModel.class);
-		
-		level.setVersionCompound(mockVersion);
+		level.setVersionCompound(versionCompound);
 		
 		level.writeToCompound(compound);
 		
 		TAG_Compound data = (TAG_Compound)compound.getTAG(dataCompoundName);
 		TAG_Compound versionCompound = (TAG_Compound)data.getTAG(versionCompoundName);
 		
-		//assertTrue(compound.hasTAG("version"));
-		verify(mockVersion).writeToCompound(versionCompound);
+		assertTagInt(id, VersionModel.idTagName, versionCompound);
+		assertTagString(name, VersionModel.nameTagName, versionCompound);
+		assertTagByte(snapshot, VersionModel.snapshotTagName, versionCompound);
 		assertTagString(levelName, levelNameTagName, data);
 		assertTagLong(randomSeed, randomSeedTagName, data);
 		assertTagInt(spawnX, spawnXTagName, data);

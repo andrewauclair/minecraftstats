@@ -1,5 +1,44 @@
 package stats.spec.nbt.model;
 
-public class RegionModelSpecification {
+import static org.junit.Assert.*;
 
+import org.junit.Before;
+import org.junit.Test;
+
+import stats.nbt.model.ChunkModel;
+import stats.nbt.model.RegionModel;
+
+public class RegionModelSpecification {
+	RegionModel region;
+	ChunkModel chunk;
+	int x;
+	int z;
+	
+	@Before
+	public void setup() {
+		region = new RegionModel();
+		x = 3;
+		z = 5;
+		chunk = new ChunkModel();
+		chunk.setxPos(x);
+		chunk.setzPos(z);
+	}
+	
+	@Test
+	public void ShouldAddChunk() {
+		region.addChunk(chunk);
+		
+		assertEquals(chunk, region.getChunk(x, z));
+	}
+	
+	@Test
+	public void ShouldRemoveChunk() {
+		region.addChunk(chunk);
+		
+		assertEquals(chunk, region.getChunk(x, z));
+		
+		region.removeChunk(chunk);
+		
+		assertNull(region.getChunk(x, z));
+	}
 }
