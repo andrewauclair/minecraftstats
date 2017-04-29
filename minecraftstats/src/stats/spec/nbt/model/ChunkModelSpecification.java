@@ -1,7 +1,7 @@
 package stats.spec.nbt.model;
 
 import static org.junit.Assert.*;
-import static stats.nbt.model.ChunkSectionsModel.*;
+import static stats.nbt.model.ChunkModel.*;
 import static stats.spec.nbt.model.ModelSpecUtils.*;
 
 import java.util.Arrays;
@@ -9,7 +9,7 @@ import java.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
 
-import stats.nbt.model.ChunkSectionsModel;
+import stats.nbt.model.ChunkModel;
 import stats.nbt.model.tags.TAG_Byte;
 import stats.nbt.model.tags.TAG_Byte_Array;
 import stats.nbt.model.tags.TAG_Compound;
@@ -17,8 +17,8 @@ import stats.nbt.model.tags.TAG_Int;
 import stats.nbt.model.tags.TAG_Int_Array;
 import stats.nbt.model.tags.TAG_Long;
 
-public class ChunkSectionsModelSpecification {
-	private ChunkSectionsModel chunkSections;
+public class ChunkModelSpecification {
+	private ChunkModel chunkSections;
 	private TAG_Compound compound;
 	private TAG_Compound level;
 	
@@ -34,7 +34,7 @@ public class ChunkSectionsModelSpecification {
 	
 	@Before
 	public void setup() {
-		chunkSections = new ChunkSectionsModel();
+		chunkSections = new ChunkModel();
 		compound = new TAG_Compound("");
 		level = new TAG_Compound(levelTagName);
 		

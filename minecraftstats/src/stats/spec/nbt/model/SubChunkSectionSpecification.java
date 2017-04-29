@@ -11,7 +11,6 @@ import stats.nbt.model.SubChunkSectionModel;
 import stats.nbt.model.tags.TAG_Byte;
 import stats.nbt.model.tags.TAG_Byte_Array;
 import stats.nbt.model.tags.TAG_Compound;
-import stats.spec.nbt.model.tags.TAG_CompoundSpecification;
 
 public class SubChunkSectionSpecification {
 	SubChunkSectionModel subChunkSection;

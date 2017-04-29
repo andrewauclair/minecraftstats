@@ -9,7 +9,7 @@ import stats.nbt.model.tags.TAG_Int;
 import stats.nbt.model.tags.TAG_Int_Array;
 import stats.nbt.model.tags.TAG_Long;
 
-public class ChunkSectionsModel {
+public class ChunkModel {
 	public static final String levelTagName = "Level";
 	public static final String inhabitedTimeTagName = "InhabitedTime";
 	public static final String lastUpdateTagName = "LastUpdate";
