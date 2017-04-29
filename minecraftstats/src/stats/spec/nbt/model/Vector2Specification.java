@@ -14,14 +14,15 @@ import stats.nbt.model.tags.TAG_Float;
 import stats.nbt.model.tags.TAG_List;
 
 public class Vector2Specification {
-
 	private Vector2 rotation;
+	private TAG_List list;
 	private float x;
 	private float y;
 	
 	@Before
 	public void setup() {
 		rotation = new Vector2();
+		list = new TAG_List("");
 		x = 1.55f;
 		y = 1.8f;
 	}
@@ -29,14 +30,13 @@ public class Vector2Specification {
 	@Test
 	public void ShouldCreateObjectWithValues() {
 		rotation = new Vector2(x, y);
-		
+		list = new TAG_List("");
 		assertEquals(x, rotation.getX(), 0.001);
 		assertEquals(y, rotation.getY(), 0.001);
 	}
 	
 	@Test
 	public void ShouldReadFromList() {
-		TAG_List list = new TAG_List("");
 		ArrayList<TAG> tags = new ArrayList<>();
 		tags.add(new TAG_Float("", x));
 		tags.add(new TAG_Float("", y));
@@ -50,8 +50,6 @@ public class Vector2Specification {
 	
 	@Test
 	public void ShouldWriteToList() {
-		TAG_List list = new TAG_List("");
-		
 		rotation.setX(x);
 		rotation.setY(y);
 		
@@ -65,7 +63,6 @@ public class Vector2Specification {
 	
 	@Test
 	public void ShouldIgnoreInvalidInput() {
-		TAG_List list = new TAG_List("");
 		ArrayList<TAG> tags = new ArrayList<>();
 		tags.add(new TAG_Double("", (double)x));
 		tags.add(new TAG_Double("", (double)y));

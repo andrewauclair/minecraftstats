@@ -14,8 +14,8 @@ import stats.nbt.model.tags.TAG_Float;
 import stats.nbt.model.tags.TAG_List;
 
 public class Vector3Specification {
-
 	private Vector3 position;
+	private TAG_List list;
 	private double x;
 	private double y;
 	private double z;
@@ -23,6 +23,7 @@ public class Vector3Specification {
 	@Before
 	public void setup() {
 		position = new Vector3();
+		list = new TAG_List("");
 		x = 1.5;
 		y = 9.33;
 		z = 5.003;
@@ -39,7 +40,6 @@ public class Vector3Specification {
 	
 	@Test
 	public void ShouldReadFromList() {
-		TAG_List list = new TAG_List("");
 		ArrayList<TAG> tags = new ArrayList<>();
 		tags.add(new TAG_Double("", x));
 		tags.add(new TAG_Double("", y));
@@ -55,8 +55,6 @@ public class Vector3Specification {
 	
 	@Test
 	public void ShouldWriteToList() {
-		TAG_List list = new TAG_List("");
-		
 		position.setX(x);
 		position.setY(y);
 		position.setZ(z);
@@ -72,7 +70,6 @@ public class Vector3Specification {
 	
 	@Test
 	public void ShouldIgnoreInvalidInput() {
-		TAG_List list = new TAG_List("");
 		ArrayList<TAG> tags = new ArrayList<>();
 		tags.add(new TAG_Float("", (float)x));
 		tags.add(new TAG_Float("", (float)y));
