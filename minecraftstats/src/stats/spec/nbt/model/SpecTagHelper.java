@@ -31,7 +31,7 @@ public class SpecTagHelper {
 		inStream = new DataInputStream(byteInStream);
 	}
 	
-	private void createOutputStream() {
+	public void createOutputStream() {
 		
 		byteOutStream = new ByteArrayOutputStream();
 		outStream = new DataOutputStream(byteOutStream);

@@ -27,30 +27,46 @@ public class PlayerStatsModelSpecification {
 	
 	@Test
 	public void ShouldSetStatPropertyNames() {
-		assertEquals("stat.playOneMinute", minutesPlayedProp);
-		assertEquals("stat.chestOpened", chestsOpenedProp);
-		assertEquals("stat.enderchestOpened", enderChestsOpenedProp);
+		assertEquals("stat.playOneMinute", minutesPlayedStat);
+		assertEquals("stat.chestOpened", chestsOpenedStat);
+		assertEquals("stat.enderchestOpened", enderChestsOpenedStat);
+		assertEquals("stat.sneakTime", sneakTimeStat);
+		assertEquals("stat.timeSinceDeath", timeSinceDeathStat);
 	}
 	
 	@Test
 	public void ShouldParsePlayerOneMinute() {
-		stats.readFromJson(createJson(minutesPlayedProp, 1310));
+		stats.readFromJson(createJson(minutesPlayedStat, 1310));
 		
 		assertEquals(65.5, stats.getSecondsPlayed(), 0.001);
 	}
 	
 	@Test
 	public void ShouldParseChestOpened() {
-		stats.readFromJson(createJson(chestsOpenedProp, 5));
+		stats.readFromJson(createJson(chestsOpenedStat, 5));
 		
 		assertEquals(5, stats.getChestsOpened());
 	}
 	
 	@Test
 	public void ShouldParseEnderChestsOpened() {
-		stats.readFromJson(createJson(enderChestsOpenedProp, 5));
+		stats.readFromJson(createJson(enderChestsOpenedStat, 5));
 		
 		assertEquals(5, stats.getEnderChestsOpened());
+	}
+	
+	@Test
+	public void ShouldParseSneakTime() {
+		stats.readFromJson(createJson(sneakTimeStat, 50));
+		
+		assertEquals(2.5, stats.getSecondsSneaking(), 0.001);
+	}
+	
+	@Test
+	public void ShouldParseTimeSinceDeath() {
+		stats.readFromJson(createJson(timeSinceDeathStat, 50));
+		
+		assertEquals(2.5, stats.getSecondsSinceDeath(), 0.001);
 	}
 	
 	private JsonObject createJson(String name, long value) {
