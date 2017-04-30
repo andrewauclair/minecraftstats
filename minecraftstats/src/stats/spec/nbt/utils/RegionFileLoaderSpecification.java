@@ -32,12 +32,6 @@ public class RegionFileLoaderSpecification {
 	TAG_Compound payload;
 	private int payloadSize;
 	
-	// TODO Expand this test to cover 2 loaded chunks
-//	@BeforeClass
-//	public void setupClass() {
-//		// TODO Build the input array
-//	}
-	
 	@Before
 	public void setup() throws IOException {
 		loader = new RegionFileLoader();
@@ -58,7 +52,6 @@ public class RegionFileLoaderSpecification {
 		compress.finish();
 		payloadSize = compress.deflate(chunkData);
 		
-		// TODO build only the input stream here
 	}
 	
 	@Test
@@ -94,5 +87,13 @@ public class RegionFileLoaderSpecification {
         assertEquals(0x2345, loader.getLocation(16, 8));
         assertEquals(0x5678, loader.getTimestamp(16, 8));
         assertNotNull(region.getChunk(x, z));
+	}
+	
+	private void writeLocationsToStream() {
+		
+	}
+	
+	private void writeTimestampsToStream() {
+		
 	}
 }

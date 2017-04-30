@@ -4,6 +4,8 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
@@ -37,14 +39,19 @@ public class RegionFileLoader {
 		// loop through the locations to find all the chunks and load them
 		RegionModel region = new RegionModel();
 		
+		int fileLoc = 4096 * 2;
+		
 		// TODO can we just read the data and not care about the location or timestamp?
 		while (input.available() > 0) {
+			System.out.println("fileLoc: " + fileLoc);
 			// read int for chunk size
 			int size = input.readInt();
+			fileLoc += 4;
+			fileLoc += size;
 			
 			// read byte for compression
 			int compression = input.readByte();
-			
+			System.out.println("compression: " + compression);
 			// read chunk data
 			byte[] chunkData = new byte[size - 1];
 			input.read(chunkData);
@@ -73,6 +80,13 @@ public class RegionFileLoader {
 			chunk.readFromCompound(tag);
 			
 			region.addChunk(chunk);
+			
+			int n = ((size + 4 + 4096 - 1) / 4096) * 4096;
+			byte[] extra = new byte[n - (size + 4)];
+			fileLoc += n - (size + 4);
+			System.out.println("size: " + size);
+			System.out.println("n: " + n);
+			input.read(extra);
 		}
 		
 		return region;
@@ -88,5 +102,17 @@ public class RegionFileLoader {
 	
 	private int getIndex(int x, int z) {
 		return (x & 31) + (z & 31) * 32;
+	}
+	
+	public static void main(String[] args) throws IOException, DataFormatException {
+		loadRegion("C:\\Users\\might\\AppData\\Roaming\\.minecraft\\saves\\New World\\region\\r.0.0.mca");
+		loadRegion("C:\\Users\\might\\AppData\\Roaming\\.minecraft\\saves\\New World\\region\\r.-1.0.mca");
+		loadRegion("C:\\Users\\might\\AppData\\Roaming\\.minecraft\\saves\\New World\\region\\r.0.-1.mca");
+		loadRegion("C:\\Users\\might\\AppData\\Roaming\\.minecraft\\saves\\New World\\region\\r.-1.-1.mca");
+	}
+	
+	private static void loadRegion(String path) throws IOException, DataFormatException {
+		FileInputStream input = new FileInputStream(new File(path));
+		RegionModel region = new RegionFileLoader().createRegionFromStream(new DataInputStream(input));
 	}
 }
