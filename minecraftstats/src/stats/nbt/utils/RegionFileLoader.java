@@ -7,8 +7,8 @@ import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.IntBuffer;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.zip.DataFormatException;
 import java.util.zip.Inflater;
 
@@ -22,86 +22,108 @@ public class RegionFileLoader {
 	
 	private int[] locations = new int[locationsByteSize / 4];
 	private int[] timestamps = new int[timestampsByteSize / 4];
+	private ArrayList<Integer> chunkOffsets = new ArrayList<>();
+	
+	private RegionModel region = new RegionModel();
+	private DataInputStream inStream = null;
+	private int sector = 0;
 	
 	public RegionModel createRegionFromStream(DataInputStream input) throws IOException, DataFormatException {
-		byte[] locs = new byte[locationsByteSize];
-		input.read(locs);
+		inStream = input;
 		
-		IntBuffer intBuffer = ByteBuffer.wrap(locs).asIntBuffer();
-		intBuffer.get(locations);
+		readLocations();
+		readTimestamps();
+		readChunks();
 		
-		byte[] times = new byte[timestampsByteSize];
-		input.read(times);
-		
-		intBuffer = ByteBuffer.wrap(times).asIntBuffer();
-		intBuffer.get(timestamps);
-		
-		// loop through the locations to find all the chunks and load them
-		RegionModel region = new RegionModel();
-		
-		int fileLoc = 4096 * 2;
-		
-		// TODO can we just read the data and not care about the location or timestamp?
-		while (input.available() > 0) {
-			System.out.println("fileLoc: " + fileLoc);
-			// read int for chunk size
-			int size = input.readInt();
-			fileLoc += 4;
-			fileLoc += size;
-			
-			// read byte for compression
-			int compression = input.readByte();
-			System.out.println("compression: " + compression);
-			// read chunk data
-			byte[] chunkData = new byte[size - 1];
-			input.read(chunkData);
-			
-			int available = input.available();
-			
-			// default the table and read the NBT
-			Inflater decompress = new Inflater();
-			decompress.setInput(chunkData);
-			
-			ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-			DataOutputStream output = new DataOutputStream(byteStream);
-			
-			byte[] bytes = new byte[1024];
-			
-			while (!decompress.finished()) {
-				int count = decompress.inflate(bytes);
-				output.write(bytes, 0, count);
+		return region;
+	}
+	
+	private void readLocations() throws IOException {
+		for (int i = 0; i < locations.length; i++) {
+			locations[i] = inStream.readInt();
+		}
+		sector++;
+	}
+	
+	private void readTimestamps() throws IOException {
+		for (int i = 0; i < timestamps.length; i++) {
+			timestamps[i] = inStream.readInt();
+		}
+		sector++;
+	}
+	
+	private void buildLocationsList() {
+		for (int location : locations) {
+			int offset = location >> 8;
+			if (offset != 0) {
+				chunkOffsets.add(offset);
 			}
+		}
+		Collections.sort(chunkOffsets);
+	}
+	
+	private void readChunks() throws IOException, DataFormatException {
+		buildLocationsList();
+		
+		for (int offset : chunkOffsets) {
+			skipSectors(offset - sector);
+			readChunk();
+		}
+	}
+	
+	private void skipSectors(int toSkip) throws IOException {
+		for (int i = 0; i < toSkip; i++) {
+			byte[] data = new byte[4096];
+			inStream.read(data);
+			sector++;
+		}
+	}
+	
+	private void readChunk() throws IOException, DataFormatException {
+		int size = inStream.readInt();
+		int compression = inStream.readByte();
+		
+		byte[] data = new byte[size - 1];
+		inStream.read(data);
+		
+		int sectors = data.length / 4096;
+		
+		if (data.length % 4096 != 0) {
+			sectors++;
+		}
+		sector += sectors;
+		
+		int toSkip = ((size + 4 + 4096 - 1) / 4096) * 4096;
+		byte[] junk = new byte[toSkip - (size + 4)];
+		inStream.read(junk);
+		
+		if (compression == 2) {
+			DataInputStream nbtIn = decompressBytes(data);
 			
-			DataInputStream inputStream = new DataInputStream(new ByteArrayInputStream(byteStream.toByteArray()));
-			
-			TAG_Compound tag = (TAG_Compound)NBTFileHelper.readNextTag(inputStream);
+			TAG_Compound tag = (TAG_Compound)NBTFileHelper.readNextTag(nbtIn);
 			
 			ChunkModel chunk = new ChunkModel();
 			chunk.readFromCompound(tag);
 			
 			region.addChunk(chunk);
-			
-			int n = ((size + 4 + 4096 - 1) / 4096) * 4096;
-			byte[] extra = new byte[n - (size + 4)];
-			fileLoc += n - (size + 4);
-			System.out.println("size: " + size);
-			System.out.println("n: " + n);
-			input.read(extra);
+		}
+	}
+	
+	private DataInputStream decompressBytes(byte[] data) throws DataFormatException, IOException {
+		byte[] temp = new byte[1024];
+		
+		Inflater decompress = new Inflater();
+		decompress.setInput(data);
+		
+		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+		DataOutputStream output = new DataOutputStream(byteStream);
+		
+		while (!decompress.finished()) {
+			int count = decompress.inflate(temp);
+			output.write(temp, 0, count);
 		}
 		
-		return region;
-	}
-	
-	public int getLocation(int x, int z) {
-		return locations[getIndex(x, z)];
-	}
-	
-	public int getTimestamp(int x, int z) {
-		return timestamps[getIndex(x, z)];
-	}
-	
-	private int getIndex(int x, int z) {
-		return (x & 31) + (z & 31) * 32;
+		return new DataInputStream(new ByteArrayInputStream(byteStream.toByteArray()));
 	}
 	
 	public static void main(String[] args) throws IOException, DataFormatException {
@@ -114,5 +136,7 @@ public class RegionFileLoader {
 	private static void loadRegion(String path) throws IOException, DataFormatException {
 		FileInputStream input = new FileInputStream(new File(path));
 		RegionModel region = new RegionFileLoader().createRegionFromStream(new DataInputStream(input));
+		
+		System.out.println("Loaded region with " + region.getChunkCount() + " chunks.");
 	}
 }

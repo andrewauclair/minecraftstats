@@ -18,6 +18,10 @@ public class RegionModel {
 		return chunks.get(getIndex(x, z));
 	}
 	
+	public int getChunkCount() {
+		return chunks.size();
+	}
+	
 	private Integer getIndex(int x, int z) {
 		return x + z * 32;
 	}

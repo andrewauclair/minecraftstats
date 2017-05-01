@@ -41,4 +41,16 @@ public class RegionModelSpecification {
 		
 		assertNull(region.getChunk(x, z));
 	}
+	
+	@Test
+	public void ShouldReturnChunkCount() {
+		ChunkModel chunk2 = new ChunkModel();
+		chunk2.setxPos(5);
+		chunk2.setzPos(10);
+		
+		region.addChunk(chunk);
+		region.addChunk(chunk2);
+		
+		assertEquals(2, region.getChunkCount());
+	}
 }
