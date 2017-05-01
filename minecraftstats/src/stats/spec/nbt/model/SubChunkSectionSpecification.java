@@ -18,6 +18,7 @@ public class SubChunkSectionSpecification {
 	private byte y;
 	private TAG_Byte_Array blockLight;
 	private TAG_Byte_Array blocks;
+	private TAG_Byte_Array add;
 	private TAG_Byte_Array data;
 	private TAG_Byte_Array skyLight;
 	
@@ -28,6 +29,7 @@ public class SubChunkSectionSpecification {
 		y = 5;
 		blockLight = new TAG_Byte_Array(blockLightTagName, new byte[] { 1, 2, 3});
 		blocks = new TAG_Byte_Array(blocksTagName, new byte[] { 5, 6, 7});
+		add = new TAG_Byte_Array(addTagName, new byte[] { 99, 22, 11});
 		data = new TAG_Byte_Array(dataTagName, new byte[] { 8, 9, 10});
 		skyLight = new TAG_Byte_Array(skyLightTagName, new byte[] { 11, 12, 13});
 	}
@@ -37,6 +39,7 @@ public class SubChunkSectionSpecification {
 		assertEquals("Y", yTagName);
 		assertEquals("BlockLight", blockLightTagName);
 		assertEquals("Blocks", blocksTagName);
+		assertEquals("Add", addTagName);
 		assertEquals("Data", dataTagName);
 		assertEquals("SkyLight", skyLightTagName);
 	}
@@ -46,6 +49,7 @@ public class SubChunkSectionSpecification {
 		compound.addTAG(new TAG_Byte(yTagName, y));
 		compound.addTAG(blockLight);
 		compound.addTAG(blocks);
+		compound.addTAG(add);
 		compound.addTAG(data);
 		compound.addTAG(skyLight);
 		
@@ -54,6 +58,7 @@ public class SubChunkSectionSpecification {
 		assertEquals(y, subChunkSection.getY());
 		assertEquals(blockLight.getValue(), subChunkSection.getBlockLight());
 		assertEquals(blocks.getValue(), subChunkSection.getBlocks());
+		assertEquals(add.getValue(), subChunkSection.getAdd());
 		assertEquals(data.getValue(), subChunkSection.getData());
 		assertEquals(skyLight.getValue(), subChunkSection.getSkyLight());
 	}
@@ -63,6 +68,7 @@ public class SubChunkSectionSpecification {
 		subChunkSection.setY(y);
 		subChunkSection.setBlockLight(blockLight.getValue());
 		subChunkSection.setBlocks(blocks.getValue());
+		subChunkSection.setAdd(add.getValue());
 		subChunkSection.setData(data.getValue());
 		subChunkSection.setSkyLight(skyLight.getValue());
 		
@@ -71,6 +77,7 @@ public class SubChunkSectionSpecification {
 		assertTagByte(y, yTagName, compound);
 		assertTagByteArray(blockLight.getValue(), blockLightTagName, compound);
 		assertTagByteArray(blocks.getValue(), blocksTagName, compound);
+		assertTagByteArray(add.getValue(), addTagName, compound);
 		assertTagByteArray(data.getValue(), dataTagName, compound);
 		assertTagByteArray(skyLight.getValue(), skyLightTagName, compound);
 	}

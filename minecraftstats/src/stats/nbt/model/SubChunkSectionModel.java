@@ -10,12 +10,14 @@ public class SubChunkSectionModel {
 	public static final String yTagName = "Y";
 	public static final String blockLightTagName = "BlockLight";
 	public static final String blocksTagName = "Blocks";
+	public static final String addTagName = "Add";
 	public static final String dataTagName = "Data";
 	public static final String skyLightTagName = "SkyLight";
 	
 	private byte y;
 	private byte[] blockLight;
 	private byte[] blocks;
+	private byte[] add;
 	private byte[] data;
 	private byte[] skyLight;
 	
@@ -23,6 +25,7 @@ public class SubChunkSectionModel {
 		y = getByteValue(compound, yTagName);
 		blockLight = getByteArrayValue(compound, blockLightTagName);
 		blocks = getByteArrayValue(compound, blocksTagName);
+		add = getByteArrayValue(compound, addTagName);
 		data = getByteArrayValue(compound, dataTagName);
 		skyLight = getByteArrayValue(compound, skyLightTagName);
 	}
@@ -31,6 +34,7 @@ public class SubChunkSectionModel {
 		compound.addTAG(new TAG_Byte(yTagName, y));
 		compound.addTAG(new TAG_Byte_Array(blockLightTagName, blockLight));
 		compound.addTAG(new TAG_Byte_Array(blocksTagName, blocks));
+		compound.addTAG(new TAG_Byte_Array(addTagName, add));
 		compound.addTAG(new TAG_Byte_Array(dataTagName, data));
 		compound.addTAG(new TAG_Byte_Array(skyLightTagName, skyLight));
 	}
@@ -57,6 +61,14 @@ public class SubChunkSectionModel {
 
 	public void setBlocks(byte[] blocks) {
 		this.blocks = blocks;
+	}
+
+	public byte[] getAdd() {
+		return add;
+	}
+
+	public void setAdd(byte[] add) {
+		this.add = add;
 	}
 
 	public byte[] getData() {
