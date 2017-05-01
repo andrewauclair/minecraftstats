@@ -3,21 +3,14 @@ package stats.spec.nbt.utils;
 import static org.junit.Assert.*;
 import static stats.nbt.utils.RegionFileLoader.*;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.IntBuffer;
 import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-
-import com.sun.xml.internal.ws.message.stream.OutboundStreamHeader;
 
 import stats.nbt.model.ChunkModel;
 import stats.nbt.model.RegionModel;
@@ -25,7 +18,6 @@ import stats.nbt.model.tags.TAG.TAG_Type;
 import stats.nbt.model.tags.TAG_Byte;
 import stats.nbt.model.tags.TAG_Compound;
 import stats.nbt.model.tags.TAG_Int;
-import stats.nbt.model.tags.TAG_List;
 import stats.nbt.utils.RegionFileLoader;
 import stats.spec.nbt.model.SpecTagHelper;
 
