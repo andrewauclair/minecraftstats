@@ -66,7 +66,7 @@ public class SubChunkSectionSpecification {
 		subChunkSection.setData(data.getValue());
 		subChunkSection.setSkyLight(skyLight.getValue());
 		
-		subChunkSection.writeToStream(compound);
+		subChunkSection.writeToCompound(compound);
 		
 		assertTagByte(y, yTagName, compound);
 		assertTagByteArray(blockLight.getValue(), blockLightTagName, compound);

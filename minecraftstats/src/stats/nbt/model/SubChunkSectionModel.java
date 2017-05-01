@@ -27,7 +27,7 @@ public class SubChunkSectionModel {
 		skyLight = getByteArrayValue(compound, skyLightTagName);
 	}
 	
-	public void writeToStream(TAG_Compound compound) {
+	public void writeToCompound(TAG_Compound compound) {
 		compound.addTAG(new TAG_Byte(yTagName, y));
 		compound.addTAG(new TAG_Byte_Array(blockLightTagName, blockLight));
 		compound.addTAG(new TAG_Byte_Array(blocksTagName, blocks));

@@ -29,6 +29,13 @@ public class TAG_List extends TAG {
 		return m_type;
 	}
 	
+	public void addTAG(TAG tag) {
+		if (TAG_Type.fromTAG(tag) == m_type || m_type == null) {
+			m_value.add(tag);
+			m_type = TAG_Type.fromTAG(tag);
+		}
+	}
+	
 	public void setValue(ArrayList<TAG> value) {
 		m_value = value;
 		
