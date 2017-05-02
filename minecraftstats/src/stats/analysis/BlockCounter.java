@@ -4,7 +4,7 @@ import stats.nbt.model.SubChunkSectionModel;
 
 public class BlockCounter {
 
-	int[] counts = new int[4096];
+	private int[] counts = new int[4096];
 	
 	public void count(SubChunkSectionModel subchunk) {
 		byte[] blocks = subchunk.getBlocks();
