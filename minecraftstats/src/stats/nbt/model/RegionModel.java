@@ -1,5 +1,6 @@
 package stats.nbt.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,6 +21,14 @@ public class RegionModel {
 	
 	public int getChunkCount() {
 		return chunks.size();
+	}
+	
+	public ArrayList<ChunkModel> getChunks() {
+		ArrayList<ChunkModel> chunks = new ArrayList<>();
+		for (ChunkModel chunk : this.chunks.values()) {
+			chunks.add(chunk);
+		}
+		return chunks;
 	}
 	
 	private Integer getIndex(int x, int z) {
