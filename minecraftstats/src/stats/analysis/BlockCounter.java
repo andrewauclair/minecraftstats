@@ -29,10 +29,10 @@ public class BlockCounter extends NBTVisitor {
 		
 		for (int i = 0; i < blocks.length; i++) {
 			int blockID = blocks[i];
-			if (add != null) {
+			if (add != null && add.length >= blocks.length / 2) {
 				blockID |= i % 2 == 0 ? (add[i / 2] & 0x0F) << 8 : (add[i / 2] & 0xF0) << 4;
 			}
-			counts[blockID]++;
+			counts[blockID & 0xFF]++;
 		}
 	}
 }
