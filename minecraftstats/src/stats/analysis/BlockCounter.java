@@ -1,12 +1,29 @@
 package stats.analysis;
 
+import stats.nbt.model.ChunkModel;
+import stats.nbt.model.RegionModel;
 import stats.nbt.model.SubChunkSectionModel;
 
-public class BlockCounter {
+public class BlockCounter extends NBTVisitor {
 
 	private int[] counts = new int[4096];
 	
-	public void count(SubChunkSectionModel subchunk) {
+	public int getCount(int blockID) {
+		return counts[blockID];
+	}
+
+	@Override
+	public void accept(RegionModel region) {
+		
+	}
+
+	@Override
+	public void accept(ChunkModel chunk) {
+		
+	}
+
+	@Override
+	public void accept(SubChunkSectionModel subchunk) {
 		byte[] blocks = subchunk.getBlocks();
 		byte[] add = subchunk.getAdd();
 		
@@ -17,9 +34,5 @@ public class BlockCounter {
 			}
 			counts[blockID]++;
 		}
-	}
-	
-	public int getCount(int blockID) {
-		return counts[blockID];
 	}
 }

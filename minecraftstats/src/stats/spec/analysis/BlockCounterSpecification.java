@@ -27,7 +27,7 @@ public class BlockCounterSpecification {
 		blocks[2] = 2;
 		subchunk.setBlocks(blocks);
 		
-		counter.count(subchunk);
+		counter.accept(subchunk);
 		
 		assertEquals(2, counter.getCount(1));
 		assertEquals(1, counter.getCount(2));
@@ -46,7 +46,7 @@ public class BlockCounterSpecification {
 		subchunk.setAdd(add);
 		subchunk.setBlocks(blocks);
 		
-		counter.count(subchunk);
+		counter.accept(subchunk);
 		
 		assertEquals(1, counter.getCount(256));
 		assertEquals(2, counter.getCount(512));
