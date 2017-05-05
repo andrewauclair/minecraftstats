@@ -19,7 +19,7 @@ public class BlockCounterSpecification {
 	@Test
 	public void ShouldCountBlocksInSubChunk() {
 		SubChunkSectionModel subchunk = new SubChunkSectionModel();
-		subchunk.setAdd(null);
+		subchunk.setAdd(new byte[0]);
 		
 		byte[] blocks = new byte[4096];
 		blocks[0] = 1;
