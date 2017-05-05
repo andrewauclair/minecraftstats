@@ -22,7 +22,6 @@ import stats.nbt.utils.RegionFileLoader;
 import stats.spec.nbt.model.SpecTagHelper;
 
 public class RegionFileLoaderSpecification extends SpecTagHelper {
-	private RegionFileLoader loader;
 	int[] locations;
 	int[] timestamps;
 	ChunkModel[] chunks = new ChunkModel[2];
@@ -30,8 +29,6 @@ public class RegionFileLoaderSpecification extends SpecTagHelper {
 	@Before
 	public void setup() throws IOException {
 		super.setup();
-		
-		loader = new RegionFileLoader();
 		
 		locations = new int[locationsByteSize / 4];
 		timestamps = new int[timestampsByteSize / 4];
@@ -77,7 +74,7 @@ public class RegionFileLoaderSpecification extends SpecTagHelper {
 		
 		createInputStreamFromOutputStream();
 		
-        RegionModel region = loader.createRegionFromStream(inStream);
+        RegionModel region = RegionFileLoader.createRegionFromStream(inStream);
         
         assertChunkCreation(region);
 	}
@@ -119,7 +116,7 @@ public class RegionFileLoaderSpecification extends SpecTagHelper {
 		
 		createInputStreamFromOutputStream();
 		
-		RegionModel region = loader.createRegionFromStream(inStream);
+		RegionModel region = RegionFileLoader.createRegionFromStream(inStream);
 
         assertChunkCreation(region);
 	}

@@ -28,14 +28,20 @@ public class RegionFileLoader {
 	private DataInputStream inStream = null;
 	private int sector = 0;
 	
-	public RegionModel createRegionFromStream(DataInputStream input) throws IOException, DataFormatException {
-		inStream = input;
+	private RegionFileLoader() {
 		
-		readLocations();
-		readTimestamps();
-		readChunks();
+	}
+	
+	public static RegionModel createRegionFromStream(DataInputStream input) throws IOException, DataFormatException {
+		RegionFileLoader loader = new RegionFileLoader();
 		
-		return region;
+		loader.inStream = input;
+		
+		loader.readLocations();
+		loader.readTimestamps();
+		loader.readChunks();
+		
+		return loader.region;
 	}
 	
 	private void readLocations() throws IOException {
@@ -53,6 +59,7 @@ public class RegionFileLoader {
 	}
 	
 	private void buildLocationsList() {
+		chunkOffsets.clear();
 		for (int location : locations) {
 			int offset = location >> 8;
 			if (offset != 0) {

@@ -1,6 +1,7 @@
 package stats.analysis;
 
 import java.io.DataInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -28,19 +29,24 @@ public class RegionParser {
 	}
 	
 	public static void main(String[] args) throws FileNotFoundException, IOException, DataFormatException {
-		RegionFileLoader loader = new RegionFileLoader();
-		RegionModel region = loader.createRegionFromStream(new DataInputStream(new FileInputStream(args[0])));
-		RegionParser parser = new RegionParser(region);
 		BlockCounter count = new BlockCounter();
-		parser.parse(count);
-		System.out.println("Air blocks: " + count.getCount(0));
+		
+		File dir = new File(args[0]);
+		File[] regionFiles = dir.listFiles();
+		for (File file : regionFiles) {
+			RegionModel region = RegionFileLoader.createRegionFromStream(new DataInputStream(new FileInputStream(file)));
+			RegionParser parser = new RegionParser(region);
+			parser.parse(count);
+		}
+
+//		System.out.println("Air blocks: " + count.getCount(0));
 		System.out.println("Diamond Ore: " + count.getCount(56));
 		System.out.println("Enchanting Table: " + count.getCount(116));
 		System.out.println("Ender Chest: " + count.getCount(130));
-		System.out.println("Trapped Chest: " + count.getCount(146));
-		System.out.println("Stone: " + count.getCount(1));
-		System.out.println("Grass: " + count.getCount(2));
-		System.out.println("Dirt: " + count.getCount(3));
+//		System.out.println("Trapped Chest: " + count.getCount(146));
+//		System.out.println("Stone: " + count.getCount(1));
+//		System.out.println("Grass: " + count.getCount(2));
+//		System.out.println("Dirt: " + count.getCount(3));
 		System.out.println("Monster Spawner: " + count.getCount(52));
 	}
 }
