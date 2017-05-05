@@ -23,6 +23,7 @@ import stats.util.MojangAPI;
 
 // Everything on this dialog and its actions are temporary
 // This will be used to setup the dialogs and figure things out
+@SuppressWarnings("serial")
 public class MainView extends JFrame {
 
 	public static MainView s_mainView = null;

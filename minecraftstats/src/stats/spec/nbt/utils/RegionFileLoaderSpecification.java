@@ -25,8 +25,7 @@ public class RegionFileLoaderSpecification extends SpecTagHelper {
 	private RegionFileLoader loader;
 	int[] locations;
 	int[] timestamps;
-	ChunkModel chunk1;
-	ChunkModel chunk2;
+	ChunkModel[] chunks = new ChunkModel[2];
 	
 	@Before
 	public void setup() throws IOException {
@@ -36,8 +35,8 @@ public class RegionFileLoaderSpecification extends SpecTagHelper {
 		
 		locations = new int[locationsByteSize / 4];
 		timestamps = new int[timestampsByteSize / 4];
-		chunk1 = createChunk(16, 8);
-		chunk2 = createChunk(18, 20);
+		chunks[0] = createChunk(16, 8);
+		chunks[1] = createChunk(18, 20);
 	}
 	
 	private ChunkModel createChunk(int x, int z) {
@@ -59,46 +58,49 @@ public class RegionFileLoaderSpecification extends SpecTagHelper {
 	
 	@Test
 	public void ShouldReadFromStream() throws IOException, DataFormatException {
-		setChunkLocation(chunk1, 2);
-		setChunkLocation(chunk2, 4);
+		setChunkLocation(chunks[0], 2);
+		setChunkLocation(chunks[1], 4);
 		
 		int chunk1Timestamp = 0x1234;
 		int chunk2Timestamp = 0x2345;
 		
-		setChunkTimestamp(chunk1, chunk1Timestamp);
-		setChunkTimestamp(chunk2, chunk2Timestamp);
+		setChunkTimestamp(chunks[0], chunk1Timestamp);
+		setChunkTimestamp(chunks[1], chunk2Timestamp);
 		
 		writeLocationsToStream();
 		writeTimestampsToStream();
 		
-		writeChunkToStream(chunk1);
+		writeChunkToStream(chunks[0]);
 		byte[] padding = new byte[4096];
 		outStream.write(padding);
-		writeChunkToStream(chunk2);
+		writeChunkToStream(chunks[1]);
 		
 		createInputStreamFromOutputStream();
 		
-		int available = inStream.available();
-		
         RegionModel region = loader.createRegionFromStream(inStream);
         
-        ChunkModel chunk1In = region.getChunk(chunk1.getxPos(), chunk1.getzPos());
-        ChunkModel chunk2In = region.getChunk(chunk2.getxPos(), chunk2.getzPos());
-        assertNotNull(chunk1In);
-        assertNotNull(chunk2In);
-        assertEquals(chunk1.getxPos(), chunk1In.getxPos());
-        assertEquals(chunk1.getzPos(), chunk1In.getzPos());
-        assertEquals(chunk2.getxPos(), chunk2In.getxPos());
-        assertEquals(chunk2.getzPos(), chunk2In.getzPos());
+        assertChunkCreation(region);
+	}
+
+	private void assertChunkCreation(RegionModel region) {
+		ChunkModel[] chunksIn = new ChunkModel[2];
+        chunksIn[0] = region.getChunk(chunks[0].getxPos(), chunks[0].getzPos());
+        chunksIn[1] = region.getChunk(chunks[1].getxPos(), chunks[1].getzPos());
+        assertNotNull(chunksIn[0]);
+        assertNotNull(chunksIn[1]);
+        assertEquals(chunksIn[0].getxPos(), chunksIn[0].getxPos());
+        assertEquals(chunksIn[0].getzPos(), chunksIn[0].getzPos());
+        assertEquals(chunksIn[1].getxPos(), chunksIn[1].getxPos());
+        assertEquals(chunksIn[1].getzPos(), chunksIn[1].getzPos());
 	}
 	
 	@Test
 	public void ShouldReadChunkWithMultipleSectors() throws IOException, DataFormatException {
-		setChunkLocation(chunk1, 2);
-		setChunkLocation(chunk2, 4);
+		setChunkLocation(chunks[0], 2);
+		setChunkLocation(chunks[1], 4);
 		
 		TAG_Compound root = new TAG_Compound("Root");
-		chunk1.writeToCompound(root);
+		chunks[0].writeToCompound(root);
 		
 		for (int i = 0; i < 1300; i++) {
 			root.addTAG(new TAG_Byte("Byte" + i, (byte)i));
@@ -113,22 +115,13 @@ public class RegionFileLoaderSpecification extends SpecTagHelper {
 		root.writeToStream(output, true);
 		
 		writeByteStreamData(byteStream);
-		writeChunkToStream(chunk2);
+		writeChunkToStream(chunks[1]);
 		
 		createInputStreamFromOutputStream();
 		
-		int available = inStream.available();
-		
 		RegionModel region = loader.createRegionFromStream(inStream);
 
-        ChunkModel chunk1In = region.getChunk(chunk1.getxPos(), chunk1.getzPos());
-        ChunkModel chunk2In = region.getChunk(chunk2.getxPos(), chunk2.getzPos());
-        assertNotNull(chunk1In);
-        assertNotNull(chunk2In);
-        assertEquals(chunk1.getxPos(), chunk1In.getxPos());
-        assertEquals(chunk1.getzPos(), chunk1In.getzPos());
-        assertEquals(chunk2.getxPos(), chunk2In.getxPos());
-        assertEquals(chunk2.getzPos(), chunk2In.getzPos());
+        assertChunkCreation(region);
 	}
 	
 	private void setChunkLocation(ChunkModel chunk, int offset) {

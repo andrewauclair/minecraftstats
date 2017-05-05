@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
-
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -39,6 +37,7 @@ public final class MinecraftSaveLoader {
 				while (scan.hasNextLine()) {
 					contents += scan.nextLine();
 				}
+				scan.close();
 				JsonObject json = new JsonParser().parse(contents).getAsJsonObject();
 				
 				long minutes = json.get("stat.playOneMinute").getAsLong();

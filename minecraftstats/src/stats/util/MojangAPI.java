@@ -11,6 +11,7 @@ import com.google.gson.JsonParser;
 
 public final class MojangAPI {
 
+	private static final String minecraftNameURI = "https://sessionserver.mojang.com/session/minecraft/profile/";
 	private static Map<String, String> uuidToUsername = new HashMap<>();
 	
 	public static String getUserName(String UUID) {
@@ -20,7 +21,7 @@ public final class MojangAPI {
 			return uuidToUsername.get(UUID);
 		}
 		
-		String urlString = "https://sessionserver.mojang.com/session/minecraft/profile/" + UUID;
+		String urlString = minecraftNameURI + UUID;
 		
 		try {
 			URL url = new URL(urlString);

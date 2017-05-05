@@ -8,8 +8,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import stats.ui.actions.OpenSaveAction;
-import stats.ui.view.dialog.PlayerStatsDialog;
 
+@SuppressWarnings("serial")
 public class Menubar extends JMenuBar {
 
 	// File menu with Open, Save, Save As?

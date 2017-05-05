@@ -10,6 +10,7 @@ import javax.swing.JFileChooser;
 import stats.ui.view.MainView;
 import stats.util.MinecraftSaveLoader;
 
+@SuppressWarnings("serial")
 public class OpenSaveAction extends AbstractAction {
 
 	public OpenSaveAction(String label) {

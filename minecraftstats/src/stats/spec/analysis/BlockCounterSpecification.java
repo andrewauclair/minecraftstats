@@ -10,15 +10,16 @@ import stats.nbt.model.SubChunkSectionModel;
 
 public class BlockCounterSpecification {
 	BlockCounter counter;
+	SubChunkSectionModel subchunk;
 	
 	@Before
 	public void setup() {
 		counter = new BlockCounter();
+		subchunk = new SubChunkSectionModel();
 	}
 	
 	@Test
 	public void ShouldCountBlocksInSubChunk() {
-		SubChunkSectionModel subchunk = new SubChunkSectionModel();
 		subchunk.setAdd(new byte[0]);
 		
 		byte[] blocks = new byte[4096];
@@ -36,7 +37,6 @@ public class BlockCounterSpecification {
 	
 	@Test
 	public void ShouldCountBlocksUsingAddDataField() {
-		SubChunkSectionModel subchunk = new SubChunkSectionModel();
 		byte[] add = new byte[2048];
 		byte[] blocks = new byte[4096];
 		
