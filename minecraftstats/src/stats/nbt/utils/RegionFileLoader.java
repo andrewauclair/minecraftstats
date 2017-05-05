@@ -17,6 +17,7 @@ import stats.nbt.model.RegionModel;
 import stats.nbt.model.tags.TAG_Compound;
 
 public class RegionFileLoader {
+	private static final int sectorSize = 4096;
 	public static final int locationsByteSize = 4096;
 	public static final int timestampsByteSize = 4096;
 	
@@ -80,8 +81,7 @@ public class RegionFileLoader {
 	
 	private void skipSectors(int toSkip) throws IOException {
 		for (int i = 0; i < toSkip; i++) {
-			byte[] data = new byte[4096];
-			inStream.read(data);
+			inStream.skip(sectorSize);
 			sector++;
 		}
 	}
@@ -93,16 +93,15 @@ public class RegionFileLoader {
 		byte[] data = new byte[size - 1];
 		inStream.read(data);
 		
-		int sectors = data.length / 4096;
+		int sectors = data.length / sectorSize;
 		
-		if (data.length % 4096 != 0) {
+		if (data.length % sectorSize != 0) {
 			sectors++;
 		}
 		sector += sectors;
 		
-		int toSkip = ((size + 4 + 4096 - 1) / 4096) * 4096;
-		byte[] junk = new byte[toSkip - (size + 4)];
-		inStream.read(junk);
+		int toSkip = ((size + 4 + sectorSize - 1) / sectorSize) * sectorSize;
+		inStream.skip(toSkip - (size + 4));
 		
 		if (compression == 2) {
 			DataInputStream nbtIn = decompressBytes(data);
@@ -131,19 +130,5 @@ public class RegionFileLoader {
 		}
 		
 		return new DataInputStream(new ByteArrayInputStream(byteStream.toByteArray()));
-	}
-	
-	public static void main(String[] args) throws IOException, DataFormatException {
-		loadRegion("C:\\Users\\might\\AppData\\Roaming\\.minecraft\\saves\\New World\\region\\r.0.0.mca");
-		loadRegion("C:\\Users\\might\\AppData\\Roaming\\.minecraft\\saves\\New World\\region\\r.-1.0.mca");
-		loadRegion("C:\\Users\\might\\AppData\\Roaming\\.minecraft\\saves\\New World\\region\\r.0.-1.mca");
-		loadRegion("C:\\Users\\might\\AppData\\Roaming\\.minecraft\\saves\\New World\\region\\r.-1.-1.mca");
-	}
-	
-	private static void loadRegion(String path) throws IOException, DataFormatException {
-		FileInputStream input = new FileInputStream(new File(path));
-		RegionModel region = new RegionFileLoader().createRegionFromStream(new DataInputStream(input));
-		
-		System.out.println("Loaded region with " + region.getChunkCount() + " chunks.");
 	}
 }
