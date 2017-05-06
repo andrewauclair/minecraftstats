@@ -6,6 +6,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import stats.analysis.BlockCounter;
+import stats.nbt.model.ChunkModel;
+import stats.nbt.model.RegionModel;
 import stats.nbt.model.SubChunkSectionModel;
 
 public class BlockCounterSpecification {
@@ -22,7 +24,7 @@ public class BlockCounterSpecification {
 	public void ShouldCountBlocksInSubChunk() {
 		subchunk.setAdd(new byte[0]);
 		
-		byte[] blocks = new byte[4096];
+		byte[] blocks = new byte[5];
 		blocks[0] = 1;
 		blocks[1] = 1;
 		blocks[2] = 2;
@@ -31,16 +33,16 @@ public class BlockCounterSpecification {
 		
 		counter.accept(subchunk);
 		
-		assertEquals(2, counter.getCount(1));
-		assertEquals(1, counter.getCount(2));
-		assertEquals(1, counter.getCount(130));
-		assertEquals(4092, counter.getCount(0));
+		assertCounts(2, 1);
+		assertCounts(1, 2);
+		assertCounts(1, 130);
+		assertCounts(1, 0);
 	}
 	
 	@Test
 	public void ShouldCountBlocksUsingAddDataField() {
-		byte[] add = new byte[2048];
-		byte[] blocks = new byte[4096];
+		byte[] add = new byte[2];
+		byte[] blocks = new byte[4];
 		
 		add[0] = (1 << 4) | 2;
 		add[1] = 2;
@@ -50,8 +52,35 @@ public class BlockCounterSpecification {
 		
 		counter.accept(subchunk);
 		
-		assertEquals(1, counter.getCount(256));
-		assertEquals(2, counter.getCount(512));
-		assertEquals(4093, counter.getCount(0));
+		assertCounts(1, 256);
+		assertCounts(2, 512);
+		assertCounts(1, 0);
+	}
+	
+	private void assertCounts(int expected, int blockID) {
+		assertEquals(expected, counter.getChunkCount(blockID));
+		assertEquals(expected, counter.getRegionCount(blockID));
+	}
+	
+	@Test
+	public void ShouldResetRegionCounts() {
+		countBlocks();
+		counter.accept(new RegionModel());
+		assertEquals(0, counter.getRegionCount(1));
+	}
+	
+	@Test
+	public void ShouldResetChunkCounts() {
+		countBlocks();
+		counter.accept(new ChunkModel());
+		assertEquals(0, counter.getChunkCount(1));
+	}
+	
+	private void countBlocks() {
+		byte[] blocks = new byte[] { 1, 1 };
+		subchunk.setBlocks(blocks);
+		subchunk.setAdd(new byte[0]);
+		
+		counter.accept(subchunk);
 	}
 }

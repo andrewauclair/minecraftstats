@@ -42,13 +42,13 @@ public class RegionParser {
 		}
 
 //		System.out.println("Air blocks: " + count.getCount(0));
-		System.out.println("Diamond Ore: " + count.getCount(56));
-		System.out.println("Enchanting Table: " + count.getCount(116));
-		System.out.println("Ender Chest: " + count.getCount(130));
+		System.out.println("Diamond Ore: " + count.getChunkCount(56));
+		System.out.println("Enchanting Table: " + count.getChunkCount(116));
+		System.out.println("Ender Chest: " + count.getChunkCount(130));
 //		System.out.println("Trapped Chest: " + count.getCount(146));
 //		System.out.println("Stone: " + count.getCount(1));
 //		System.out.println("Grass: " + count.getCount(2));
 //		System.out.println("Dirt: " + count.getCount(3));
-		System.out.println("Monster Spawner: " + count.getCount(52));
+		System.out.println("Monster Spawner: " + count.getChunkCount(52));
 	}
 }
