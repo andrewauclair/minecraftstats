@@ -4,8 +4,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -93,15 +91,16 @@ public class RegionFileLoader {
 		byte[] data = new byte[size - 1];
 		inStream.read(data);
 		
-		int sectors = data.length / sectorSize;
+		int sectors = (size + 4) / sectorSize;
 		
-		if (data.length % sectorSize != 0) {
+		if ((size + 4) % sectorSize != 0) {
 			sectors++;
 		}
 		sector += sectors;
 		
 		int toSkip = ((size + 4 + sectorSize - 1) / sectorSize) * sectorSize;
 		inStream.skip(toSkip - (size + 4));
+		sector += (toSkip - (size + 4)) / sectorSize;
 		
 		if (compression == 2) {
 			DataInputStream nbtIn = decompressBytes(data);
@@ -116,7 +115,7 @@ public class RegionFileLoader {
 	}
 	
 	private DataInputStream decompressBytes(byte[] data) throws DataFormatException, IOException {
-		byte[] temp = new byte[1024];
+		byte[] temp = new byte[4096];
 		
 		Inflater decompress = new Inflater();
 		decompress.setInput(data);

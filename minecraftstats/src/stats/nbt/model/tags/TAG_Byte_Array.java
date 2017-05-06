@@ -39,9 +39,6 @@ public class TAG_Byte_Array extends TAG {
 		int size = in.readInt();
 		
 		m_value = new byte[size];
-		
-		for (int i = 0; i < size; i++) {
-			m_value[i] = in.readByte();
-		}
+		in.readFully(m_value);
 	}
 }

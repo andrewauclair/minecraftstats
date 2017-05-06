@@ -28,7 +28,7 @@ public class BlockCounter extends NBTVisitor {
 		byte[] add = subchunk.getAdd();
 		
 		for (int i = 0; i < blocks.length; i++) {
-			int blockID = blocks[i];
+			int blockID = blocks[i] & 0xFF;
 			if (add.length >= blocks.length / 2) {
 				blockID |= i % 2 == 0 ? (add[i / 2] & 0x0F) << 8 : (add[i / 2] & 0xF0) << 4;
 			}

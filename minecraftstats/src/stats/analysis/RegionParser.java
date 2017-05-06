@@ -34,9 +34,11 @@ public class RegionParser {
 		File dir = new File(args[0]);
 		File[] regionFiles = dir.listFiles();
 		for (File file : regionFiles) {
-			RegionModel region = RegionFileLoader.createRegionFromStream(new DataInputStream(new FileInputStream(file)));
-			RegionParser parser = new RegionParser(region);
-			parser.parse(count);
+			if (file.getName().contains(".mca")) {
+				RegionModel region = RegionFileLoader.createRegionFromStream(new DataInputStream(new FileInputStream(file)));
+				RegionParser parser = new RegionParser(region);
+				parser.parse(count);
+			}
 		}
 
 //		System.out.println("Air blocks: " + count.getCount(0));

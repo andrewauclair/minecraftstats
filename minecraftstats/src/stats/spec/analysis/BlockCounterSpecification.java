@@ -26,13 +26,15 @@ public class BlockCounterSpecification {
 		blocks[0] = 1;
 		blocks[1] = 1;
 		blocks[2] = 2;
+		blocks[3] = (byte)130;
 		subchunk.setBlocks(blocks);
 		
 		counter.accept(subchunk);
 		
 		assertEquals(2, counter.getCount(1));
 		assertEquals(1, counter.getCount(2));
-		assertEquals(4093, counter.getCount(0));
+		assertEquals(1, counter.getCount(130));
+		assertEquals(4092, counter.getCount(0));
 	}
 	
 	@Test
