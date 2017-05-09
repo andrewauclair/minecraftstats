@@ -98,8 +98,8 @@
 						<include name="**/*.class" />
 						<!-- Exclude classes necessary for testing only from the code coverage report-->
 						<exclude name="**/*Specification.class" />
-						<exclude name="stats.ui.actions.*" />
-						<exclude name="stats.ui.view.*" />
+						<exclude name="**/stats/ui/actions/**" />
+						<exclude name="**/stats/ui/view/**" />
 						<!-- Exclude inner classes -->
 						<!-- <exclude name="**/*$*.class" /> -->
 					</fileset>
