@@ -71,7 +71,9 @@
 				</batchtest>
 			</junit>
 		</jacoco:coverage>
-<fail message="Test(s) failed." if="test.failed" />
+		
+		<fail message="Test(s) failed." if="test.failed" />
+		
 		<!-- Generate HTML report
 			- junit-noframes.html -> Single page HTML-report 
 			- index.html -> HTML-report using frames (several files, but more comfortable to read)-->
@@ -96,8 +98,10 @@
 						<include name="**/*.class" />
 						<!-- Exclude classes necessary for testing only from the code coverage report-->
 						<exclude name="**/*Specification.class" />
+						<exclude name="stats.ui.actions.*" />
+						<exclude name="stats.ui.view.*" />
 						<!-- Exclude inner classes -->
-						<exclude name="**/*$*.class" />
+						<!-- <exclude name="**/*$*.class" /> -->
 					</fileset>
 				</classfiles>
 			</structure>
