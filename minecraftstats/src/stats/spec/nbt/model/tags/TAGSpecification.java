@@ -93,42 +93,42 @@ public class TAGSpecification {
 	
 	@Test
 	public void ShouldReturnTAGByteWhenCallingFromTAGWithTAGByte() {
-		assertEquals(TAG_Type.TAG_Byte, TAG_Type.fromTAG(new TAG_Byte("")));
+		assertEquals(TAG_Type.TAG_Byte, TAG_Type.fromTAG(new TAG_Byte("", (byte)0)));
 	}
 	
 	@Test
 	public void ShouldReturnTAGShortWhenCallingFromTAGWithTAGShort() {
-		assertEquals(TAG_Type.TAG_Short, TAG_Type.fromTAG(new TAG_Short("")));
+		assertEquals(TAG_Type.TAG_Short, TAG_Type.fromTAG(new TAG_Short("", (short)0)));
 	}
 	
 	@Test
 	public void ShouldReturnTAGIntWhenCallingFromTAGWithTAGInt() {
-		assertEquals(TAG_Type.TAG_Int, TAG_Type.fromTAG(new TAG_Int("")));
+		assertEquals(TAG_Type.TAG_Int, TAG_Type.fromTAG(new TAG_Int("", 0)));
 	}
 	
 	@Test
 	public void ShouldReturnTAGLongWhenCallingFromTAGWithTAGLong() {
-		assertEquals(TAG_Type.TAG_Long, TAG_Type.fromTAG(new TAG_Long("")));
+		assertEquals(TAG_Type.TAG_Long, TAG_Type.fromTAG(new TAG_Long("", 0L)));
 	}
 	
 	@Test
 	public void ShouldReturnTAGFloatWhenCallingFromTAGWithTAGFloat() {
-		assertEquals(TAG_Type.TAG_Float, TAG_Type.fromTAG(new TAG_Float("")));
+		assertEquals(TAG_Type.TAG_Float, TAG_Type.fromTAG(new TAG_Float("", 0.0f)));
 	}
 	
 	@Test
 	public void ShouldReturnTAGDoubleWhenCallingFromTAGWithTAGDouble() {
-		assertEquals(TAG_Type.TAG_Double, TAG_Type.fromTAG(new TAG_Double("")));
+		assertEquals(TAG_Type.TAG_Double, TAG_Type.fromTAG(new TAG_Double("", 0.0)));
 	}
 	
 	@Test
 	public void ShouldReturnTAGByteArrayWhenCallingFromTAGWithTAGByteArray() {
-		assertEquals(TAG_Type.TAG_Byte_Array, TAG_Type.fromTAG(new TAG_Byte_Array("")));
+		assertEquals(TAG_Type.TAG_Byte_Array, TAG_Type.fromTAG(new TAG_Byte_Array("", new byte[0])));
 	}
 	
 	@Test
 	public void ShouldReturnTAGStringWhenCallingFromTAGWithTAGString() {
-		assertEquals(TAG_Type.TAG_String, TAG_Type.fromTAG(new TAG_String("")));
+		assertEquals(TAG_Type.TAG_String, TAG_Type.fromTAG(new TAG_String("", "")));
 	}
 	
 	@Test

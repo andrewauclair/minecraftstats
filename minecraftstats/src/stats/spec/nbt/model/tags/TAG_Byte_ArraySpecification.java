@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.io.IOException;
 import java.util.Arrays;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import stats.nbt.model.tags.TAG_Byte_Array;
@@ -13,11 +14,16 @@ public class TAG_Byte_ArraySpecification extends TAGSpecCommon {
 
 	private static final byte[] s_value = { 1, 2, 3, 4, 5 };
 	
-	private TAG_Byte_Array tagByteArray = new TAG_Byte_Array("");
+	private TAG_Byte_Array tagByteArray;
 	
+	@Before
+	public void setup() throws IOException {
+		super.setup();
+		tagByteArray = new TAG_Byte_Array("", new byte[0]);
+	}
 	@Test
 	public void ShouldCreateObjectWithName() {
-		tagByteArray = new TAG_Byte_Array(getName());
+		tagByteArray = new TAG_Byte_Array(getName(), new byte[0]);
 		
 		assertEquals(getName(), tagByteArray.getName());
 	}

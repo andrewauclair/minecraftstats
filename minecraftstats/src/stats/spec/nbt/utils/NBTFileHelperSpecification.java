@@ -31,12 +31,12 @@ public class NBTFileHelperSpecification extends SpecTagHelper {
 	
 	@Test
 	public void ShouldReadTagTypes() throws IOException {
-		assertReadsTagType(new TAG_Short(name));
-		assertReadsTagType(new TAG_Long(name));
-		assertReadsTagType(new TAG_Float(name));
-		assertReadsTagType(new TAG_Double(name));
-		assertReadsTagType(new TAG_Byte_Array(name));
-		assertReadsTagType(new TAG_String(name));
+		assertReadsTagType(new TAG_Short(name, (short)0));
+		assertReadsTagType(new TAG_Long(name, 0L));
+		assertReadsTagType(new TAG_Float(name, 0.0f));
+		assertReadsTagType(new TAG_Double(name, 0.0));
+		assertReadsTagType(new TAG_Byte_Array(name, new byte[0]));
+		assertReadsTagType(new TAG_String(name, ""));
 		assertReadsTagType(new TAG_List(name));
 		assertReadsTagType(new TAG_Int_Array(name));
 	}

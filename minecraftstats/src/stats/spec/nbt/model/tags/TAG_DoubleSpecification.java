@@ -2,6 +2,7 @@ package stats.spec.nbt.model.tags;
 
 import java.io.IOException;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import stats.nbt.model.tags.TAG_Double;
@@ -10,11 +11,17 @@ public class TAG_DoubleSpecification extends TAGSpecCommon {
 
 	private static final double s_value = 15.0;
 	
-	private TAG_Double tagDouble = new TAG_Double("", 0.0);
+	private TAG_Double tagDouble;
+	
+	@Before
+	public void setup() throws IOException {
+		super.setup();
+		tagDouble = new TAG_Double("", 0.0);
+	}
 	
 	@Test
 	public void ShouldCreateObjectWithName() {
-		tagDouble = new TAG_Double(getName());
+		tagDouble = new TAG_Double(getName(), 0.0);
 		
 		Assert.assertEquals(getName(), tagDouble.getName());
 	}

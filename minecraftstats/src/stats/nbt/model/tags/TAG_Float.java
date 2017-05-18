@@ -6,11 +6,7 @@ import java.io.IOException;
 
 public class TAG_Float extends TAG {
 
-	private float m_value = 0f;
-	
-	public TAG_Float(String name) {
-		super(name);
-	}
+	private float m_value;
 	
 	public TAG_Float(String name, float value) {
 		super(name);

@@ -2,19 +2,25 @@ package stats.spec.nbt.model.tags;
 
 import java.io.IOException;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import stats.nbt.model.tags.TAG_Byte;
 
 public class TAG_ByteSpecification extends TAGSpecCommon {
-
 	private static final byte s_value = 15;
 	
-	private TAG_Byte tagByte = new TAG_Byte("", (byte)0);
+	private TAG_Byte tagByte;
+	
+	@Before
+	public void setup() throws IOException {
+		super.setup();
+		tagByte = new TAG_Byte("", (byte)0);
+	}
 	
 	@Test
 	public void ShouldCreateObject() {
-		tagByte = new TAG_Byte(getName());
+		tagByte = new TAG_Byte(getName(), (byte)0);
 		
 		Assert.assertEquals(getName(), tagByte.getName());
 		

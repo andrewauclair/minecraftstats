@@ -6,11 +6,7 @@ import java.io.IOException;
 
 public class TAG_String extends TAG {
 
-	private String m_value = "";
-	
-	public TAG_String(String name) {
-		super(name);
-	}
+	private String m_value;
 	
 	public TAG_String(String name, String value) {
 		super(name);

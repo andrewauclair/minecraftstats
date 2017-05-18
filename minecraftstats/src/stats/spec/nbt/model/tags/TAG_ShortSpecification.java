@@ -3,6 +3,8 @@ package stats.spec.nbt.model.tags;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
+
+import org.junit.Before;
 import org.junit.Test;
 
 import stats.nbt.model.tags.TAG_Short;
@@ -11,11 +13,17 @@ public class TAG_ShortSpecification extends TAGSpecCommon {
 
 	private static final short s_value = 15;
 	
-	private TAG_Short tagShort = new TAG_Short("", (short)0);
+	private TAG_Short tagShort;
+	
+	@Before
+	public void setup() throws IOException {
+		super.setup();
+		tagShort = new TAG_Short("", (short)0);
+	}
 	
 	@Test
 	public void ShouldCreateObjectWithName() {
-		tagShort = new TAG_Short(getName());
+		tagShort = new TAG_Short(getName(), (short)0);
 		
 		assertEquals(getName(), tagShort.getName());
 	}

@@ -6,11 +6,7 @@ import java.io.IOException;
 
 public class TAG_Double extends TAG {
 
-	private double m_value = 0;
-	
-	public TAG_Double(String name) {
-		super(name);
-	}
+	private double m_value;
 	
 	public TAG_Double(String name, double value) {
 		super(name);

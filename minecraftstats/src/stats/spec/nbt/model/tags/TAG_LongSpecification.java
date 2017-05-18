@@ -2,19 +2,25 @@ package stats.spec.nbt.model.tags;
 
 import java.io.IOException;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import stats.nbt.model.tags.TAG_Long;
 
 public class TAG_LongSpecification extends TAGSpecCommon {
-
 	private static final long s_value = 15L;
 	
-	private TAG_Long tagLong = new TAG_Long("", 0L);
+	private TAG_Long tagLong;
+	
+	@Before
+	public void setup() throws IOException {
+		super.setup();
+		tagLong = new TAG_Long("", 0L);
+	}
 	
 	@Test
 	public void ShouldCreateObjectWithName() {
-		tagLong = new TAG_Long(getName());
+		tagLong = new TAG_Long(getName(), 0L);
 		
 		Assert.assertEquals(getName(), tagLong.getName());
 	}

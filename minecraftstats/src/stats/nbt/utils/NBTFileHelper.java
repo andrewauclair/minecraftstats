@@ -42,28 +42,28 @@ public final class NBTFileHelper {
 			newTag = new TAG_End();
 			break;
 		case TAG_Byte:
-			newTag = new TAG_Byte("");
+			newTag = new TAG_Byte("", (byte)0);
 			break;
 		case TAG_Short:
-			newTag = new TAG_Short("");
+			newTag = new TAG_Short("", (short)0);
 			break;
 		case TAG_Int:
-			newTag = new TAG_Int("");
+			newTag = new TAG_Int("", 0);
 			break;
 		case TAG_Long:
-			newTag = new TAG_Long("");
+			newTag = new TAG_Long("", 0L);
 			break;
 		case TAG_Float:
-			newTag = new TAG_Float("");
+			newTag = new TAG_Float("", 0.0f);
 			break;
 		case TAG_Double:
-			newTag = new TAG_Double("");
+			newTag = new TAG_Double("", 0.0);
 			break;
 		case TAG_Byte_Array:
-			newTag = new TAG_Byte_Array("");
+			newTag = new TAG_Byte_Array("", new byte[0]);
 			break;
 		case TAG_String:
-			newTag = new TAG_String("");
+			newTag = new TAG_String("", "");
 			break;
 		case TAG_List:
 			newTag = new TAG_List("");

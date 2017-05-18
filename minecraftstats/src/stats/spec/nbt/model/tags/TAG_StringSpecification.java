@@ -20,13 +20,11 @@ public class TAG_StringSpecification extends TAGSpecCommon {
 	
 	@Test
 	public void ShouldCreateObject() {
-		value = s_value;
-		
-		tagString = new TAG_String(getName());
+		tagString = new TAG_String(getName(), "");
 		
 		assertEquals(getName(), tagString.getName());
 		
-		tagString = new TAG_String(getName(), value);
+		tagString = new TAG_String(getName(), s_value);
 		
 		assertNameAndValueAreSet();
 	}

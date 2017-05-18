@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.io.IOException;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import stats.nbt.model.tags.TAG_Int;
@@ -12,11 +13,17 @@ public class TAG_IntSpecification extends TAGSpecCommon {
 
 	private static final int s_value = 15;
 	
-	private TAG_Int tagInt = new TAG_Int("", 0);
+	private TAG_Int tagInt;
+	
+	@Before
+	public void setup() throws IOException {
+		super.setup();
+		tagInt = new TAG_Int("", 0);
+	}
 	
 	@Test
 	public void ShouldCreateObjectWithName() {
-		tagInt = new TAG_Int(getName());
+		tagInt = new TAG_Int(getName(), 0);
 		
 		Assert.assertEquals(getName(), tagInt.getName());
 	}

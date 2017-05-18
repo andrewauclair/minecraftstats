@@ -3,6 +3,8 @@ package stats.spec.nbt.model.tags;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
+
+import org.junit.Before;
 import org.junit.Test;
 
 import stats.nbt.model.tags.TAG_Float;
@@ -11,11 +13,17 @@ public class TAG_FloatSpecification extends TAGSpecCommon {
 
 	private static final float s_value = 15.0f;
 
-	private TAG_Float tagFloat = new TAG_Float("", 0.0f);
+	private TAG_Float tagFloat;
+	
+	@Before
+	public void setup() throws IOException {
+		super.setup();
+		tagFloat = new TAG_Float("", 0.0f);
+	}
 	
 	@Test
 	public void ShouldCreateObjectWithName() {
-		tagFloat = new TAG_Float(getName());
+		tagFloat = new TAG_Float(getName(), 0.0f);
 		
 		assertEquals(getName(), tagFloat.getName());
 	}

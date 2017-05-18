@@ -6,11 +6,7 @@ import java.io.IOException;
 
 public class TAG_Byte extends TAG {
 
-	private byte m_value = 0;
-	
-	public TAG_Byte(String name) {
-		super(name);
-	}
+	private byte m_value;
 	
 	public TAG_Byte(String name, byte value) {
 		super(name);
