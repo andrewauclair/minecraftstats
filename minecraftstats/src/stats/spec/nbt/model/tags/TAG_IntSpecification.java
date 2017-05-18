@@ -3,7 +3,6 @@ package stats.spec.nbt.model.tags;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 

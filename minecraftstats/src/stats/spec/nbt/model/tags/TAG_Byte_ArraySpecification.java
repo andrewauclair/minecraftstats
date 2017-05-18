@@ -21,12 +21,6 @@ public class TAG_Byte_ArraySpecification extends TAGSpecCommon {
 		super.setup();
 		tagByteArray = new TAG_Byte_Array("", new byte[0]);
 	}
-	@Test
-	public void ShouldCreateObjectWithName() {
-		tagByteArray = new TAG_Byte_Array(getName(), new byte[0]);
-		
-		assertEquals(getName(), tagByteArray.getName());
-	}
 	
 	@Test
 	public void ShouldCreateObjectWithNameAndValue() {

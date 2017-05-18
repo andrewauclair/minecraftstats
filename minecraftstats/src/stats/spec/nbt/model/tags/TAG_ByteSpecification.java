@@ -1,7 +1,8 @@
 package stats.spec.nbt.model.tags;
 
+import static org.junit.Assert.*;
+
 import java.io.IOException;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,7 +23,7 @@ public class TAG_ByteSpecification extends TAGSpecCommon {
 	public void ShouldCreateObject() {
 		tagByte = new TAG_Byte(getName(), (byte)0);
 		
-		Assert.assertEquals(getName(), tagByte.getName());
+		assertEquals(getName(), tagByte.getName());
 		
 		tagByte = new TAG_Byte(getName(), s_value);
 		
@@ -42,8 +43,8 @@ public class TAG_ByteSpecification extends TAGSpecCommon {
 	}
 	
 	private void assertNameAndValueAreSet() {
-		Assert.assertEquals(getName(), tagByte.getName());
-		Assert.assertEquals(s_value, tagByte.getValue());
+		assertEquals(getName(), tagByte.getName());
+		assertEquals(s_value, tagByte.getValue());
 	}
 	
 	@Test
@@ -55,7 +56,7 @@ public class TAG_ByteSpecification extends TAGSpecCommon {
 		createInputStreamFromOutputStream();
 		
 		assertNameRead();
-		Assert.assertEquals(s_value, inStream.readByte());
+		assertEquals(s_value, inStream.readByte());
 	}
 	
 	@Test
@@ -68,8 +69,8 @@ public class TAG_ByteSpecification extends TAGSpecCommon {
 		
 		tagByte.readFromStream(inStream, true);
 		
-		Assert.assertEquals("", tagByte.getName());
-		Assert.assertEquals(s_value, tagByte.getValue());
+		assertEquals("", tagByte.getName());
+		assertEquals(s_value, tagByte.getValue());
 	}
 
 	@Test
@@ -81,14 +82,14 @@ public class TAG_ByteSpecification extends TAGSpecCommon {
 		
 		createInputStreamFromOutputStream();
 		
-		Assert.assertEquals(0, inStream.readShort());
-		Assert.assertEquals(s_value, inStream.readByte());
+		assertEquals(0, inStream.readShort());
+		assertEquals(s_value, inStream.readByte());
 	}
 	
 	@Test
 	public void ShouldAllowSetAndGetOfValue() {
 		tagByte.setValue(s_value);
 		
-		Assert.assertEquals(s_value, tagByte.getValue());
+		assertEquals(s_value, tagByte.getValue());
 	}
 }
