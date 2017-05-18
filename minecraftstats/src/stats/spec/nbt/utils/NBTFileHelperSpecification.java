@@ -38,7 +38,7 @@ public class NBTFileHelperSpecification extends SpecTagHelper {
 		assertReadsTagType(new TAG_Byte_Array(name, new byte[0]));
 		assertReadsTagType(new TAG_String(name, ""));
 		assertReadsTagType(new TAG_List(name));
-		assertReadsTagType(new TAG_Int_Array(name));
+		assertReadsTagType(new TAG_Int_Array(name, new int[0]));
 	}
 	
 	private void assertReadsTagType(TAG tag) throws IOException {

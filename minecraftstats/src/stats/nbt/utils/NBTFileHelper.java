@@ -72,7 +72,7 @@ public final class NBTFileHelper {
 			newTag = new TAG_Compound("");
 			break;
 		case TAG_Int_Array:
-			newTag = new TAG_Int_Array("");
+			newTag = new TAG_Int_Array("", new int[0]);
 			break;
 		}
 

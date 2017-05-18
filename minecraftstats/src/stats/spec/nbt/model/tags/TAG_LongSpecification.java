@@ -19,13 +19,6 @@ public class TAG_LongSpecification extends TAGSpecCommon {
 	}
 	
 	@Test
-	public void ShouldCreateObjectWithName() {
-		tagLong = new TAG_Long(getName(), 0L);
-		
-		Assert.assertEquals(getName(), tagLong.getName());
-	}
-	
-	@Test
 	public void ShouldCreateObjectWithNameAndValue() {
 		tagLong = new TAG_Long(getName(), s_value);
 		
@@ -35,7 +28,7 @@ public class TAG_LongSpecification extends TAGSpecCommon {
 	@Test
 	public void ShouldReadDataFromInputStream() throws IOException {
 		writeName();
-		writeValue();
+		outStream.writeLong(s_value);
 		
 		createInputStreamFromOutputStream();
 		
@@ -65,7 +58,7 @@ public class TAG_LongSpecification extends TAGSpecCommon {
 	public void ShouldReadDataWithEmptyName() throws IOException {
 		clearName();
 		writeName();
-		writeValue();
+		outStream.writeLong(s_value);
 		
 		createInputStreamFromOutputStream();
 		
@@ -93,9 +86,5 @@ public class TAG_LongSpecification extends TAGSpecCommon {
 		tagLong.setValue(s_value);
 		
 		Assert.assertEquals(s_value, tagLong.getValue());
-	}
-	
-	public void writeValue() throws IOException {
-		outStream.writeLong(s_value);
 	}
 }

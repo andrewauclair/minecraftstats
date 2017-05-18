@@ -22,13 +22,6 @@ public class TAG_FloatSpecification extends TAGSpecCommon {
 	}
 	
 	@Test
-	public void ShouldCreateObjectWithName() {
-		tagFloat = new TAG_Float(getName(), 0.0f);
-		
-		assertEquals(getName(), tagFloat.getName());
-	}
-	
-	@Test
 	public void ShouldCreateObjectWithNameAndValue() {
 		tagFloat = new TAG_Float(getName(), s_value);
 		

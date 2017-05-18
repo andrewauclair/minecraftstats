@@ -69,7 +69,7 @@ public class TAG_ListSpecification extends TAGSpecCommon {
 		nbtTAG.readFromStream(nbtIn, true);
 		
 		assertEquals(getName(), nbtTAG.getName());
-		assertEquals(1, ((ArrayList<TAG>)nbtTAG.getValue()).size());
+		assertEquals(1, nbtTAG.getValue().size());
 	}
 	
 	@Test
@@ -99,7 +99,6 @@ public class TAG_ListSpecification extends TAGSpecCommon {
 
 	@Test
 	public void ShouldWriteType0WhenEmpty() throws IOException {
-		
 		TAG_List nbtTAG = new TAG_List(getName());
 		
 		nbtTAG.writeToStream(outStream, true);

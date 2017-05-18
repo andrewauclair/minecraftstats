@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import java.io.IOException;
 import java.util.Arrays;
 
-import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import stats.nbt.model.tags.TAG_Int_Array;
@@ -14,13 +14,12 @@ public class TAG_Int_ArraySpecification extends TAGSpecCommon {
 
 	private static final int[] s_value = { 1, 2, 3, 4, 5 };
 	
-	private TAG_Int_Array tagIntArray = new TAG_Int_Array("");
+	private TAG_Int_Array tagIntArray;
 	
-	@Test
-	public void ShouldCreateObjectWithName() {
-		tagIntArray = new TAG_Int_Array(getName());
-		
-		Assert.assertEquals(getName(), tagIntArray.getName());
+	@Before
+	public void setup() throws IOException {
+		super.setup();
+		tagIntArray = new TAG_Int_Array("", new int[0]);
 	}
 	
 	@Test

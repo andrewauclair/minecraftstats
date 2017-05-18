@@ -143,7 +143,7 @@ public class TAGSpecification {
 	
 	@Test
 	public void ShouldReturnTAGIntArrayWhenCallingFromTAGWithTAGIntArray() {
-		assertEquals(TAG_Type.TAG_Int_Array, TAG_Type.fromTAG(new TAG_Int_Array("")));
+		assertEquals(TAG_Type.TAG_Int_Array, TAG_Type.fromTAG(new TAG_Int_Array("", new int[0])));
 	}
 	
 	@Test

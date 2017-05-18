@@ -8,10 +8,6 @@ public class TAG_Int_Array extends TAG {
 
 	private int[] m_value = new int[0];
 	
-	public TAG_Int_Array(String name) {
-		super(name);
-	}
-
 	public TAG_Int_Array(String name, int[] value) {
 		super(name);
 		m_value = value;

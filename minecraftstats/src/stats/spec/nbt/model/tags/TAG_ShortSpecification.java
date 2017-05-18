@@ -22,13 +22,6 @@ public class TAG_ShortSpecification extends TAGSpecCommon {
 	}
 	
 	@Test
-	public void ShouldCreateObjectWithName() {
-		tagShort = new TAG_Short(getName(), (short)0);
-		
-		assertEquals(getName(), tagShort.getName());
-	}
-	
-	@Test
 	public void ShouldCreateObjectWithNameAndValue() {
 		tagShort = new TAG_Short(getName(), s_value);
 		

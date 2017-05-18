@@ -22,13 +22,6 @@ public class TAG_IntSpecification extends TAGSpecCommon {
 	}
 	
 	@Test
-	public void ShouldCreateObjectWithName() {
-		tagInt = new TAG_Int(getName(), 0);
-		
-		Assert.assertEquals(getName(), tagInt.getName());
-	}
-	
-	@Test
 	public void ShouldCreateObjectWithNameAndValue() {
 		tagInt = new TAG_Int(getName(), s_value);
 		
